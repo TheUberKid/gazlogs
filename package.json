@@ -1,0 +1,40 @@
+{
+  "name": "gazlogs",
+  "version": "0.0.0",
+  "description": "A Heroes of the Storm replay logger, statistics generator, and doubloon exchange.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nf start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theuberkid/gazlogs.git"
+  },
+  "author": "Zeki Xu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/theuberkid/gazlogs/issues"
+  },
+  "homepage": "https://github.com/theuberkid/gazlogs#readme",
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "async": "^2.4.0",
+    "compression": "^1.6.2",
+    "cookie-session": "^2.0.0-beta.1",
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "express-minify": "^0.2.0",
+    "foreman": "^2.0.0",
+    "mongodb": "^2.2.26",
+    "mongoose": "^4.9.8",
+    "python-shell": "^0.4.0",
+    "serve-favicon": "^2.4.2",
+    "uuid": "^3.0.1",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "6.9.2"
+  }
+}

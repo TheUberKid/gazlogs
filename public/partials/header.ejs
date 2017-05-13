@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+  <head>
+    <link rel='stylesheet' type='text/css' href='/css/shared.css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Exo:600|Open+Sans:400' rel='stylesheet'>
+    <title>
+      <%= (title) ? title+' - ' : '' %>
+      Gazlogs <% if(!title){ %> - Heroes of the Storm Statistics, Replays, and Doubloon exchange <% } %>
+    </title>
+    <script> </script>
+  </head>
+  <body>
+
+    <div id='navbar'>
+      <a href='/'>
+        <div class='logo'>
+          <img src='/img/logo.png'>
+        </div>
+      </a>
+
+      <div class='nav-button'>
+        Log In
+      </div>
+
+      <a href='/upload'>
+        <div class='<%= (nav == 'upload') ? 'nav-button selected' : 'nav-button' %>'>
+          Upload
+        </div>
+      </a>
+
+      <a href='/exchange'>
+        <div class='<%= (nav == 'exchange') ? 'nav-button selected' : 'nav-button' %>'>
+          Exchange
+        </div>
+      </a>
+
+      <a href='/leaderboard'>
+        <div class='<%= (nav == 'leaderboard') ? 'nav-button selected' : 'nav-button' %>'>
+          Leaderboard
+        </div>
+      </a>
+
+      <a href='/statistics'>
+        <div class='<%= (nav == 'statistics') ? 'nav-button selected' : 'nav-button' %>'>
+          Statistics
+        </div>
+      </a>
+    </div>

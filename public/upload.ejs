@@ -1,0 +1,69 @@
+<% include ../public/partials/header %>
+
+<div id='gazlowe'>
+  <img src='/img/gazlowe.png'>
+</div>
+
+<div class='page-content'>
+  <div class='page-heading'>
+    Upload Replays
+  </div>
+  <div class='page-info'>
+    Upload HotS replays to be added to our database!
+    <br/>
+    Gazlowe will reward you with doubloons for each new replay you upload. Don't ask where he got them ;)
+    <br/>
+    <a href='/faq#doubloons' target='_blank' class='small'>
+      What are doubloons?
+      <i class="fa fa-external-link" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <div class='doubloon-table'>
+    <div class='labels row'>
+      <div class='item'>Game Mode</div>
+      <div class='item'>Value</div>
+    </div>
+    <div class='row'>
+      <div class='item'>Quick Match</div>
+      <div class='item'>50 doubloons</div>
+    </div>
+    <div class='row'>
+      <div class='item'>Unranked Draft</div>
+      <div class='item'>100 doubloons</div>
+    </div>
+    <div class='row'>
+      <div class='item'>Hero League</div>
+      <div class='item'>100 doubloons</div>
+    </div>
+    <div class='row'>
+      <div class='item'>Team League</div>
+      <div class='item'>125 doubloons</div>
+    </div>
+    <div class='row'>
+      <div class='item'>other</div>
+      <div class='item'>nothing</div>
+    </div>
+  </div>
+
+  <div class='page-info small'>
+    Location of replay files:
+    <br/>
+    Windows: ...\Documents\Heroes of the Storm\Accounts\###\#Hero#\Replays\
+    <br/>
+    Mac: ~/Library/Application Support/Blizzard/Heroes of the Storm/Accounts/###/#Hero#/Replays/
+  </div>
+
+  <div class='upload-form'>
+    <input type='file' id='upload-box' accept='.StormReplay' multiple=true class='inputfile'/>
+    <label for='upload-box' id='upload-label'>Choose Files</label>
+    <div id='file-drag-box'>(Or Drag Here)</div>
+  </div>
+
+  <div id='file-display'>
+  </div>
+</div>
+
+<script type='text/javascript' src='/js/uploader.js'></script>
+
+<% include ../public/partials/footer %>
