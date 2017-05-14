@@ -1,7 +1,9 @@
-var logger = require('winston');
+'use strict';
+
+const logger = require('winston');
 const config = require('./config');
 
-var amqp = require('amqplib/callback_api');
+const amqp = require('amqplib/callback_api');
 var amqp_conn = null;
 var amqp_ch = null;
 var queues = [
@@ -37,6 +39,7 @@ function start(callback){
         logger.log('info', '[AMQP] channel closed');
       });
 
+      ch.prefetch(1);
       amqp_ch = ch;
 
       // assert all queues
@@ -56,8 +59,8 @@ function closeOnErr(err) {
   return true;
 }
 
-function produce(q, msg){
-  amqp_ch.sendToQueue(q, new Buffer(msg), {persistent: true});
+function produce(q, msg, params){
+  amqp_ch.sendToQueue(q, new Buffer(msg), {persistent: true}, params);
 }
 function consume(q, func){
   amqp_ch.consume(q, func);

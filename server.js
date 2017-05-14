@@ -1,15 +1,19 @@
 'use strict';
 
-var logger = require('winston');
+const logger = require('winston');
+const async = require('async');
 const config = require('./includes/config');
 var amqp = require('./includes/amqp');
 amqp.start();
 
 // middleware
-var compression = require('compression');
-var minify = require('express-minify');
-var favicon = require('serve-favicon');
-var session = require('cookie-session');
+const compression = require('compression');
+const minify = require('express-minify');
+const favicon = require('serve-favicon');
+const session = require('cookie-session');
+
+// file upload
+const efu = require('express-fileupload');
 
 var express = require('express');
 var app = express();
@@ -22,6 +26,7 @@ app.use(compression());
 if(!config.debug) app.use(minify());
 app.use(favicon(__dirname + '/public/img/favicon.png'))
    .use(session({name: 'session', keys: config.cookie_keys, maxAge: config.cookie_max_age}))
+   .use(efu({ limits: {fileSize: 5*1024*1024} }))
    .use('/css', express.static('public/css'))
    .use('/js', express.static('public/js'))
    .use('/img', express.static('public/img'))
@@ -39,10 +44,35 @@ app.use(favicon(__dirname + '/public/img/favicon.png'))
    })
    .get('/upload', function(req, res){
      res.render('upload', {title: 'Upload Replays', nav: 'upload'});
-     amqp.produce('replays', 'upload please lol');
+   })
+   .post('/upload', function(req, res){
+     for(var i in req.files){
+
+       // check if proper filetype
+       if(req.files[i].mimetype == 'application/octet-stream'){
+
+         // generate a file number
+         var fname = Math.floor(Math.random() * 100000000).toString();
+         logger.log('info', '[FILE] received file: ' + req.files[i].name);
+
+         // store the file
+         req.files[i].mv(__dirname + '/filequeue/' + fname + '.StormReplay', function(err){
+           if(err) return res.send('r');
+
+           // add file to queue
+           amqp.produce('replays', fname);
+           res.send('s');
+         });
+
+       } else {
+         logger.log('info', '[FILE] rejected file: ' + req.files[i].name + ' (incorrect filetype)');
+         res.send('r');
+       }
+
+     }
    })
    .get('*', function(req, res){
-     res.render('404', {title: false, nav: false});
+     res.status(404).render('404', {title: false, nav: false});
    });
 
 // start the server
