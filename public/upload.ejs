@@ -56,7 +56,7 @@
 
   <div class='upload-form'>
     <form method='post' action='upload' enctype='multipart/form-data' id='upload-form'>
-      <input type='file' name='replays' id='upload-box' accept='.StormReplay' multiple=true class='inputfile'/>
+      <input type='file' name='replays' id='upload-box' accept='.StormReplay' multiple class='inputfile'/>
       <label for='upload-box' id='upload-label'>Choose Files</label>
       <div id='file-drag-box'>(Or Drag Here)</div>
     </form>
@@ -64,6 +64,50 @@
 
 </div>
 
+<div id='modals'>
+
+  <div id='upload-modal'>
+
+    <div class='modal-nav'>
+      <div class='modal-nav-button modal-exit'>
+        <i class='fa fa-times'></i>
+      </div>
+    </div>
+
+    <div class='modal-title'>
+      Uploading Replays...
+    </div>
+
+    <div id='modal-load-above'>
+      uploading 0 / 0
+    </div>
+    <div class='modal-load-icon' id='modal-load-spinner'>
+      <i class='fa fa-cog fa-spin'></i>
+    </div>
+    <div class='modal-load-icon' id='modal-load-complete'>
+      <i class='fa fa-check'></i>
+    </div>
+    <div class='modal-load-icon' id='modal-load-error'>
+      <i class='fa fa-times'></i>
+    </div>
+    <div id='modal-load-below'>
+      file.StormReplay
+    </div>
+
+    <div class='modal-table' id='modal-upload-table'>
+      <div class='labels row'>
+        <div class='item'>results</div>
+        <div class='item'># replays</div>
+      </div>
+      <div id='upload-results'>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src='https://cdn.socket.io/socket.io-1.4.5.js'></script>
 <script type='text/javascript' src='/js/uploader.js'></script>
 
 <% include ../public/partials/footer %>

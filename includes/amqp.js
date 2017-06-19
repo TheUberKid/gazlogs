@@ -1,14 +1,12 @@
-'use strict';
-
-const logger = require('winston');
+var logger = require('winston');
 const config = require('./config');
 
-const amqp = require('amqplib/callback_api');
-var amqp_conn = null;
-var amqp_ch = null;
-var queues = [
-  'replays'
-];
+var amqp = require('amqplib/callback_api');
+var Amqp = {
+  conn: null,
+  ch: null,
+  start: start
+}
 
 function start(callback){
   // connect to amqp
@@ -26,52 +24,30 @@ function start(callback){
       logger.log('info', '[AMQP] reconnecting');
       return setTimeout(start, 1000);
     });
+
+    Amqp.conn = conn;
     logger.log('info', '[AMQP] connected');
 
-    amqp_conn = conn;
-
-    conn.createChannel(function(err, ch){
-      if(closeOnErr(err)) return;
-      ch.on('error', function(err){
-        logger.log('info', '[AMQP] channel error '+err.message);
-      });
-      ch.on('close', function(){
-        logger.log('info', '[AMQP] channel closed');
-      });
-
-      ch.prefetch(1);
-      amqp_ch = ch;
-
-      // assert all queues
-      queues.map(function(q){
-        logger.log('info', '[AMQP] asserted queue: '+q);
-        ch.assertQueue(q, {durable: true});
-      });
-
-      if(callback) callback();
-    });
+    createChannel(callback);
   });
 }
-function closeOnErr(err) {
-  if (!err) return false;
-  logger.log('info', '[AMQP] error '+err);
-  amqp_conn.close();
-  return true;
+function createChannel(callback){
+  Amqp.conn.createChannel(function(err, ch){
+    ch.on('error', function(err){
+      logger.log('info', '[AMQP] channel error '+err.message);
+    });
+    ch.on('close', function(){
+      logger.log('info', '[AMQP] channel closed, recreating');
+      return setTimeout(createChannel, 1000);
+    });
+
+    Amqp.ch = ch;
+    ch.assertQueue('replays', {durable: true});
+
+    logger.log('info', '[AMQP] channel created');
+
+    if(callback) callback();
+  });
 }
 
-function produce(q, msg, params){
-  amqp_ch.sendToQueue(q, new Buffer(msg), {persistent: true}, params);
-}
-function consume(q, func){
-  amqp_ch.consume(q, func);
-}
-function ack(msg){
-  amqp_ch.ack(msg);
-}
-
-module.exports = {
-  start: start,
-  produce: produce,
-  consume: consume,
-  ack: ack
-}
+module.exports = Amqp;
