@@ -122,7 +122,7 @@ function submitFiles(){
 
 // poll a socket for results
 function poll(path){
-  socket = io.connect('http://localhost:3000');
+  socket = io.connect('https://gazlogs-uploader.herokuapp.com');
   socket.emit('pollPath', path);
 
   socket.on('fileProgress', function(status){
