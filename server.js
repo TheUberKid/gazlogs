@@ -39,7 +39,7 @@ app.get('*',function(req,res,next){
 // start receiving requests
 function init(){
   app.use(compression());
-  if(!config.debug) serv.use(minify());
+  if(!config.debug) app.use(minify());
   app.use(favicon(__dirname + '/public/img/favicon.png'))
       .use(session({secret: config.session_secret, resave: true, saveUninitialized: true}))
       .use(passport.initialize())
