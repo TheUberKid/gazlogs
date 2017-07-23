@@ -1,3 +1,8 @@
+Number.prototype.format = function(r){
+  if(!r) r = '&#8198;';
+  return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, r);
+}
+
 var ubox = document.getElementById('upload-box');
 var ulabel = document.getElementById('upload-label');
 var dragbox = document.getElementById('file-drag-box');
@@ -10,15 +15,59 @@ var modalUploadComplete = document.getElementById('modal-load-complete');
 var modalUploadError = document.getElementById('modal-load-error');
 var modalUploadTable = document.getElementById('modal-upload-table');
 var modalUploadResults = document.getElementById('upload-results');
+var modalUploadDoubloonTotal = document.getElementById('modal-upload-doubloon-total');
+var modalUploadReplayTotal = document.getElementById('modal-upload-replay-total');
+var modalUploadReplayS = document.getElementById('modal-upload-replay-petty-s');
+var gazloweQuoteWrapper = document.getElementById('gazlowe-quote-wrapper');
+var gazloweQuote = document.getElementById('gazlowe-quote');
+var modalSignOutForm = document.getElementById('modal-form');
+var modalSignOut = document.getElementById('modal-upload-accept');
 var uProgress = document.getElementById('modal-load-above');
 var uName = document.getElementById('modal-load-below');
 ubox.addEventListener('change', submitFiles);
 
 var upload;
-var responseTable = [
-  ['Error', '#833'],
-  ['Success', '#383']
-];
+var responseTable = {
+  0: ['Error', '#833', 0],
+  1: ['Duplicate', '#bb3', 0],
+  2: ['Training', '#bb3', 0],
+  3: ['Versus AI', '#bb3', 0],
+  4: ['Brawl', '#bb3', 0],
+  5: ['Unranked', '#383', 100],
+  6: ['Quick Match', '#383', 50],
+  7: ['Hero League', '#383', 100],
+  8: ['Team League', '#383', 125]
+};
+
+var gazloweQuotes = {
+  nothing: [
+    "Kid, I hate to break it to ya, but you're a huge disappointment.",
+    "Well, I don't know how, but ya did it. You gave me absolutely nothin'.",
+    "Hey, time is money, and kid, you're wasting my time! Get back to work!"
+  ],
+  bad: [
+    "Not the best parts I've seen, but uh, I'll take it.",
+    "Whaddya think this is, a pawn shop!? Well, I guess it kinda is...",
+    "What is this, a replay for ants? It needs to be at least... three times bigger than this!",
+    "Keep it quick, kid! I ain't got all day!"
+  ],
+  good: [
+    "You done good, kid. Keep it up!",
+    "Uh, yeah, sure, whatever. Just leave 'em right here.",
+    "Good work! You see any more parts around here, you go ahead and pick 'em up, aight?"
+  ],
+  great: [
+    "This is what I'm talkin' about! We're back in business, boys!",
+    "Oh man, these are some good parts! Take these doubloons, it's the least I could do to repay ya.",
+    "Ha-ha! Cha-ching!"
+  ]
+}
+var signOuts = {
+  nothing: "Sorry, I'll try harder next time",
+  bad: "Back to Work",
+  good: "Thanks!",
+  great: "Yeah Baby!"
+}
 
 var socket, update;
 
@@ -69,9 +118,6 @@ function submitFiles(){
 
   req.send(form);
   update = setInterval(uploadUpdate, 50);
-
-  starttime = Date.now();
-  console.log('Start time: ' + starttime);
 }
 
 // poll a socket for results
@@ -97,42 +143,100 @@ function poll(path){
 }
 
 function uploadUpdate(){
+
+  // display results below
+  var resHTML = '';
+  var totalDoubloons = 0;
+  var totalReplays = 0;
+
+  // this for loop setup is kinda weird but it's done so that the results are iterated and listed in order
+  // since objects (such as the responseTable) are inherently orderless
+  var keys = Object.keys(responseTable).sort(function(a, b){return b-a});
+  for(var h=0, j=keys.length; h<j; h++){
+    var i = keys[h];
+
+    var res = upload.results[i];
+    var dres = upload.displayResults[i];
+    if(dres < res) upload.displayResults[i] += Math.ceil((res - dres) / 5);
+
+    if(upload.displayResults[i] > 0){
+
+      if(responseTable[i][2] > 0){
+
+        totalDoubloons += upload.displayResults[i] * responseTable[i][2];
+        totalReplays += upload.displayResults[i];
+        resHTML += '<div class="row" style="box-shadow: inset 3px 0 0 '
+                + responseTable[i][1]
+                + '"><div class="item">'
+                + responseTable[i][0]
+                + '</div><div class="item hover-hide">'
+                + (upload.displayResults[i] * responseTable[i][2]).format() + ' <i class="fa fa-circle coin" aria-hidden="true"></i>'
+                + '</div><div class="item hover-reveal">'
+                + upload.displayResults[i].format() + ' x ' + responseTable[i][2] + ' <i class="fa fa-circle coin" aria-hidden="true"></i>'
+                + '</div></div>';
+
+      } else {
+
+        resHTML += '<div class="row worthless" style="box-shadow: inset 3px 0 0 '
+                + responseTable[i][1]
+                + '"><div class="item">'
+                + responseTable[i][0]
+                + '</div><div class="item">'
+                + upload.displayResults[i].format() + ' x 0'
+                + '</div></div>';
+      }
+    }
+  }
+
+  modalUploadDoubloonTotal.innerHTML = totalDoubloons.format();
+  modalUploadReplayTotal.innerHTML = totalReplays.format();
+  modalUploadResults.innerHTML = resHTML;
+  modalUploadReplayS.innerHTML = totalReplays === 1 ? '' : 's';
+
   // update the progress display
   var n = upload.state === 0 ? Math.floor(upload.progress * ubox.files.length) : upload.done;
   if(upload.display < n) upload.display += Math.ceil((n-upload.display) / 5);
   if(upload.done < upload.total || upload.display < upload.done){
     uProgress.innerHTML = (upload.state === 0 ? 'uploading ' : 'processing ') + upload.display + ' / ' + upload.total;
-    uName.innerHTML = ubox.files[upload.display].name;
+    uName.innerHTML = (ubox.files.length > 1 ? ubox.files[upload.display].name : ubox.files[0].name).replace(/\.stormreplay/ig, '');;
   } else {
+
     uProgress.innerHTML = 'processed ' + upload.total + ' / ' + upload.total;
     uName.innerHTML = 'Jobs done!';
     modalUploadTable.className = 'modal-table complete';
+    gazloweQuoteWrapper.className = 'gazlowe-quote-wrapper complete';
+    modalSignOutForm.className = 'modal-form complete';
+
+    var quotes, out;
+    if(totalDoubloons === 0){
+      quotes = gazloweQuotes.nothing;
+      out = signOuts.nothing;
+    } else if(totalDoubloons <= 200){
+      quotes = gazloweQuotes.bad;
+      out = signOuts.bad;
+    } else if(totalDoubloons <= 2000){
+      quotes = gazloweQuotes.good;
+      out = signOuts.good;
+    } else {
+      quotes = gazloweQuotes.great;
+      out = signOuts.great;
+    }
+
+    gazloweQuote.innerHTML = quotes[Math.floor(Math.random()*quotes.length)];
+    modalSignOut.innerHTML = out;
+
     uploadStatusIcon(1);
     clearInterval(update);
     elapsed = Date.now()-starttime;
-    console.log('Finished in '+elapsed+' milliseconds');
+    console.log('Finished in '+elapsed+'ms');
+
   }
   if(upload.state === 0 && upload.progress === 1){
     upload.state = 1;
     upload.display = 0;
+    starttime = Date.now();
   }
 
-  // display results below
-  var resHTML = '';
-  for(var i=upload.displayResults.length-1; i>-1; i--){
-    var res = upload.results[i];
-    var dres = upload.displayResults[i];
-    if(dres < res) upload.displayResults[i] += Math.ceil((res - dres) / 5);
-
-    if(dres > 0){
-      resHTML += '<div class="row"><div class="item">'
-              + responseTable[i][0]
-              + '</div><div class="item">'
-              + upload.displayResults[i]
-              + '</div></div>';
-    }
-  }
-  modalUploadResults.innerHTML = resHTML;
 }
 
 // display an upload error on the modal
@@ -196,6 +300,9 @@ function closeModals(){
   setTimeout(function(){
     modalWrapper.style.zIndex = -2;
     modalUploadTable.className = 'modal-table';
+    gazloweQuoteWrapper.className = 'gazlowe-quote-wrapper';
+    modalSignOutForm.className = 'modal-form';
+    modalUpload.scrollTop = 0;
   }, 400);
   modalWrapper.style.opacity = 0;
 }

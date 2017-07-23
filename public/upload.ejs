@@ -15,7 +15,7 @@
     <br/>
     <a href='/faq#doubloons' target='_blank' class='small'>
       What are doubloons?
-      <i class="fa fa-external-link" aria-hidden="true"></i>
+      <i class='fa fa-external-link' aria-hidden='true'></i>
     </a>
   </div>
 
@@ -70,7 +70,7 @@
 
     <div class='modal-nav'>
       <div class='modal-nav-button modal-exit'>
-        <i class='fa fa-times'></i>
+        <i class='fa fa-times' aria-hidden='true'></i>
       </div>
     </div>
 
@@ -82,13 +82,13 @@
       uploading 0 / 0
     </div>
     <div class='modal-load-icon' id='modal-load-spinner'>
-      <i class='fa fa-cog fa-spin'></i>
+      <div class='spinner'></div>
     </div>
     <div class='modal-load-icon' id='modal-load-complete'>
-      <i class='fa fa-check'></i>
+      <i class='fa fa-check' aria-hidden='true'></i>
     </div>
     <div class='modal-load-icon' id='modal-load-error'>
-      <i class='fa fa-times'></i>
+      <i class='fa fa-times' aria-hidden='true'></i>
     </div>
     <div id='modal-load-below'>
       file.StormReplay
@@ -97,10 +97,33 @@
     <div class='modal-table' id='modal-upload-table'>
       <div class='labels row'>
         <div class='item'>results</div>
-        <div class='item'># replays</div>
+        <div class='item'>doubloons</div>
       </div>
       <div id='upload-results'>
       </div>
+      <div id='modal-upload-total' class='row'>
+        <div class='item'>total</div>
+        <div class='item hover-hide'>
+          <span id='modal-upload-doubloon-total'>0</span>
+          <i class='fa fa-circle coin' aria-hidden='true'></i>
+        </div>
+        <div class='item hover-reveal'>
+          (<span id='modal-upload-replay-total'></span> Replay<span id='modal-upload-replay-petty-s'>s</span>)
+        </div>
+      </div>
+    </div>
+
+    <div class='gazlowe-quote-wrapper' id='gazlowe-quote-wrapper'>
+      <div class='fa fa-quote-left' aria-hidden='true'></div>
+      <div class='gazlowe-quote'>
+        <span id='gazlowe-quote'>Kid, I hate to break it to ya, but you're a huge disappointment.</span>
+        <div class='quote-credit'> - Gazlowe</div>
+      </div>
+      <div class='fa fa-quote-right' aria-hidden='true'></div>
+    </div>
+
+    <div class='modal-form' id='modal-form'>
+      <div class='modal-upload-button modal-exit' id='modal-upload-accept'></div>
     </div>
 
   </div>

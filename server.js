@@ -48,7 +48,7 @@ function init(){
         res.render('upload', {title: 'Upload Replays', nav: 'upload'});
       })
       .get('*', function(req, res){
-        res.status(404).render('404', {title: false, nav: false});
+        res.status(404).render('404', {title: '404', nav: false});
       });
 
   // start the server
