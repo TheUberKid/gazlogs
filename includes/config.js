@@ -9,30 +9,21 @@ function moduleAvailable(name){
 }
 
 // test for environment by checking existence of keys module (ignored by git) and load the relevant config
-// hide secret keys in either local keys.js module or as heroku environment variables
-var mongodb_key, amqp_key, cookie_keys, debug;
+// hide secret keys and certificates in either local keys.js module or as heroku environment variables
+var Keys;
 if(moduleAvailable('./keys')){
-  const Keys = require('./keys');
-  mongodb_key = Keys.mongodb_key;
-  amqp_key = Keys.amqp_key;
-  cookie_keys = Keys.cookie_keys;
-  debug = true;
+  Keys = require('./keys');
 } else {
-  mongodb_key = process.env.mongodb_key;
-  amqp_key = process.env.amqp_key;
-  cookie_keys = eval(process.env.cookie_keys);
-  debug = false;
+  Keys = process.env;
 }
-
-// non-secret keys can be shown here
-const port = process.env.PORT || 5000;
-const cookie_max_age = 7*24*60*60*1000;
 
 module.exports = {
-  'mongodb_key': mongodb_key,
-  'amqp_key': amqp_key,
-  'cookie_keys': cookie_keys,
-  'cookie_max_age': cookie_max_age,
-  'debug': debug,
-  'port': port
-}
+  mongodb_key: Keys.mongodb_key,
+  amqp_key: Keys.amqp_key,
+  bnet_key: Keys.bnet_key,
+  bnet_secret: Keys.bnet_secret,
+  bnet_callback: Keys.bnet_callback,
+  session_secret: Keys.session_secret,
+  debug: moduleAvailable('./keys'),
+  port: process.env.PORT || 5000
+};
