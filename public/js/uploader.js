@@ -99,7 +99,7 @@ function submitFiles(){
   }
 
   var req = new XMLHttpRequest();
-  req.open('POST', 'http://localhost:3000', true);
+  req.open('POST', 'https://gazlogs-uploader.herokuapp.com', true);
 
   req.onreadystatechange = function(){
     if(req.readyState == XMLHttpRequest.DONE){
