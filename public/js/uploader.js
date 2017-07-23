@@ -106,6 +106,7 @@ function submitFiles(){
       if(req.responseText !== 'nofile'
       && req.responseText !== 'error'){
         poll(req.responseText);
+        console.log(req.responseText);
       } else {
         uploadError(req.responseText != 'error' ? req.responseText : '');
       }
@@ -193,6 +194,12 @@ function uploadUpdate(){
   modalUploadResults.innerHTML = resHTML;
   modalUploadReplayS.innerHTML = totalReplays === 1 ? '' : 's';
 
+  if(upload.state === 0 && upload.progress === 1){
+    upload.state = 1;
+    upload.display = 0;
+    starttime = Date.now();
+  }
+
   // update the progress display
   var n = upload.state === 0 ? Math.floor(upload.progress * ubox.files.length) : upload.done;
   if(upload.display < n) upload.display += Math.ceil((n-upload.display) / 5);
@@ -230,11 +237,6 @@ function uploadUpdate(){
     elapsed = Date.now()-starttime;
     console.log('Finished in '+elapsed+'ms');
 
-  }
-  if(upload.state === 0 && upload.progress === 1){
-    upload.state = 1;
-    upload.display = 0;
-    starttime = Date.now();
   }
 
 }
