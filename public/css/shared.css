@@ -35,6 +35,9 @@ body{
   cursor: pointer;
   transition: all 0.3s ease;
 }
+#navbar .nav-user{
+
+}
 #navbar .nav-button:hover, #navbar .nav-button.selected{
   color: #338;
 }
@@ -137,7 +140,7 @@ body{
   outline: none;
   margin: 10px 0px;
 }
-.inputfile + label{
+.page-content .button{
   font-size: 16px;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
@@ -149,7 +152,7 @@ body{
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.inputfile + label:hover {
+.page-content .button:hover {
   color: #338;
   border: 3px solid #338;
 }
@@ -326,6 +329,7 @@ body{
   padding-left: 3px;
 }
 #modals .modal-table:not(.complete) #modal-upload-total{
+  display: none;
   opacity: 0;
 }
 #modals .modal-table #modal-upload-total .item{
@@ -350,6 +354,7 @@ body{
   cursor: pointer;
 }
 .gazlowe-quote-wrapper:not(.complete){
+  display: none;
   margin-top: 60px;
   opacity: 0;
 }
@@ -391,6 +396,7 @@ body{
   transition: margin 0.3s ease, opacity 0.3s ease;
 }
 .modal-form:not(.complete){
+  display: none;
   margin-top: 60px;
   opacity: 0;
 }

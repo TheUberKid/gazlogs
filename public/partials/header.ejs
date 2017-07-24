@@ -21,11 +21,24 @@
         </div>
       </a>
 
-      <a href='/auth'>
-        <div class='nav-button'>
-          Log In
-        </div>
-      </a>
+      <% if(!auth){ %>
+
+        <a href='/auth/login'>
+          <div class='<%= (nav == 'user') ? 'nav-button selected' : 'nav-button' %>'>
+            Log In
+          </div>
+        </a>
+
+      <% } else { %>
+
+        <a href='/profile'>
+          <div class='<%= (nav == 'exchange') ? 'nav-button selected' : 'nav-button' %> nav-user'>
+            <i class='fa fa-star' aria-hidden='true'></i>
+            <%= auth.name %>
+          </div>
+        </a>
+
+      <% } %>
 
       <a href='/upload'>
         <div class='<%= (nav == 'upload') ? 'nav-button selected' : 'nav-button' %>'>

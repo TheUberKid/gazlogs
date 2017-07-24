@@ -99,14 +99,13 @@ function submitFiles(){
   }
 
   var req = new XMLHttpRequest();
-  req.open('POST', 'https://gazlogs-uploader.herokuapp.com', true);
+  req.open('POST', 'http://localhost:3000', true);
 
   req.onreadystatechange = function(){
     if(req.readyState == XMLHttpRequest.DONE){
       if(req.responseText !== 'nofile'
       && req.responseText !== 'error'){
         poll(req.responseText);
-        console.log(req.responseText);
       } else {
         uploadError(req.responseText != 'error' ? req.responseText : '');
       }
@@ -123,7 +122,7 @@ function submitFiles(){
 
 // poll a socket for results
 function poll(path){
-  socket = io.connect('https://gazlogs-uploader.herokuapp.com');
+  socket = io.connect('http://localhost:3000');
   socket.emit('pollPath', path);
 
   socket.on('fileProgress', function(status){
@@ -244,8 +243,9 @@ function uploadUpdate(){
 // display an upload error on the modal
 function uploadError(err){
   uploadStatusIcon(2);
+  clearInterval(update);
   uProgress.innerHTML = 'Upload Error';
-  uName.innerHTML = (err ? 'err: '+err : 'unknown error');
+  if(typeof err === String) uName.innerHTML = err;
 }
 
 // change the icon for upload status, and text colors

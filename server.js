@@ -16,11 +16,12 @@ var compression = require('compression');
 var minify = require('express-minify');
 var favicon = require('serve-favicon');
 var session = require('express-session');
+var routing = require('./includes/routing');
 
 // server
 var express = require('express'),
     app = express(),
-    serv = require('http').Server(app);
+    serv;
 
 // configure view engine
 app.set('views', __dirname + '/public');
@@ -28,13 +29,18 @@ app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
 // redirect to https
-app.get('*',function(req,res,next){
-  if(req.headers['x-forwarded-proto'] != 'https'){
-    res.redirect('https://gazlogs.com'+req.url);
-  } else {
-    next();
-  }
-});
+if(!config.debug){
+  app.get('*', routing.forceHTTPS);
+  serv = require('http').Server(app);
+} else {
+  // https server created in this way only on localhost testing (debug mode)
+  serv = require('https').createServer({
+    key: config.ssl_key,
+    cert: config.ssl_cert,
+    requestCert: false,
+    rejectUnauthorized: false
+  }, app);
+}
 
 // start receiving requests
 function init(){
@@ -47,30 +53,39 @@ function init(){
       .use('/css', express.static('public/css'))
       .use('/js', express.static('public/js'))
       .use('/img', express.static('public/img'))
+      .use('*', routing.addProfileHeaders)
       .get('/', function(req, res){
-        if(req.isAuthenticated()) logger.log('info', 'cool beans!');
-        res.render('index', {title: false, nav: false});
+        res.render('partials/header', {title: false, nav: false, auth: req.auth});
       })
       .get('/statistics', function(req, res){
-        res.render('statistics', {title: 'HotS Statistics', nav: 'statistics'});
+        res.render('statistics', {title: 'HotS Statistics', nav: 'statistics', auth: req.auth});
       })
       .get('/leaderboard', function(req, res){
-        res.render('leaderboard', {title: 'Leaderboard', nav: 'leaderboard'});
+        res.render('leaderboard', {title: 'Leaderboard', nav: 'leaderboard', auth: req.auth});
       })
       .get('/exchange', function(req, res){
-        res.render('exchange', {title: 'Doubloon Exchange', nav: 'exchange'});
+        res.render('exchange', {title: 'Doubloon Exchange', nav: 'exchange', auth: req.auth});
       })
       .get('/upload', function(req, res){
-        res.render('upload', {title: 'Upload Replays', nav: 'upload'});
+        res.render('upload', {title: 'Upload Replays', nav: 'upload', auth: req.auth});
       })
-      .get('/auth', passport.authenticate('bnet'))
+      .get('/profile', routing.requireAuth, function(req, res){
+        res.render('profile', {title: 'Profile', nav: 'user', auth: req.auth});
+      })
+      .get('/auth', routing.noAuth, function(req, res){
+        res.redirect('/auth/login');
+      })
+      .get('/auth/login', routing.noAuth, function(req, res){
+        res.render('login', {title: 'Log In', nav: 'user', auth: req.auth});
+      })
       .get('/auth/callback', passport.authenticate('bnet', {failureRedirect: '/'}), function(req, res){
         res.redirect('/');
       })
       .get('/auth/logout', function(req, res){
         req.logout();
-        res.redirect('/');
+        res.redirect('/auth/login');
       })
+      .get('/auth/nydus', routing.noAuth, passport.authenticate('bnet'))
       .get('*', function(req, res){
         res.status(404).render('404', {title: '404', nav: false});
       });
