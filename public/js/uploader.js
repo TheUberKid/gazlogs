@@ -99,7 +99,7 @@ function submitFiles(){
   }
 
   var req = new XMLHttpRequest();
-  req.open('POST', 'http://localhost:3000', true);
+  req.open('POST', 'http://gazlogs-uploader.herokuapp.com', true);
 
   req.onreadystatechange = function(){
     if(req.readyState == XMLHttpRequest.DONE){
@@ -122,7 +122,7 @@ function submitFiles(){
 
 // poll a socket for results
 function poll(path){
-  socket = io.connect('http://localhost:3000');
+  socket = io.connect('http://gazlogs-uploader.herokuapp.com');
   socket.emit('pollPath', path);
 
   socket.on('fileProgress', function(status){
