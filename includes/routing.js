@@ -10,8 +10,10 @@ function forceHTTPS(req, res, next){
 // add authenticated profile headers to a request
 function addProfileHeaders(req, res, next){
   if(req.isAuthenticated()){
+    var separated = req.user.battletag.split('#');
     req.auth = {
-      name: req.user.battletag.split('#')[0]
+      username: separated[0],
+      battletag: separated[1]
     }
   }
   next();

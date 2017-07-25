@@ -32,9 +32,9 @@
       <% } else { %>
 
         <a href='/profile'>
-          <div class='<%= (nav == 'exchange') ? 'nav-button selected' : 'nav-button' %> nav-user'>
+          <div class='<%= (nav == 'user') ? 'nav-button selected' : 'nav-button' %> nav-user'>
             <i class='fa fa-star' aria-hidden='true'></i>
-            <%= auth.name %>
+            <%= auth.username %>
           </div>
         </a>
 

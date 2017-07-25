@@ -78,8 +78,8 @@ function init(){
       .get('/auth/login', routing.noAuth, function(req, res){
         res.render('login', {title: 'Log In', nav: 'user', auth: req.auth});
       })
-      .get('/auth/callback', passport.authenticate('bnet', {failureRedirect: '/'}), function(req, res){
-        res.redirect('/');
+      .get('/auth/callback', passport.authenticate('bnet', {failureRedirect: '/auth/login'}), function(req, res){
+        res.redirect('/profile');
       })
       .get('/auth/logout', function(req, res){
         req.logout();
