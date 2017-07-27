@@ -1,3 +1,6 @@
+// https://gazlogs-uploader.herokuapp.com
+var uploader = 'https://localhost:3000';
+
 Number.prototype.format = function(r){
   if(!r) r = '&#8198;';
   return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, r);
@@ -8,7 +11,10 @@ var ulabel = document.getElementById('upload-label');
 var dragbox = document.getElementById('file-drag-box');
 var fileList = document.getElementById('file-display');
 var modalWrapper = document.getElementById('modals');
+var modals = document.getElementsByClassName('modal');
 var modalUpload = document.getElementById('upload-modal');
+var modalLogin = document.getElementById('login-modal');
+var modalDontCare = document.getElementById('modal-dontcare');
 var modalUploadIcon = document.getElementsByClassName('modal-load-icon');
 var modalUploadSpinner = document.getElementById('modal-load-spinner');
 var modalUploadComplete = document.getElementById('modal-load-complete');
@@ -20,13 +26,14 @@ var modalUploadReplayTotal = document.getElementById('modal-upload-replay-total'
 var modalUploadReplayS = document.getElementById('modal-upload-replay-petty-s');
 var gazloweQuoteWrapper = document.getElementById('gazlowe-quote-wrapper');
 var gazloweQuote = document.getElementById('gazlowe-quote');
-var modalSignOutForm = document.getElementById('modal-form');
+var modalSignOutForm = document.getElementById('modal-upload-form');
 var modalSignOut = document.getElementById('modal-upload-accept');
 var uProgress = document.getElementById('modal-load-above');
 var uName = document.getElementById('modal-load-below');
-ubox.addEventListener('change', submitFiles);
+ubox.addEventListener('change', submitLoginCheck);
 
 var upload;
+var doesUserCare = true;
 var responseTable = {
   0: ['Error', '#833', 0],
   1: ['Duplicate', '#bb3', 0],
@@ -54,24 +61,37 @@ var gazloweQuotes = {
   good: [
     "You done good, kid. Keep it up!",
     "Uh, yeah, sure, whatever. Just leave 'em right here.",
-    "Good work! You see any more parts around here, you go ahead and pick 'em up, aight?"
+    "Take these doubloons, it's the least I could do to repay ya."
   ],
   great: [
-    "This is what I'm talkin' about! We're back in business, boys!",
-    "Oh man, these are some good parts! Take these doubloons, it's the least I could do to repay ya.",
-    "Ha-ha! Cha-ching!"
+    "Haha! Cha-ching! We're back in business, boys!",
+    "Oh, man! It's a miracle! We're gonna be rich!"
   ]
 }
 var signOuts = {
   nothing: "Sorry, I'll try harder next time",
   bad: "Back to Work",
   good: "Thanks!",
-  great: "Yeah Baby!"
+  great: "Hell yeah!"
 }
 
 var socket, update;
 
 var starttime, elapsed;
+
+// check if user is logged in to show warning
+function submitLoginCheck(){
+  if(params.loggedIn || !doesUserCare){
+    submitFiles();
+  } else {
+    openModal(modalLogin);
+  }
+}
+modalDontCare.addEventListener('click', function(){
+  closeModals();
+  setTimeout(submitFiles, 450);
+  doesUserCare = false;
+})
 
 // submit files
 function submitFiles(){
@@ -90,16 +110,16 @@ function submitFiles(){
   upload.displayResults.fill(0);
   uploadStatusIcon(0);
 
-  modalWrapper.style.zIndex = 99;
-  modalWrapper.style.opacity = 1;
+  openModal(modalUpload);
 
   var form = new FormData();
   for(var i=0, j=ubox.files.length; i<j; i++){
     form.append('replay'+i, ubox.files[i]);
   }
+  if(params.loggedIn) form.append('ultoken', params.ultoken);
 
   var req = new XMLHttpRequest();
-  req.open('POST', 'https://gazlogs-uploader.herokuapp.com', true);
+  req.open('POST', uploader, true);
 
   req.onreadystatechange = function(){
     if(req.readyState == XMLHttpRequest.DONE){
@@ -122,7 +142,7 @@ function submitFiles(){
 
 // poll a socket for results
 function poll(path){
-  socket = io.connect('https://gazlogs-uploader.herokuapp.com');
+  socket = io.connect(uploader);
   socket.emit('pollPath', path);
 
   socket.on('fileProgress', function(status){
@@ -170,9 +190,9 @@ function uploadUpdate(){
                 + '"><div class="item">'
                 + responseTable[i][0]
                 + '</div><div class="item hover-hide">'
-                + (upload.displayResults[i] * responseTable[i][2]).format() + ' <i class="fa fa-circle coin" aria-hidden="true"></i>'
+                + (upload.displayResults[i] * responseTable[i][2]).format() + ' <div class="coin" aria-hidden="true"></div>'
                 + '</div><div class="item hover-reveal">'
-                + upload.displayResults[i].format() + ' x ' + responseTable[i][2] + ' <i class="fa fa-circle coin" aria-hidden="true"></i>'
+                + upload.displayResults[i].format() + ' x ' + responseTable[i][2] + ' <div class="coin" aria-hidden="true"></div>'
                 + '</div></div>';
 
       } else {
@@ -298,13 +318,23 @@ function dropFile(e){
   ubox.files = e.target.files || e.dataTransfer.files;
 }
 
+function openModal(m){
+  modalWrapper.style.zIndex = 99;
+  modalWrapper.style.opacity = 1;
+  m.style.display = 'block';
+  m.style.opacity = 1;
+}
 function closeModals(){
   setTimeout(function(){
     modalWrapper.style.zIndex = -2;
     modalUploadTable.className = 'modal-table';
     gazloweQuoteWrapper.className = 'gazlowe-quote-wrapper';
     modalSignOutForm.className = 'modal-form';
-    modalUpload.scrollTop = 0;
+    for(var i=0, j=modals.length; i<j; i++){
+      modals[i].scrollTop = 0;
+      modals[i].style.opacity = 0;
+      modals[i].style.display = 'none';
+    }
   }, 400);
   modalWrapper.style.opacity = 0;
 }

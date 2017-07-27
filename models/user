@@ -9,7 +9,8 @@ var settings = new Schema({
 var userSchema = new Schema({
   battletag: {type: Number, required: true, unique: true},
   username: {type: String, required: true},
-  settings: {type: settings, required: true}
+  doubloons: {type: Number, required: true, default: 0},
+  settings: {type: settings, required: true, default: {}}
 });
 
 var User = mongoose.model('User', userSchema);

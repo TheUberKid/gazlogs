@@ -10,13 +10,16 @@ amqp.start(init)
 
 // authentication
 var passport = require('./includes/passport');
+var session = require('express-session');
 
 // express middleware
 var compression = require('compression');
 var minify = require('express-minify');
 var favicon = require('serve-favicon');
-var session = require('express-session');
 var routing = require('./includes/routing');
+
+// database
+var db_User = require('./models/user');
 
 // server
 var express = require('express'),
@@ -67,10 +70,15 @@ function init(){
         res.render('exchange', {title: 'Doubloon Exchange', nav: 'exchange', auth: req.auth});
       })
       .get('/upload', function(req, res){
-        res.render('upload', {title: 'Upload Replays', nav: 'upload', auth: req.auth});
+        res.render('upload', {title: 'Upload Replays', nav: 'upload', auth: req.auth,
+          params: {
+            loggedIn: req.isAuthenticated(),
+            ultoken: req.auth ? req.auth.battletag : ''
+          }
+        });
       })
       .get('/profile', routing.requireAuth, function(req, res){
-        res.render('profile', {title: 'Profile', nav: 'user', auth: req.auth});
+        res.render('profile', {title: req.auth.username + '\'s Profile', nav: 'user', auth: req.auth});
       })
       .get('/auth', routing.noAuth, function(req, res){
         res.redirect('/auth/login');
@@ -87,7 +95,7 @@ function init(){
       })
       .get('/auth/nydus', routing.noAuth, passport.authenticate('bnet'))
       .get('*', function(req, res){
-        res.status(404).render('404', {title: '404', nav: false});
+        res.status(404).render('404', {title: '404', nav: false, auth: req.auth});
       });
 
   // start the server
