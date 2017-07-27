@@ -1,4 +1,4 @@
-var uploader = 'https://gazlogs-uploader.herokuapp.com';
+var uploader = 'https://localhost:3000';
 
 Number.prototype.format = function(r){
   if(!r) r = '&#8198;';
@@ -124,6 +124,7 @@ function submitFiles(){
     if(req.readyState == XMLHttpRequest.DONE){
       if(req.responseText !== 'nofile'
       && req.responseText !== 'error'){
+        console.log(req.responseText);
         poll(req.responseText);
       } else {
         uploadError(req.responseText != 'error' ? req.responseText : '');

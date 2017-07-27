@@ -19,6 +19,8 @@ var favicon = require('serve-favicon');
 var routing = require('./includes/routing');
 
 // database
+var mongoose = require('mongoose');
+mongoose.connect(config.mongodb_key);
 var db_User = require('./models/user');
 
 // server
