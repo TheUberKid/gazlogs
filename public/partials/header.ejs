@@ -31,6 +31,11 @@
 
       <% } else { %>
 
+        <div class='doubloon-count'>
+          <%= auth.doubloons %>
+          <div class='coin'></div>
+        </div>
+        
         <a href='/profile'>
           <div class='<%= (nav == 'user') ? 'nav-button selected' : 'nav-button' %> nav-user'>
             <i class='fa fa-star' aria-hidden='true'></i>

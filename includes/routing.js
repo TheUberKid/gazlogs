@@ -1,3 +1,5 @@
+var db_User = require('../models/user');
+
 // redirect non-secure users to https
 function forceHTTPS(req, res, next){
   if(req.headers['x-forwarded-proto'] != 'https'){
@@ -10,13 +12,21 @@ function forceHTTPS(req, res, next){
 // add authenticated profile headers to a request
 function addProfileHeaders(req, res, next){
   if(req.isAuthenticated()){
-    var separated = req.user.battletag.split('#');
-    req.auth = {
-      username: separated[0],
-      battletag: separated[1]
-    }
+    var battletag = req.user.battletag.split('#')[1];
+
+    db_User.findOne({battletag: battletag}, function(err, user){
+      if(err) next();
+      req.auth = {
+        battletag: user.battletag,
+        username: user.username,
+        doubloons: user.doubloons
+      }
+      next();
+    });
+
+  } else {
+    next();
   }
-  next();
 }
 
 // redirect if user is not authenticated

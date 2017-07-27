@@ -58,6 +58,20 @@ a{
   animation: nav-button-select 0.4s;
   border-bottom: 2px solid #338
 }
+#navbar .doubloon-count{
+  display: inline-block;
+  float: right;
+  margin: 9px 24px 9px -10px;
+  font-size: 16px;
+  font-family: 'Exo', sans-serif;
+  text-transform: uppercase;
+  color: #555;
+}
+#navbar .doubloon-count .coin{
+  margin-bottom: -2px;
+  margin-left: -2px;
+  transition: opacity 0.3s ease;
+}
 
 .page-content{
   padding: 0px 4vw;
