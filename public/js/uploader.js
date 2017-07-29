@@ -1,4 +1,4 @@
-var uploader = 'https://localhost:3000';
+var uploader = 'https://gazlogs-uploader.herokuapp.com';
 
 Number.prototype.format = function(r){
   if(!r) r = '&#8198;';
