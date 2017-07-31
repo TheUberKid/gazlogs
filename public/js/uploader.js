@@ -1,4 +1,4 @@
-var uploader = 'https://gazlogs-uploader.herokuapp.com';
+var uploader = 'https://localhost:3000';
 
 Number.prototype.format = function(r){
   if(!r) r = '&#8198;';
@@ -101,7 +101,8 @@ function submitFiles(){
     total: ubox.files.length,
     display: 0,
     results: [],
-    displayResults: []
+    displayResults: [],
+    error: false
   };
   upload.results.length = Object.keys(responseTable).length;
   upload.results.fill(0);
@@ -124,26 +125,33 @@ function submitFiles(){
     if(req.readyState == XMLHttpRequest.DONE){
       if(req.responseText !== 'nofile'
       && req.responseText !== 'error'){
-        console.log(req.responseText);
+        console.log('polling path: ' + req.responseText);
         poll(req.responseText);
       } else {
-        uploadError(req.responseText != 'error' ? req.responseText : '');
+        uploadError('request error');
       }
     }
   }
-  req.onerror = uploadError;
+  req.onerror = function(){
+    uploadError('request error');
+  };
   req.upload.addEventListener('progress', function(e){
-    upload.progress = e.loaded/e.total;
+    upload.progress = e.loaded / e.total;
   });
 
   req.send(form);
   update = setInterval(uploadUpdate, 50);
+  starttime = Date.now();
 }
 
 // poll a socket for results
 function poll(path){
   socket = io.connect(uploader);
   socket.emit('pollPath', path);
+
+  socket.on('badPoll', function(){
+    uploadError('polling failed');
+  });
 
   socket.on('fileProgress', function(status){
     upload.done = status.length;
@@ -171,7 +179,7 @@ function uploadUpdate(){
 
   // this for loop setup is kinda weird but it's done so that the results are iterated and listed in order
   // since objects (such as the responseTable) are inherently orderless
-  var keys = Object.keys(responseTable).sort(function(a, b){return b-a});
+  var keys = Object.keys(responseTable).sort(function(a, b){return b - a});
   for(var h=0, j=keys.length; h<j; h++){
     var i = keys[h];
 
@@ -216,6 +224,8 @@ function uploadUpdate(){
   if(upload.state === 0 && upload.progress === 1){
     upload.state = 1;
     upload.display = 0;
+    elapsed = Date.now() - starttime;
+    console.log('Finished uploading in ' + elapsed + 'ms');
     starttime = Date.now();
   }
 
@@ -248,13 +258,13 @@ function uploadUpdate(){
       out = signOuts.great;
     }
 
-    gazloweQuote.innerHTML = quotes[Math.floor(Math.random()*quotes.length)];
+    gazloweQuote.innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
     modalSignOut.innerHTML = out;
 
     uploadStatusIcon(1);
     clearInterval(update);
     elapsed = Date.now()-starttime;
-    console.log('Finished in '+elapsed+'ms');
+    console.log('Finished processing in ' + elapsed + 'ms');
 
   }
 
@@ -262,10 +272,12 @@ function uploadUpdate(){
 
 // display an upload error on the modal
 function uploadError(err){
+  upload.error = true;
   uploadStatusIcon(2);
   clearInterval(update);
   uProgress.innerHTML = 'Upload Error';
-  if(typeof err === String) uName.innerHTML = err;
+  uName.innerHTML = err;
+  console.log('upload error: ' + err);
 }
 
 // change the icon for upload status, and text colors

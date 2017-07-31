@@ -6,7 +6,7 @@ const config = require('./includes/config');
 
 // rabbitMQ web/worker communication module
 var amqp = require('./includes/amqp');
-amqp.start(init)
+amqp.start(init);
 
 // authentication
 var passport = require('./includes/passport');
@@ -102,6 +102,6 @@ function init(){
 
   // start the server
   serv.listen(config.port, function(){
-    logger.log('info', 'starting server on port '+config.port);
+    logger.log('info', 'starting server on port ' + config.port);
   });
 }
