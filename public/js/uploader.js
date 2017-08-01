@@ -1,3 +1,5 @@
+'use strict';
+
 var uploader = 'https://gazlogs-uploader.herokuapp.com';
 
 Number.prototype.format = function(r){
@@ -64,7 +66,7 @@ var gazloweQuotes = {
   ],
   great: [
     "Haha! Cha-ching! We're back in business, boys!",
-    "Oh, man! It's a miracle! We're gonna be rich!"
+    "We're gonna be rich!"
   ]
 }
 var signOuts = {

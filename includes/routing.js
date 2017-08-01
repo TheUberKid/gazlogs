@@ -1,4 +1,5 @@
 var db_User = require('../models/user');
+var passport = require('./passport')
 
 // redirect non-secure users to https
 function forceHTTPS(req, res, next){
@@ -8,6 +9,7 @@ function forceHTTPS(req, res, next){
     next();
   }
 }
+module.exports.forceHTTPS = forceHTTPS;
 
 // add authenticated profile headers to a request
 function addProfileHeaders(req, res, next){
@@ -28,15 +30,41 @@ function addProfileHeaders(req, res, next){
     next();
   }
 }
+module.exports.addProfileHeaders = addProfileHeaders;
+
+// authenticate a user using a custom authentication route
+function authenticate(req, res, next){
+  passport.authenticate('bnet', function(err, user, info){
+    if(err || !user){
+      res.redirect('/auth/login');
+    } else {
+      req.login(user, err => {
+        if(err){
+          res.redirect('/auth/login');
+        } else {
+          var callback = req.session.callback;
+          if(callback){
+            req.session.callback = null;
+            res.redirect(callback);
+          } else {
+            res.redirect('/profile');
+          }
+        }
+      });
+    }
+  })(req, res, next);
+}
+module.exports.authenticate = authenticate;
 
 // redirect if user is not authenticated
 function requireAuth(req, res, next){
   if(req.isAuthenticated()){
     next();
   } else {
-    res.redirect('/auth/login');
+    res.redirect('/auth/login?callback='+req.originalUrl);
   }
 }
+module.exports.requireAuth = requireAuth;
 
 // redirect if user is already authenticated
 function noAuth(req, res, next){
@@ -46,10 +74,4 @@ function noAuth(req, res, next){
     next();
   }
 }
-
-module.exports = {
-  forceHTTPS: forceHTTPS,
-  addProfileHeaders: addProfileHeaders,
-  requireAuth: requireAuth,
-  noAuth: noAuth
-}
+module.exports.noAuth = noAuth;

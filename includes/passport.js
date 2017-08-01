@@ -15,7 +15,7 @@ passport.use(new BnetStrategy({
     callbackURL: config.bnet_callback,
     region: 'us'
 }, function(accessToken, refreshToken, profile, done){
-    return done(null, profile);
+    return profile ? done(null, profile) : done(1);
 }));
 
 passport.serializeUser(function(user, done){

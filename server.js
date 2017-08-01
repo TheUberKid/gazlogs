@@ -17,6 +17,7 @@ var compression = require('compression');
 var minify = require('express-minify');
 var favicon = require('serve-favicon');
 var routing = require('./includes/routing');
+var queries = require('./includes/queries');
 
 // database
 var mongoose = require('mongoose');
@@ -80,7 +81,11 @@ function init(){
         });
       })
       .get('/profile', routing.requireAuth, function(req, res){
-        res.render('profile', {title: req.auth.username + '\'s Profile', nav: 'user', auth: req.auth});
+        res.render('profile', {title: req.auth.username + '\'s Profile', nav: 'user', auth: req.auth,
+          params: {
+            replays: queries.getReplaysByUser(req.auth.battletag)
+          }
+        });
       })
       .get('/auth', routing.noAuth, function(req, res){
         res.redirect('/auth/login');
@@ -88,14 +93,15 @@ function init(){
       .get('/auth/login', routing.noAuth, function(req, res){
         res.render('login', {title: 'Log In', nav: 'user', auth: req.auth});
       })
-      .get('/auth/callback', passport.authenticate('bnet', {failureRedirect: '/auth/login'}), function(req, res){
-        res.redirect('/profile');
-      })
+      .get('/auth/callback', routing.authenticate)
       .get('/auth/logout', function(req, res){
         req.logout();
         res.redirect('/auth/login');
       })
-      .get('/auth/nydus', routing.noAuth, passport.authenticate('bnet'))
+      .get('/auth/nydus', routing.noAuth, function(req, res, next){
+        if(req.query.callback) req.session.callback = req.query.callback;
+        next();
+      }, passport.authenticate('bnet'))
       .get('*', function(req, res){
         res.status(404).render('404', {title: '404', nav: false, auth: req.auth});
       });
