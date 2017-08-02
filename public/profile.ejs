@@ -4,6 +4,29 @@
   <div class='page-heading'>
     <%= auth.username %> #<%= auth.battletag %>
   </div>
+
+  <div class='page-heading'>
+    Recent Games
+  </div>
+  <div id='recent-replays-table' class='full-width-table'>
+    <div class='labels row'>
+      <div class='item replayBuild'>Build</div>
+      <div class='item replayGameType'>Gametype</div>
+      <div class='item replayResult'>Result</div>
+      <div class='item replayMapName'>Map</div>
+      <div class='item replayHero'>Hero</div>
+      <div class='item replayGameLength'>Length</div>
+      <div class='item replayTimePlayed'>Time</div>
+    </div>
+    <div id='recent-replays-list'></div>
+  </div>
 </div>
+
+<% if(locals.params){ %>
+  <script>
+    var params = <%- JSON.stringify(params) %>;
+  </script>
+<% } %>
+<script type='text/javascript' src='/js/profile.js'></script>
 
 <% include ../public/partials/footer %>

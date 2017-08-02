@@ -2,7 +2,7 @@ var logger = require('winston');
 var db_Replay = require('../models/replay');
 
 // load all replays a user has been in
-function getReplaysByUser(battletag, page){
+function getReplaysByUser(battletag, page, callback){
   if(!page) page = 0;
   var res;
   db_Replay.aggregate([
@@ -18,8 +18,6 @@ function getReplaysByUser(battletag, page){
         'MapName': 1,
         'GameType': 1,
         'WinningTeam': 1,
-        'Team0Level': 1,
-        'Team1Level': 1,
         'GameLength': 1,
         'TimePlayed': 1,
         'Players': {
@@ -39,9 +37,6 @@ function getReplaysByUser(battletag, page){
             'in': {
               'Hero': '$$c.Hero',
               'Team': '$$c.Team',
-              'SoloKill': '$$c.SoloKill',
-              'Assists': '$$c.Assists',
-              'Deaths': '$$c.Deaths',
               'MVP': '$$c.MVP'
             }
           }
@@ -54,7 +49,7 @@ function getReplaysByUser(battletag, page){
     exec(function(err, replays){
       if(err) logger.log('info', '[QUERY] error: ' + err)
       res = replays;
+      callback(res);
     });
-    return res;
 }
 module.exports.getReplaysByUser = getReplaysByUser;

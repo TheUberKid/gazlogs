@@ -120,6 +120,40 @@ a{
 .page-info a:hover{
   color: #338;
 }
+.full-width-table{
+  display: flex;
+  width: 92vw;
+  margin: 20px 0px 100px;
+  flex-direction: column;
+  overflow: scroll;
+}
+.full-width-table .row{
+  display: flex;
+  width: 100%;
+  min-width: 920px;
+  height: 50px;
+  background-color: #ddd;
+  transition: all 0.4s ease;
+}
+.full-width-table .row:nth-child(even), .full-width-table .row.labels{
+  background-color: #ccc;
+}
+.full-width-table .row .item{
+  display: flex;
+  padding: 15px;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  color: #222;
+  border-right: 2px solid #ddd;
+  flex-grow: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.full-width-table .labels .item{
+  font-family: 'Exo', sans-serif;
+  text-transform: uppercase;
+  color: #222;
+}
 
 .doubloon-table{
   display: flex;
@@ -133,7 +167,6 @@ a{
   width: 100%;
   height: 50px;
   background-color: #ccc;
-  transition: background-color 0.4s ease;
 }
 .doubloon-table .row:nth-child(even){
   background-color: #ddd;
@@ -468,4 +501,26 @@ a{
   background-color: #ccc;
   z-index: -2;
   content: ' ';
+}
+
+#recent-replays-table .replayBuild{ width: 46px; min-width: 46px; color: #888; }
+#recent-replays-table .replayGameType{ width: 15vw; min-width: 100px; }
+#recent-replays-table .replayResult{ width: 10vw; min-width: 63px; font-weight: 600; }
+#recent-replays-table .replayMapName{ width: 22vw; min-width: 211px; }
+#recent-replays-table .replayHero{ width: 12vw; min-width: 120px; }
+#recent-replays-table .replayGameLength{ width: 6vw; min-width: 45px; }
+#recent-replays-table .replayTimePlayed{ width: 10vw; min-width: 110px; }
+#recent-replays-table .row.Victory .replayResult{ color: #383; }
+#recent-replays-table .row.Defeat .replayResult{ color: #833; }
+#recent-replays-table .row.Victory{ box-shadow: inset 3px 0 0 #383; }
+#recent-replays-table .row.Defeat{ box-shadow: inset 3px 0 0 #833; }
+
+#recent-replays-list .row{
+  cursor: pointer;
+}
+#recent-replays-list .row:not(:hover){
+  box-shadow: inset 3px 0 0 transparent;
+}
+#recent-replays-list .row:hover{
+  padding-left: 3px;
 }

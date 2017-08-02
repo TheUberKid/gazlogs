@@ -61,7 +61,7 @@ function init(){
       .use('/img', express.static('public/img'))
       .use('*', routing.addProfileHeaders)
       .get('/', function(req, res){
-        res.render('partials/header', {title: false, nav: false, auth: req.auth});
+        res.render('index', {title: false, nav: false, auth: req.auth});
       })
       .get('/statistics', function(req, res){
         res.render('statistics', {title: 'HotS Statistics', nav: 'statistics', auth: req.auth});
@@ -81,10 +81,12 @@ function init(){
         });
       })
       .get('/profile', routing.requireAuth, function(req, res){
-        res.render('profile', {title: req.auth.username + '\'s Profile', nav: 'user', auth: req.auth,
-          params: {
-            replays: queries.getReplaysByUser(req.auth.battletag)
-          }
+        queries.getReplaysByUser(req.auth.battletag, 0, function(replays){
+          res.render('profile', {title: req.auth.username + '\'s Profile', nav: 'user', auth: req.auth,
+            params: {
+              replays: replays
+            }
+          });
         });
       })
       .get('/auth', routing.noAuth, function(req, res){
