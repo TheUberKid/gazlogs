@@ -81,13 +81,17 @@ function init(){
         });
       })
       .get('/profile', routing.requireAuth, function(req, res){
-        queries.getReplaysByUser(req.auth.battletag, 0, function(replays){
-          res.render('profile', {title: req.auth.username + '\'s Profile', nav: 'user', auth: req.auth,
-            params: {
-              replays: replays
-            }
-          });
-        });
+        queries.countReplaysWithUser(req.auth.battletag, function(n){
+          if(n > 0){
+            queries.getReplaysByUser(req.auth.battletag, null, function(replays){
+              res.render('profile', {title: req.auth.username + '\'s Profile', nav: 'user', auth: req.auth,
+              params: { replaysUploaded: req.auth.replaysUploaded, replaysIn: n, replays: replays }});
+            });
+          } else {
+            res.render('profile', {title: req.auth.username + '\'s Profile', nav: 'user', auth: req.auth,
+            params: { replaysUploaded: req.auth.replaysUploaded, replaysIn: 0, replays: [] }});
+          }
+        })
       })
       .get('/auth', routing.noAuth, function(req, res){
         res.redirect('/auth/login');

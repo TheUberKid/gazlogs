@@ -1,3 +1,4 @@
+var logger = require('winston');
 var db_User = require('../models/user');
 var passport = require('./passport')
 
@@ -21,7 +22,8 @@ function addProfileHeaders(req, res, next){
       req.auth = {
         battletag: user.battletag,
         username: user.username,
-        doubloons: user.doubloons
+        doubloons: user.doubloons,
+        replaysUploaded: user.replaysUploaded
       }
       next();
     });
@@ -35,23 +37,20 @@ module.exports.addProfileHeaders = addProfileHeaders;
 // authenticate a user using a custom authentication route
 function authenticate(req, res, next){
   passport.authenticate('bnet', function(err, user, info){
-    if(err || !user){
-      res.redirect('/auth/login');
-    } else {
-      req.login(user, err => {
-        if(err){
-          res.redirect('/auth/login');
-        } else {
-          var callback = req.session.callback;
-          if(callback){
-            req.session.callback = null;
-            res.redirect(callback);
-          } else {
-            res.redirect('/profile');
-          }
-        }
-      });
-    }
+    if(err || !user)
+      return res.redirect('/auth/login');
+
+    req.logIn(user, function(err){
+      if(err)
+        return res.redirect('/auth/login');
+
+      var callback = req.session.callback;
+      if(callback){
+        req.session.callback = null;
+        return res.redirect(callback);
+      }
+      return res.redirect('/profile');
+    });
   })(req, res, next);
 }
 module.exports.authenticate = authenticate;

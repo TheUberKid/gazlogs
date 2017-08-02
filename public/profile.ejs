@@ -4,6 +4,14 @@
   <div class='page-heading'>
     <%= auth.username %> #<%= auth.battletag %>
   </div>
+  <div class='page-info'>
+    Doubloons:
+    <span class='bold'><%= auth.doubloons %></span>
+    <br>
+    Uploaded <span class='bold'><%= params.replaysUploaded %></span> replays
+    <br>
+    Found in <span class='bold'><%= params.replaysIn %></span> replays
+  </div>
 
   <div class='page-heading'>
     Recent Games

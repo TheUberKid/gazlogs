@@ -15,7 +15,7 @@ passport.use(new BnetStrategy({
     callbackURL: config.bnet_callback,
     region: 'us'
 }, function(accessToken, refreshToken, profile, done){
-    return profile ? done(null, profile) : done(1);
+    return done(null, profile);
 }));
 
 passport.serializeUser(function(user, done){
@@ -26,8 +26,8 @@ passport.serializeUser(function(user, done){
   var battletag = separated[1];
 
   // create user if does not exist in database, update user if already exists
-  db_User.findOne({battletag: battletag}, {username}, function(err, user){
-    if(!user){
+  db_User.findOne({battletag: battletag}, {username}, function(err, User){
+    if(!User){
       var newUser = db_User({
         battletag: battletag,
         username: username
@@ -36,14 +36,14 @@ passport.serializeUser(function(user, done){
         if(err) console.log('[AUTH] user creation error: ' + err.message);
       })
     } else {
-      if(user.username !== username)
+      if(User.username !== username)
         db_User.update({battletag: battletag}, {username: username}, function(err){
           if(err) console.log('[AUTH] user update error: ' + err.message);
         });
     }
-  });
 
-  done(null, user);
+    done(null, user);
+  });
 });
 
 passport.deserializeUser(function(user, done){

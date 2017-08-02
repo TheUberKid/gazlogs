@@ -1,10 +1,19 @@
 var logger = require('winston');
 var db_Replay = require('../models/replay');
 
+// count number of replays a user has been in
+function countReplaysWithUser(battletag, callback){
+  db_Replay.count({'Players.BattleTag': battletag}).
+  exec(function(err, n){
+    if(err) logger.log('info', '[QUERY] error: ' + err);
+    if(callback) callback(n);
+  });
+}
+module.exports.countReplaysWithUser = countReplaysWithUser;
+
 // load all replays a user has been in
 function getReplaysByUser(battletag, page, callback){
   if(!page) page = 0;
-  var res;
   db_Replay.aggregate([
     {
       '$match': {
@@ -43,13 +52,12 @@ function getReplaysByUser(battletag, page, callback){
         }
       }
     }]).
+    sort({'TimePlayed': -1}).
     limit(20).
     skip(page * 20).
-    sort('-TimePlayed').
     exec(function(err, replays){
-      if(err) logger.log('info', '[QUERY] error: ' + err)
-      res = replays;
-      callback(res);
+      if(err) logger.log('info', '[QUERY] error: ' + err);
+      if(callback) callback(replays);
     });
 }
 module.exports.getReplaysByUser = getReplaysByUser;

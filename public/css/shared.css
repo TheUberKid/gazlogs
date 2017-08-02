@@ -120,17 +120,19 @@ a{
 .page-info a:hover{
   color: #338;
 }
+.page-info .bold{
+  font-weight: 600;
+}
 .full-width-table{
   display: flex;
   width: 92vw;
   margin: 20px 0px 100px;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
 }
 .full-width-table .row{
   display: flex;
   width: 100%;
-  min-width: 920px;
   height: 50px;
   background-color: #ddd;
   transition: all 0.4s ease;
@@ -503,13 +505,14 @@ a{
   content: ' ';
 }
 
+#recent-replays-table .row { min-width: 935px; }
 #recent-replays-table .replayBuild{ width: 46px; min-width: 46px; }
 #recent-replays-list .replayBuild{ color: #888; }
 #recent-replays-table .replayGameType{ width: 15vw; min-width: 100px; }
 #recent-replays-table .replayResult{ width: 10vw; min-width: 63px; font-weight: 600; }
 #recent-replays-table .replayMapName{ width: 22vw; min-width: 211px; }
 #recent-replays-table .replayHero{ width: 12vw; min-width: 120px; }
-#recent-replays-table .replayGameLength{ width: 6vw; min-width: 45px; }
+#recent-replays-table .replayGameLength{ width: 6vw; min-width: 60px; }
 #recent-replays-table .replayTimePlayed{ width: 10vw; min-width: 110px; }
 #recent-replays-table .row.Victory .replayResult{ color: #383; }
 #recent-replays-table .row.Defeat .replayResult{ color: #833; }
@@ -524,4 +527,5 @@ a{
 }
 #recent-replays-list .row:hover{
   padding-left: 3px;
+  width: calc(92vw - 3px);
 }
