@@ -503,7 +503,8 @@ a{
   content: ' ';
 }
 
-#recent-replays-table .replayBuild{ width: 46px; min-width: 46px; color: #888; }
+#recent-replays-table .replayBuild{ width: 46px; min-width: 46px; }
+#recent-replays-list .replayBuild{ color: #888; }
 #recent-replays-table .replayGameType{ width: 15vw; min-width: 100px; }
 #recent-replays-table .replayResult{ width: 10vw; min-width: 63px; font-weight: 600; }
 #recent-replays-table .replayMapName{ width: 22vw; min-width: 211px; }

@@ -20,7 +20,7 @@ for(var i=0, j=params.replays.length; i<j; i++){
   var p = params.replays[i];
   var GameLength = Math.floor(p.GameLength / (16 * 60)) + ':' + (Math.round(p.GameLength / 16) % 60).pad(2);
   var TimePlayed = Math.floor((Date.now() - p.TimePlayed) / (1000 * 60 * 60 * 24));
-  TimePlayed = TimePlayed === 0 ? 'Today' : TimePlayed + ' Days Ago';
+  TimePlayed = TimePlayed === 0 ? 'Today' : TimePlayed + ' Day' + (TimePlayed > 1 ? 's' : '') + ' Ago';
   var Result = p.WinningTeam === p.Players[0].Team ? 'Victory' : 'Defeat';
   res += '<div class="row ' + Result + '">';
   res += '<div class="item replayBuild">' + p.Build + '</div>';
