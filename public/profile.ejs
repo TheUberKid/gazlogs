@@ -1,16 +1,28 @@
 <% include ../public/partials/header %>
 
 <div class='page-content'>
-  <div class='page-heading'>
+  <div class='page-heading divider'>
     <%= auth.username %> #<%= auth.battletag %>
   </div>
   <div class='page-info'>
-    Doubloons:
-    <span class='bold'><%= auth.doubloons %></span>
-    <br>
-    Uploaded <span class='bold'><%= params.replaysUploaded %></span> replays
-    <br>
-    Found in <span class='bold'><%= params.replaysIn %></span> replays
+    <div class='profile-table'>
+      <div class='profile-block'>
+        <div class='profile-block-label'>Doubloons</div>
+        <div class='profile-block-value'><%= auth.doubloons %></div>
+      </div>
+      <div class='profile-block'>
+        <div class='profile-block-label'>Uploaded</div>
+        <div class='profile-block-value'><%= params.replaysUploaded %> Games</div>
+      </div>
+      <div class='profile-block'>
+        <div class='profile-block-label'>Found In</div>
+        <div class='profile-block-value'><%= params.replaysIn %> Games</div>
+      </div>
+      <div class='profile-block'>
+        <div class='profile-block-label'>ELO Rating</div>
+        <div class='profile-block-value'>-a billion</div>
+      </div>
+    </div>
   </div>
 
   <div class='page-heading'>

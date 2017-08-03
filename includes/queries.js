@@ -23,6 +23,7 @@ function getReplaysByUser(battletag, page, callback){
     {
       '$project': {
         '_id': 0,
+        'Id': 1,
         'Build': 1,
         'MapName': 1,
         'GameType': 1,

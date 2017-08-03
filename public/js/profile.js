@@ -22,7 +22,8 @@ for(var i=0, j=params.replays.length; i<j; i++){
   var TimePlayed = Math.floor((Date.now() - p.TimePlayed) / (1000 * 60 * 60 * 24));
   TimePlayed = TimePlayed === 0 ? 'Today' : TimePlayed + ' Day' + (TimePlayed > 1 ? 's' : '') + ' Ago';
   var Result = p.WinningTeam === p.Players[0].Team ? 'Victory' : 'Defeat';
-  res += '<div class="row ' + Result + '">';
+
+  res += '<div class="row ' + Result + ' replay" data-replayid="' + p.Id.toString().replace('-', 'n') + '">';
   res += '<div class="item replayBuild">' + p.Build + '</div>';
   res += '<div class="item replayGameType">' + gametypes[p.GameType] + '</div>';
   res += '<div class="item replayResult">' + Result + '</div>';
@@ -33,3 +34,9 @@ for(var i=0, j=params.replays.length; i<j; i++){
   res += '</div>';
 }
 recentReplaysList.innerHTML = res;
+
+var replays = document.getElementsByClassName('replay');
+for(var i in replays)
+  replays[i].addEventListener('click', function(e){
+    window.location.href = '/replay/' + this.dataset.replayid;
+  });

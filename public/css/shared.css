@@ -1,7 +1,7 @@
 body{
   margin: 0px;
   padding: 0px;
-  background-color: #ddd;
+  background-color: #eee;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -20,10 +20,10 @@ a{
 
 #navbar{
   height: 40px;
-  padding: 15px 4vw;
-  width: 92vw;
-  background-color: #eee;
-  border-bottom: 1px solid #bbb;
+  padding: 15px 8vw;
+  width: 84vw;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
   overflow: hidden;
 }
 #navbar .logo{
@@ -74,7 +74,7 @@ a{
 }
 
 .page-content{
-  padding: 0px 4vw;
+  padding: 0px 8vw;
 }
 .page-content.centered{
   text-align: center;
@@ -93,8 +93,11 @@ a{
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin: 40px 0px 10px;
+  margin: 20px 0px 10px;
   color: #338;
+}
+.page-heading:nth-child(0n+1){
+  margin-top: 40px;
 }
 .page-large-title{
   font-size: 32px;
@@ -125,19 +128,22 @@ a{
 }
 .full-width-table{
   display: flex;
-  width: 92vw;
-  margin: 20px 0px 100px;
+  width: calc(84vw + 3px);
+  margin: -5px 0px 100px;
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
 }
 .full-width-table .row{
   display: flex;
-  width: calc(92vw - 3px);
+  width: calc(84vw + 3px);
   height: 50px;
-  background-color: #ddd;
+  background-color: #eee;
   transition: all 0.4s ease;
 }
-.full-width-table .row:nth-child(even), .full-width-table .row.labels{
+.full-width-table .row:nth-child(even){
+  background-color: #ddd;
+}
+.full-width-table .row.labels{
   background-color: #ccc;
 }
 .full-width-table .row .item{
@@ -146,7 +152,7 @@ a{
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
   color: #222;
-  border-right: 2px solid #ddd;
+  border-right: 2px solid #eee;
   flex-grow: 1;
   overflow: hidden;
   white-space: nowrap;
@@ -155,6 +161,9 @@ a{
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
   color: #222;
+}
+.divider{
+  border-bottom: 3px solid #338;
 }
 
 .doubloon-table{
@@ -168,10 +177,10 @@ a{
   display: flex;
   width: 100%;
   height: 50px;
-  background-color: #ccc;
+  background-color: #ddd;
 }
 .doubloon-table .row:nth-child(even){
-  background-color: #ddd;
+  background-color: #eee;
 }
 .doubloon-table .row .item{
   display: flex;
@@ -180,7 +189,7 @@ a{
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
   color: #222;
-  border-right: 2px solid #ddd;
+  border-right: 2px solid #eee;
 }
 .doubloon-table .labels .item{
   font-family: 'Exo', sans-serif;
@@ -203,7 +212,7 @@ a{
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
   padding: 10px 10px 8px 10px;
-  background-color: #eee;
+  background-color: #fff;
   color: #777;
   border: 3px solid #777;
   display: inline-block;
@@ -220,9 +229,9 @@ a{
   text-transform: uppercase;
   padding: 10px 10px 8px 10px;
   margin-left: 10px;
-  background-color: #eee;
-  color: #bbb;
-  border: 3px solid #bbb;
+  background-color: #fff;
+  color: #ccc;
+  border: 3px solid #ccc;
   display: inline-block;
   transition: all 0.3s ease;
   cursor: default;
@@ -258,7 +267,7 @@ a{
   max-height: 85vh;
   overflow-y: auto;
   margin: auto;
-  background-color: #f0f0f0;
+  background-color: #fff;
   border-radius: 5px;
   transition: opacity 0.3s ease;
 }
@@ -309,12 +318,12 @@ a{
   display: flex;
   width: 100%;
   height: 40px;
-  background-color: #ddd;
+  background-color: #eee;
   font-size: 16px;
   transition: all 0.4s ease;
 }
 #modals .modal-table .row:nth-child(odd):not(.labels){
-  background-color: #f0f0f0;
+  background-color: #fff;
 }
 #modals .modal-table .row .item{
   display: flex;
@@ -325,7 +334,7 @@ a{
   color: #333;
 }
 #modals .modal-table .row .item:nth-child(0n+1){
-  border-right: 2px solid #f0f0f0;
+  border-right: 2px solid #fff;
 }
 #modals .modal-table .labels .item{
   font-family: 'Exo', sans-serif;
@@ -413,8 +422,8 @@ a{
   text-align: center;
   margin: 0px auto;
   color: #338;
-  -webkit-text-stroke: 10px #f0f0f0;
-  text-stroke: 10px #f0f0f0;
+  -webkit-text-stroke: 10px #fff;
+  text-stroke: 10px #fff;
 }
 #modal-load-complete{
   display: none;
@@ -500,20 +509,61 @@ a{
   width: 250px;
   height: 80px;
   border-radius: 50%;
-  background-color: #ccc;
+  background-color: #ddd;
   z-index: -2;
   content: ' ';
 }
 
+.profile-table{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: calc(100% + 10px);
+}
+.profile-table .profile-block{
+  display: inline-block;
+  height: 60px;
+  flex-grow: 1;
+  margin: 0px 10px 10px 0px;
+  min-width: 180px;
+  padding: 10px;
+  background-color: #fff;
+  text-align: center;
+  border-left: 3px solid #ddd;
+  border-top: 3px solid #ddd;
+  border-bottom: 3px solid #aaa;
+  border-right: 3px solid #aaa;
+  cursor: pointer;
+}
+.profile-block .profile-block-label{
+  font-family: 'Exo', sans-serif;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: #888;
+  transition: color 0.3s ease;
+}
+.profile-block:hover .profile-block-label{
+  color: #444;
+}
+.profile-block .profile-block-value{
+  font-family: 'Exo', sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 36px;
+  text-transform: uppercase;
+  color: #338;
+}
+
 #recent-replays-table .row { min-width: 935px; }
-#recent-replays-table .replayBuild{ width: 46px; min-width: 46px; }
+#recent-replays-table .replayBuild{ width: 46px; min-width: 46px; flex-grow: 0 }
 #recent-replays-list .replayBuild{ color: #888; }
-#recent-replays-table .replayGameType{ width: 15vw; min-width: 100px; }
-#recent-replays-table .replayResult{ width: 10vw; min-width: 63px; font-weight: 600; }
-#recent-replays-table .replayMapName{ width: 22vw; min-width: 211px; }
-#recent-replays-table .replayHero{ width: 12vw; min-width: 120px; }
-#recent-replays-table .replayGameLength{ width: 6vw; min-width: 60px; }
-#recent-replays-table .replayTimePlayed{ width: 10vw; min-width: 110px; }
+#recent-replays-table .replayGameType{ width: 10vw; min-width: 100px; }
+#recent-replays-table .replayResult{ width: 6vw; min-width: 63px; font-weight: 600; }
+#recent-replays-table .replayMapName{ width: 18vw; min-width: 211px; }
+#recent-replays-table .replayHero{ width: 10vw; min-width: 120px; }
+#recent-replays-table .replayGameLength{ width: 5vw; min-width: 60px; }
+#recent-replays-table .replayTimePlayed{ width: 8vw; min-width: 110px; }
 #recent-replays-table .row.Victory .replayResult{ color: #383; }
 #recent-replays-table .row.Defeat .replayResult{ color: #833; }
 #recent-replays-table .row.Victory{ box-shadow: inset 3px 0 0 #383; }
