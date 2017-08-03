@@ -28,6 +28,7 @@ a{
 }
 #navbar .logo{
   display: inline-block;
+  width: 123px;
 }
 #navbar .logo img{
   height: 40px;
