@@ -3,7 +3,7 @@ body{
   padding: 0px;
   background-color: #eee;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 a{
   text-decoration: none;
@@ -20,8 +20,9 @@ a{
 
 #navbar{
   height: 40px;
-  padding: 15px 8vw;
-  width: 84vw;
+  padding: 20px 16vw;
+  width: 68vw;
+  min-width: 850px;
   background-color: #fff;
   border-bottom: 1px solid #ccc;
   overflow: hidden;
@@ -53,9 +54,6 @@ a{
   cursor: pointer;
   transition: all 0.3s ease;
 }
-#navbar .nav-user{
-
-}
 #navbar .nav-button:hover, #navbar .nav-button.selected{
   color: #338;
 }
@@ -70,7 +68,7 @@ a{
 #navbar .doubloon-count{
   display: inline-block;
   float: right;
-  margin: 9px 24px 9px -15px;
+  margin: 9px 16px 9px -15px;
   font-size: 16px;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
@@ -83,7 +81,7 @@ a{
 }
 
 .page-content{
-  padding: 0px 8vw;
+  padding: 0px 16vw;
 }
 .page-content.centered{
   text-align: center;
@@ -137,14 +135,14 @@ a{
 }
 .full-width-table{
   display: flex;
-  width: calc(84vw + 3px);
+  width: calc(100% + 3px);
   margin: -5px 0px 100px;
   flex-direction: column;
   overflow: hidden;
 }
 .full-width-table .row{
   display: flex;
-  width: calc(84vw + 3px);
+  width: calc(100% + 3px);
   height: 50px;
   background-color: #eee;
   transition: all 0.4s ease;
@@ -506,8 +504,8 @@ a{
 }
 
 #gazlowe{
-  position: absolute;
-  right: calc(50vw - 870px);
+  position: fixed;
+  right: calc(16vw - 512px);
   top: 25px;
   z-index: -1;
 }

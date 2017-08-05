@@ -359,7 +359,7 @@ for(var i=0, j=modalExit.length; i<j; i++){
 
 window.addEventListener('resize', onResize);
 function onResize(){
-  if(window.innerWidth < 1300){
+  if(window.innerWidth < 1450){
     document.getElementById('gazlowe').style.display = 'none';
   } else {
     document.getElementById('gazlowe').style.display = 'block';
