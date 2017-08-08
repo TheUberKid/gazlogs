@@ -21,7 +21,6 @@ a{
 #navbar{
   height: 40px;
   padding: 20px 12vw;
-  width: 76vw;
   min-width: 850px;
   background-color: #fff;
   border-bottom: 1px solid #ccc;
@@ -506,7 +505,7 @@ a{
 
 #gazlowe{
   position: fixed;
-  left: 50vw;
+  left: 45vw;
   top: 25px;
   z-index: -1;
   display: none;
@@ -664,4 +663,16 @@ a{
   width: 5px;
   height: 40px;
   background-color: #444;
+}
+
+.page-info.question{
+  padding: 15px;
+  margin-top: 20px;
+  background-color: #ddd;
+  font-weight: 600;
+  font-size: 15px;
+}
+.page-info.answer{
+  padding: 5px 15px;
+  font-size: 15px;
 }

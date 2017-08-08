@@ -114,6 +114,7 @@ function init(){
         if(req.query.callback) req.session.callback = req.query.callback;
         next();
       }, passport.authenticate('bnet'))
+      .get('/faq', routing.render('faq', 'Frequently Asked Questions', false))
       .get('*', function(req, res){
         res.status(404).render('404', {title: '404', nav: false, auth: req.user.profile});
       });
