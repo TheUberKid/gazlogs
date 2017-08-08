@@ -4,12 +4,12 @@
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  background: #338;
-  background: -moz-linear-gradient(left, #338 10%, transparent 50%);
-  background: -webkit-linear-gradient(left, #338 10%, transparent 50%);
-  background: -o-linear-gradient(left, #338 10%, transparent 50%);
-  background: -ms-linear-gradient(left, #338 10%, transparent 50%);
-  background: linear-gradient(to right, #338 10%, transparent 50%);
+  background: #359;
+  background: -moz-linear-gradient(left, #359 10%, transparent 50%);
+  background: -webkit-linear-gradient(left, #359 10%, transparent 50%);
+  background: -o-linear-gradient(left, #359 10%, transparent 50%);
+  background: -ms-linear-gradient(left, #359 10%, transparent 50%);
+  background: linear-gradient(to right, #359 10%, transparent 50%);
   position: relative;
   -webkit-animation: load3 0.8s infinite linear;
   animation: load3 0.8s infinite linear;
@@ -20,7 +20,7 @@
 .spinner:before{
   width: 50%;
   height: 50%;
-  background-color: #338;
+  background-color: #359;
   border-radius: 100% 0 0 0;
   position: absolute;
   top: 0;

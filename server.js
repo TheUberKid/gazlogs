@@ -60,44 +60,49 @@ function init(){
       .use('/js', express.static('public/js'))
       .use('/img', express.static('public/img'))
       .use('*', routing.addProfileHeaders)
-      .get('/', function(req, res){
-        res.render('index', {title: false, nav: false, auth: req.auth});
-      })
-      .get('/statistics', function(req, res){
-        res.render('statistics', {title: 'HotS Statistics', nav: 'statistics', auth: req.auth});
-      })
-      .get('/leaderboard', function(req, res){
-        res.render('leaderboard', {title: 'Leaderboard', nav: 'leaderboard', auth: req.auth});
-      })
-      .get('/exchange', function(req, res){
-        res.render('exchange', {title: 'Doubloon Exchange', nav: 'exchange', auth: req.auth});
-      })
+      .get('/', routing.render('index', false, false))
+      .get('/statistics', routing.render('statistics', 'HotS Statistics', 'statistics'))
+      .get('/leaderboard', routing.render('leaderboard', 'Leaderboard', 'leaderboard'))
+      .get('/exchange', routing.render('exchange', 'Doubloon Exchange', 'exchange'))
       .get('/upload', function(req, res){
-        res.render('upload', {title: 'Upload Replays', nav: 'upload', auth: req.auth,
-          params: {
-            loggedIn: req.isAuthenticated(),
-            ultoken: req.auth ? req.auth.battletag : ''
-          }
-        });
+        routing.render('upload', 'Upload Replays', 'upload', {
+          loggedIn: req.isAuthenticated(),
+          ultoken: req.auth ? req.auth.battletag : ''
+        })(req, res);
       })
       .get('/profile', routing.requireAuth, function(req, res){
-        queries.countReplaysWithUser(req.auth.battletag, function(n){
+        queries.countReplaysWithUser(req.auth, function(n){
           if(n > 0){
-            queries.getReplaysByUser(req.auth.battletag, null, function(replays){
-              res.render('profile', {title: req.auth.username + '\'s Profile', nav: 'user', auth: req.auth,
-              params: { replaysUploaded: req.auth.replaysUploaded, replaysIn: n, replays: replays }});
+            queries.getReplaysByUser(req.auth, null, function(replays){
+              routing.render('profile', req.auth.username + '\'s Profile', 'user', {
+                replaysUploaded: req.auth.replaysUploaded,
+                replaysIn: n,
+                replays: replays
+              })(req, res);
             });
           } else {
-            res.render('profile', {title: req.auth.username + '\'s Profile', nav: 'user', auth: req.auth,
-            params: { replaysUploaded: req.auth.replaysUploaded, replaysIn: 0, replays: [] }});
+            routing.render('profile', req.auth.username + '\'s Profile', 'user', {
+              replaysUploaded: req.auth.replaysUploaded,
+              replaysIn: 0,
+              replays: []
+            })(req, res);
           }
         })
+      })
+      .get('/replay/*', function(req, res){
+        queries.getReplay(req.originalUrl.substring(8), function(replay){
+          if(replay){
+            routing.render('replay', 'Replay Viewer', 'statistics', replay)(req, res);
+          } else {
+            routing.render('replayMissing', 'Replay Not Found', 'statistics')(req, res);
+          }
+        });
       })
       .get('/auth', routing.noAuth, function(req, res){
         res.redirect('/auth/login');
       })
       .get('/auth/login', routing.noAuth, function(req, res){
-        res.render('login', {title: 'Log In', nav: 'user', auth: req.auth});
+        routing.render('login', 'Log In', 'user', req.auth)(req, res);
       })
       .get('/auth/callback', routing.authenticate)
       .get('/auth/logout', function(req, res){

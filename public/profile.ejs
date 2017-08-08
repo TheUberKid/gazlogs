@@ -8,7 +8,10 @@
     <div class='profile-table'>
       <div class='profile-block'>
         <div class='profile-block-label'>Doubloons</div>
-        <div class='profile-block-value'><%= auth.doubloons %></div>
+        <div class='profile-block-value'>
+          <div class='coin'></div>
+          <%= auth.doubloons %>
+        </div>
       </div>
       <div class='profile-block'>
         <div class='profile-block-label'>Uploaded</div>
@@ -20,12 +23,12 @@
       </div>
       <div class='profile-block'>
         <div class='profile-block-label'>ELO Rating</div>
-        <div class='profile-block-value'>-a billion</div>
+        <div class='profile-block-value'>1200</div>
       </div>
     </div>
   </div>
 
-  <div class='page-heading'>
+  <div class='page-heading divider'>
     Recent Games
   </div>
   <div id='recent-replays-table' class='full-width-table'>
@@ -47,6 +50,8 @@
     var params = <%- JSON.stringify(params) %>;
   </script>
 <% } %>
+
+<script type='text/javascript' src='/js/dictionary.js'></script>
 <script type='text/javascript' src='/js/profile.js'></script>
 
 <% include ../public/partials/footer %>

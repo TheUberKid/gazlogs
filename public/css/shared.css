@@ -9,8 +9,8 @@ a{
   text-decoration: none;
 }
 .coin{
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   display: inline-block;
   background-image: url('/img/doubloon.png');
   background-size: contain;
@@ -20,8 +20,8 @@ a{
 
 #navbar{
   height: 40px;
-  padding: 20px 16vw;
-  width: 68vw;
+  padding: 20px 12vw;
+  width: 76vw;
   min-width: 850px;
   background-color: #fff;
   border-bottom: 1px solid #ccc;
@@ -46,7 +46,7 @@ a{
 #navbar .nav-button{
   display: inline-block;
   float: right;
-  margin: 9px 24px;
+  margin: 9px 0px 9px 32px;
   font-size: 16px;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
@@ -55,20 +55,20 @@ a{
   transition: all 0.3s ease;
 }
 #navbar .nav-button:hover, #navbar .nav-button.selected{
-  color: #338;
+  color: #359;
 }
 @keyframes nav-button-select {
   from {border-bottom: 2px solid transparent}
-  to   {border-bottom: 2px solid #338}
+  to   {border-bottom: 2px solid #359}
 }
 #navbar .nav-button.selected{
   animation: nav-button-select 0.4s;
-  border-bottom: 2px solid #338
+  border-bottom: 2px solid #359
 }
 #navbar .doubloon-count{
   display: inline-block;
   float: right;
-  margin: 9px 16px 9px -15px;
+  margin: 9px 0px 9px 10px;
   font-size: 16px;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
@@ -81,7 +81,7 @@ a{
 }
 
 .page-content{
-  padding: 0px 16vw;
+  padding: 0px 12vw;
 }
 .page-content.centered{
   text-align: center;
@@ -90,45 +90,45 @@ a{
   height: 80px;
   display: inline-block;
 }
-.page-padding-block .fa{
-  font-size: 64px;
-  margin-top: 8px;
-  color: #338;
-}
 .page-heading{
-  font-size: 24px;
+  font-size: 20px;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin: 20px 0px 10px;
-  color: #338;
+  margin: 20px 0px 5px;
+  color: #359;
 }
 .page-heading:nth-child(0n+1){
   margin-top: 40px;
 }
+.page-heading .right{
+  display: inline-block;
+  float: right;
+}
 .page-large-title{
-  font-size: 32px;
+  font-size: 28px;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin: 40px 0px 10px;
-  color: #338;
+  color: #359;
 }
 .page-info{
   font-size: 18px;
   font-family: 'Open Sans', sans-serif;
   color: #222;
-  margin: 10px 0px;
+  margin-bottom: 10px;
+  line-height: 28px;
 }
 .page-info.small, .page-info .small{
   font-size: 16px;
 }
 .page-info a{
-  color: #33f;
+  color: #338;
   text-decoration: none !important;
 }
 .page-info a:hover{
-  color: #338;
+  color: #359;
 }
 .page-info .bold{
   font-weight: 600;
@@ -136,7 +136,7 @@ a{
 .full-width-table{
   display: flex;
   width: calc(100% + 3px);
-  margin: -5px 0px 100px;
+  margin-bottom: 100px;
   flex-direction: column;
   overflow: hidden;
 }
@@ -147,16 +147,13 @@ a{
   background-color: #eee;
   transition: all 0.4s ease;
 }
-.full-width-table .row:nth-child(even){
-  background-color: #ddd;
-}
-.full-width-table .row.labels{
-  background-color: #ccc;
+.full-width-table .row:nth-child(even), .full-width-table .row.labels{
+  background-color: #e4e4e4;
 }
 .full-width-table .row .item{
   display: flex;
   padding: 15px;
-  font-size: 16px;
+  font-size: 15px;
   font-family: 'Open Sans', sans-serif;
   color: #222;
   border-right: 2px solid #eee;
@@ -170,7 +167,9 @@ a{
   color: #222;
 }
 .divider{
-  border-bottom: 3px solid #338;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #359;
+  margin-bottom: 20px;
 }
 
 .doubloon-table{
@@ -184,7 +183,7 @@ a{
   display: flex;
   width: 100%;
   height: 50px;
-  background-color: #ddd;
+  background-color: #e4e4e4;
 }
 .doubloon-table .row:nth-child(even){
   background-color: #eee;
@@ -193,7 +192,7 @@ a{
   display: flex;
   width: 50%;
   padding: 15px;
-  font-size: 16px;
+  font-size: 15px;
   font-family: 'Open Sans', sans-serif;
   color: #222;
   border-right: 2px solid #eee;
@@ -215,7 +214,7 @@ a{
   margin: 10px 0px;
 }
 .page-content .button{
-  font-size: 16px;
+  font-size: 15px;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
   padding: 10px 10px 8px 10px;
@@ -225,13 +224,14 @@ a{
   display: inline-block;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 10px;
 }
 .page-content .button:hover {
-  color: #338;
-  border: 3px solid #338;
+  color: #359;
+  border: 3px solid #359;
 }
 #file-drag-box{
-  font-size: 16px;
+  font-size: 15px;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
   padding: 10px 10px 8px 10px;
@@ -244,12 +244,12 @@ a{
   cursor: default;
 }
 #file-drag-box.enter{
+  border: #777;
   color: #777;
-  border: 3px solid #777;
 }
 #file-drag-box.hover{
-  color: #338;
-  border: 3px solid #338;
+  color: #359;
+  border: 3px solid #359;
 }
 
 #modals{
@@ -291,15 +291,15 @@ a{
   transition: color 0.3s ease;
 }
 #modals .modal-nav .modal-nav-button:hover{
-  color: #338;
+  color: #359;
 }
 #modals .modal-title{
-  font-size: 24px;
+  font-size: 20px;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   text-align: center;
-  color: #338;
+  color: #359;
   margin-bottom: 20px;
 }
 #modals .modal-info{
@@ -325,8 +325,7 @@ a{
   display: flex;
   width: 100%;
   height: 40px;
-  background-color: #eee;
-  font-size: 16px;
+  background-color: #f2f2f2;
   transition: all 0.4s ease;
 }
 #modals .modal-table .row:nth-child(odd):not(.labels){
@@ -336,7 +335,7 @@ a{
   display: flex;
   width: 50%;
   padding: 10px;
-  font-size: 16px;
+  font-size: 15px;
   font-family: 'Open Sans', sans-serif;
   color: #333;
 }
@@ -403,7 +402,7 @@ a{
   transition: margin 0.3s ease, opacity 0.3s ease;
 }
 .modal-button{
-  font-size: 16px;
+  font-size: 15px;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
   padding: 10px 10px 8px 10px;
@@ -416,8 +415,8 @@ a{
   margin: 0px 5px;
 }
 .modal-button:hover {
-  color: #338;
-  border: 3px solid #338;
+  color: #359;
+  border: 3px solid #359;
 }
 
 #upload-modal{
@@ -428,7 +427,7 @@ a{
   width: 80px;
   text-align: center;
   margin: 0px auto;
-  color: #338;
+  color: #359;
   -webkit-text-stroke: 10px #fff;
   text-stroke: 10px #fff;
 }
@@ -445,9 +444,8 @@ a{
 }
 #modal-load-above, #modal-load-below{
   font-size: 18px;
-  color: #338;
+  color: #359;
   font-family: 'Open Sans', sans-serif;
-  font-weight: 600;
   text-align: center;
   padding: 10px 0px;
   transition: color 0.3s ease;
@@ -494,7 +492,7 @@ a{
   color: #222;
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
-  font-size: 16px;
+  font-size: 15px;
   align-self: center;
 }
 .gazlowe-quote-wrapper .gazlowe-quote .quote-credit{
@@ -508,6 +506,7 @@ a{
   left: 50vw;
   top: 25px;
   z-index: -1;
+  display: none;
 }
 #gazlowe::after{
   position: absolute;
@@ -530,7 +529,6 @@ a{
 }
 .profile-table .profile-block{
   display: inline-block;
-  height: 60px;
   flex-grow: 1;
   margin: 0px 10px 10px 0px;
   min-width: 180px;
@@ -542,29 +540,46 @@ a{
   border-bottom: 3px solid #aaa;
   border-right: 3px solid #aaa;
   cursor: pointer;
+  transition: border 0.3s ease;
+}
+.profile-block:hover{
+  border-left: 3px solid #79c;
+  border-top: 3px solid #79d;
+  border-bottom: 3px solid #359;
+  border-right: 3px solid #359;
 }
 .profile-block .profile-block-label{
   font-family: 'Exo', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 20px;
   text-transform: uppercase;
-  color: #888;
+  color: #777;
   transition: color 0.3s ease;
 }
 .profile-block:hover .profile-block-label{
-  color: #444;
+  color: #359;
 }
 .profile-block .profile-block-value{
   font-family: 'Exo', sans-serif;
   font-weight: 600;
-  font-size: 30px;
-  line-height: 36px;
+  font-size: 22px;
   text-transform: uppercase;
-  color: #338;
+  color: #777;
+  transition: color 0.3s ease;
+}
+.profile-block:hover .profile-block-value{
+  color: #359;
+}
+.profile-block .coin{
+  width: 20px;
+  height: 20px;
+  margin-bottom: -2px;
+  margin-right: -2px;
 }
 
 #recent-replays-table .row { min-width: 935px; }
 #recent-replays-table .replayBuild{ width: 46px; min-width: 46px; flex-grow: 0 }
-#recent-replays-list .replayBuild{ color: #888; }
+#recent-replays-list .replayBuild{ color: #777; }
 #recent-replays-table .replayGameType{ width: 10vw; min-width: 100px; }
 #recent-replays-table .replayResult{ width: 6vw; min-width: 63px; font-weight: 600; }
 #recent-replays-table .replayMapName{ width: 18vw; min-width: 211px; }

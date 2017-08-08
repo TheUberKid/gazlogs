@@ -1,0 +1,19 @@
+<% include ../public/partials/header %>
+
+<div class='page-content'>
+  <div class='page-heading divider'>
+    <%= params.MapName %>
+    <div class='right' id='replay-date'> Replay Viewer </div>
+  </div>
+</div>
+
+<% if(locals.params){ %>
+  <script>
+    var params = <%- JSON.stringify(params) %>;
+  </script>
+<% } %>
+
+<script type='text/javascript' src='/js/dictionary.js'></script>
+<script type='text/javascript' src='/js/replay.js'></script>
+
+<% include ../public/partials/footer %>

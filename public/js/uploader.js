@@ -302,8 +302,8 @@ function uploadStatusIcon(code){
       break;
     default:
       modalUploadSpinner.style.display = 'block';
-      uProgress.style.color = '#338';
-      uName.style.color = '#338';
+      uProgress.style.color = '#359';
+      uName.style.color = '#359';
   }
 
 }

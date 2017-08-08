@@ -74,3 +74,12 @@ function noAuth(req, res, next){
   }
 }
 module.exports.noAuth = noAuth;
+
+// render a page
+function render(view, title, nav, params){
+  var callback = function(req, res, next){
+    res.render(view, {'title': title, 'nav': nav, 'auth': req.auth, 'params': params});
+  }
+  return callback;
+}
+module.exports.render = render;
