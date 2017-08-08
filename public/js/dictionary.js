@@ -1,3 +1,11 @@
+Number.prototype.pad = function(size) {
+  var s = String(this);
+  while(s.length < (size || 2)){
+    s = "0" + s;
+  }
+  return s;
+}
+
 var altNames = {
   Amazon: 'Cassia',
   Anubarak: 'Anub\'arak',
@@ -29,6 +37,17 @@ var gametypes = {
   7: 'Hero League',
   8: 'Team League'
 };
+
+var fullGametypes = {
+  5: 'Unranked Draft',
+  6: 'Quick Match',
+  7: 'Hero League',
+  8: 'Team League'
+}
+
+var regions = {
+  1: 'North America'
+}
 
 var months = [
   'january',

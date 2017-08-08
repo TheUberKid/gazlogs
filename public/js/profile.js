@@ -1,11 +1,3 @@
-Number.prototype.pad = function(size) {
-  var s = String(this);
-  while(s.length < (size || 2)){
-    s = "0" + s;
-  }
-  return s;
-}
-
 var recentReplaysList = document.getElementById('recent-replays-list');
 
 var res = '';
@@ -32,6 +24,6 @@ recentReplaysList.innerHTML = res;
 
 var replays = document.getElementsByClassName('replay');
 for(var i in replays)
-  replays[i].addEventListener('click', function(e){
+  if(replays[i].children) replays[i].addEventListener('click', function(e){
     window.location.href = '/replay/' + this.dataset.replayid;
   });

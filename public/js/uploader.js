@@ -1,6 +1,6 @@
 'use strict';
 
-var uploader = 'https://gazlogs-uploader.herokuapp.com';
+var uploader = 'https://localhost:3000';
 
 Number.prototype.format = function(r){
   if(!r) r = '&#8198;';
@@ -56,7 +56,7 @@ var gazloweQuotes = {
   bad: [
     "Not the best parts I've seen, but uh, I'll take it.",
     "Whaddya think this is, a pawn shop!? Well, I guess it kinda is...",
-    "What is this, a replay for ants? It needs to be at least... three times bigger than this!",
+    "What is this, a replay for ants? It needs to be at least... three times more than this!",
     "Keep it quick, kid! I ain't got all day!"
   ],
   good: [

@@ -22,7 +22,7 @@
         <div class='beta'>BETA</div>
       </a>
 
-      <% if(!locals.auth){ %>
+      <% if(!locals.profile){ %>
 
         <a href='/auth/login'>
           <div class='<%= (nav == 'user') ? 'nav-button selected' : 'nav-button' %>'>
@@ -33,14 +33,14 @@
       <% } else { %>
 
         <div class='doubloon-count'>
-          <%= auth.doubloons %>
+          <%= profile.doubloons %>
           <div class='coin'></div>
         </div>
 
         <a href='/profile'>
           <div class='<%= (nav == 'user') ? 'nav-button selected' : 'nav-button' %> nav-user'>
             <i class='fa fa-star' aria-hidden='true'></i>
-            <%= auth.username %>
+            <%= profile.separated.username %>
           </div>
         </a>
 

@@ -97,6 +97,8 @@ a{
   letter-spacing: 0.08em;
   margin: 20px 0px 5px;
   color: #359;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .page-heading:nth-child(0n+1){
   margin-top: 40px;
@@ -447,6 +449,7 @@ a{
   color: #359;
   font-family: 'Open Sans', sans-serif;
   text-align: center;
+  font-weight: 600;
   padding: 10px 0px;
   transition: color 0.3s ease;
 }
@@ -600,4 +603,65 @@ a{
 }
 #recent-replays-list .row:hover{
   padding-left: 3px;
+}
+
+.replay-stat-table{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: calc(100% + 10px);
+}
+.replay-stat-table .replay-stat{
+  display: inline-block;
+  flex-grow: 1;
+  margin: 0px 10px 10px 0px;
+  min-width: 200px;
+  padding: 10px;
+  background-color: #ddd;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #444;
+}
+.replay-stat-table .replay-stat .label{
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.replay-stat-table .replay-stat .value{
+  float: right;
+  margin-right: 5px;
+}
+
+.replay-stat-level-bar{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.replay-stat-level-bar .replay-stat{
+  display: inline-block;
+  flex-grow: 1;
+  padding: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.replay-stat-level-bar .blue{
+  background-color: #55b;
+}
+.replay-stat-level-bar .red{
+  background-color: #b55;
+}
+.replay-stat-level-bar .red .label, .replay-stat-level-bar .blue .value{
+  float: right;
+}
+.replay-stat-level-bar .value{
+  margin: 0px 10px;
+}
+.replay-stat-level-bar .separator{
+  display: inline-block;
+  width: 5px;
+  height: 40px;
+  background-color: #444;
 }

@@ -2,12 +2,12 @@ var logger = require('winston');
 var db_Replay = require('../models/replay');
 
 // count number of replays a user has been in
-function countReplaysWithUser(auth, callback){
+function countReplaysWithUser(battletag, callback){
+
   db_Replay.count({
     Players: {
       $elemMatch: {
-        Name: auth.username,
-        BattleTag: auth.battletag
+        BattleTag: battletag
       }
     }
   }).
@@ -19,15 +19,14 @@ function countReplaysWithUser(auth, callback){
 module.exports.countReplaysWithUser = countReplaysWithUser;
 
 // load all replays a user has been in
-function getReplaysByUser(auth, page, callback){
+function getReplaysByUser(battletag, page, callback){
   if(!page) page = 0;
   db_Replay.aggregate([
     {
       $match: {
         Players: {
           $elemMatch: {
-            Name: auth.username,
-            BattleTag: auth.battletag
+            BattleTag: battletag
           }
         }
       }
@@ -50,7 +49,7 @@ function getReplaysByUser(auth, page, callback){
                 as: 'c',
                 cond: {
                   $eq: [
-                    '$$c.BattleTag', auth.battletag
+                    '$$c.BattleTag', battletag
                   ]
                 }
               }

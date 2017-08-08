@@ -1,10 +1,42 @@
 <% include ../public/partials/header %>
 
 <div class='page-content'>
+
   <div class='page-heading divider'>
-    <%= params.MapName %>
-    <div class='right' id='replay-date'> Replay Viewer </div>
+    <span id='gametype'></span>
+    <div class='right' id='date'></div>
   </div>
+
+  <div class='replay-stat-table'>
+    <div class='replay-stat'>
+      <span class='label'>Build</span>
+      <span class='value' id='build'></span>
+    </div>
+    <div class='replay-stat'>
+      <span class='label'>Region</span>
+      <span class='value' id='region'></span>
+    </div>
+    <div class='replay-stat'>
+      <span class='label'>Average ELO</span>
+      <span class='value'>1200</span>
+    </div>
+    <div class='replay-stat'>
+      <span class='label'>Duration</span>
+      <span class='value' id='duration'></span>
+    </div>
+  </div>
+  <div class='replay-stat-level-bar'>
+    <div class='replay-stat blue' id='level-blue'>
+      <span class='label'>Level</span>
+      <span class='value' id='team0level'></span>
+    </div>
+    <div class='separator'></div>
+    <div class='replay-stat red' id='level-red'>
+      <span class='label'>Level</span>
+      <span class='value' id='team1level'></span>
+    </div>
+  </div>
+
 </div>
 
 <% if(locals.params){ %>

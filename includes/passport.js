@@ -19,35 +19,40 @@ passport.use(new BnetStrategy({
 }));
 
 passport.serializeUser(function(user, done){
+  done(null, user);
+});
 
-  // separate battletag into name and number
-  var separated = user.battletag.split('#');
-  var username = separated[0];
-  var battletag = separated[1];
+passport.deserializeUser(function(user, done){
 
-  // create user if does not exist in database, update user if already exists
-  db_User.findOne({battletag: battletag}, {username}, function(err, User){
+  db_User.findOne({battletag: user.battletag}, function(err, User){
+    if(err) done(err);
+
     if(!User){
       var newUser = db_User({
-        battletag: battletag,
-        username: username
+        battletag: user.battletag
       });
       newUser.save(function(err){
         if(err) console.log('[AUTH] user creation error: ' + err.message);
       })
+      user.profile = {
+        doubloons: 0,
+        replaysUploaded: 0
+      }
     } else {
-      if(User.username !== username)
-        db_User.update({battletag: battletag}, {username: username}, function(err){
-          if(err) console.log('[AUTH] user update error: ' + err.message);
-        });
+      user.profile = {
+        doubloons: User.doubloons,
+        replaysUploaded: User.replaysUploaded
+      }
     }
 
+    var separated = user.battletag.split('#');
+
+    user.profile.separated = {
+      username: separated[0],
+      battletag: separated[1]
+    };
     done(null, user);
   });
-});
-
-passport.deserializeUser(function(user, done){
-  done(null, user);
 });
 
 module.exports = passport;

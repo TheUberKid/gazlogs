@@ -12,28 +12,6 @@ function forceHTTPS(req, res, next){
 }
 module.exports.forceHTTPS = forceHTTPS;
 
-// add authenticated profile headers to a request
-function addProfileHeaders(req, res, next){
-  if(req.isAuthenticated()){
-    var battletag = req.user.battletag.split('#')[1];
-
-    db_User.findOne({battletag: battletag}, function(err, user){
-      if(err) next();
-      req.auth = {
-        battletag: user.battletag,
-        username: user.username,
-        doubloons: user.doubloons,
-        replaysUploaded: user.replaysUploaded
-      }
-      next();
-    });
-
-  } else {
-    next();
-  }
-}
-module.exports.addProfileHeaders = addProfileHeaders;
-
 // authenticate a user using a custom authentication route
 function authenticate(req, res, next){
   passport.authenticate('bnet', function(err, user, info){
@@ -78,7 +56,7 @@ module.exports.noAuth = noAuth;
 // render a page
 function render(view, title, nav, params){
   var callback = function(req, res, next){
-    res.render(view, {'title': title, 'nav': nav, 'auth': req.auth, 'params': params});
+    res.render(view, {'title': title, 'nav': nav, 'profile': req.user ? req.user.profile : null, 'params': params});
   }
   return callback;
 }

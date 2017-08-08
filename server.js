@@ -11,6 +11,7 @@ amqp.start(init);
 // authentication
 var passport = require('./includes/passport');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 // express middleware
 var compression = require('compression');
@@ -53,13 +54,13 @@ function init(){
   app.use(compression());
   if(!config.debug) app.use(minify());
   app.use(favicon(__dirname + '/public/img/favicon.png'))
+      .use(cookieParser(config.session_secret))
       .use(session({secret: config.session_secret, resave: true, saveUninitialized: true}))
       .use(passport.initialize())
       .use(passport.session())
       .use('/css', express.static('public/css'))
       .use('/js', express.static('public/js'))
       .use('/img', express.static('public/img'))
-      .use('*', routing.addProfileHeaders)
       .get('/', routing.render('index', false, false))
       .get('/statistics', routing.render('statistics', 'HotS Statistics', 'statistics'))
       .get('/leaderboard', routing.render('leaderboard', 'Leaderboard', 'leaderboard'))
@@ -67,22 +68,22 @@ function init(){
       .get('/upload', function(req, res){
         routing.render('upload', 'Upload Replays', 'upload', {
           loggedIn: req.isAuthenticated(),
-          ultoken: req.auth ? req.auth.battletag : ''
+          ultoken: req.user ? req.user.battletag : ''
         })(req, res);
       })
       .get('/profile', routing.requireAuth, function(req, res){
-        queries.countReplaysWithUser(req.auth, function(n){
+        queries.countReplaysWithUser(req.user.battletag, function(n){
           if(n > 0){
-            queries.getReplaysByUser(req.auth, null, function(replays){
-              routing.render('profile', req.auth.username + '\'s Profile', 'user', {
-                replaysUploaded: req.auth.replaysUploaded,
+            queries.getReplaysByUser(req.user.battletag, null, function(replays){
+              routing.render('profile', req.user.profile.separated.username + '\'s Profile', 'user', {
+                profile: req.user.profile,
                 replaysIn: n,
                 replays: replays
               })(req, res);
             });
           } else {
-            routing.render('profile', req.auth.username + '\'s Profile', 'user', {
-              replaysUploaded: req.auth.replaysUploaded,
+            routing.render('profile', req.user.profile.separated.username + '\'s Profile', 'user', {
+              profile: req.user.profile,
               replaysIn: 0,
               replays: []
             })(req, res);
@@ -102,7 +103,7 @@ function init(){
         res.redirect('/auth/login');
       })
       .get('/auth/login', routing.noAuth, function(req, res){
-        routing.render('login', 'Log In', 'user', req.auth)(req, res);
+        routing.render('login', 'Log In', 'user', req.user)(req, res);
       })
       .get('/auth/callback', routing.authenticate)
       .get('/auth/logout', function(req, res){
@@ -114,7 +115,7 @@ function init(){
         next();
       }, passport.authenticate('bnet'))
       .get('*', function(req, res){
-        res.status(404).render('404', {title: '404', nav: false, auth: req.auth});
+        res.status(404).render('404', {title: '404', nav: false, auth: req.user.profile});
       });
 
   // start the server

@@ -2,7 +2,7 @@
 
 <div class='page-content'>
   <div class='page-heading divider'>
-    <%= auth.username %> #<%= auth.battletag %>
+    <%= params.profile.separated.username %> #<%= params.profile.separated.battletag %>
   </div>
   <div class='page-info'>
     <div class='profile-table'>
@@ -10,12 +10,12 @@
         <div class='profile-block-label'>Doubloons</div>
         <div class='profile-block-value'>
           <div class='coin'></div>
-          <%= auth.doubloons %>
+          <%= params.profile.doubloons %>
         </div>
       </div>
       <div class='profile-block'>
         <div class='profile-block-label'>Uploaded</div>
-        <div class='profile-block-value'><%= params.replaysUploaded %> Games</div>
+        <div class='profile-block-value'><%= params.profile.replaysUploaded %> Games</div>
       </div>
       <div class='profile-block'>
         <div class='profile-block-label'>Found In</div>
