@@ -7,6 +7,7 @@ Number.prototype.format = function(r){
   return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, r);
 }
 
+var doubloonCount = document.getElementById('doubloon-count');
 var ubox = document.getElementById('upload-box');
 var ulabel = document.getElementById('upload-label');
 var dragbox = document.getElementById('file-drag-box');
@@ -56,7 +57,7 @@ var gazloweQuotes = {
   bad: [
     "Not the best parts I've seen, but uh, I'll take it.",
     "Whaddya think this is, a pawn shop!? Well, I guess it kinda is...",
-    "What is this, a replay for ants? It needs to be at least... three times more than this!",
+    "What is this, a replay for ants? There needs to be at least... three times more than this!",
     "Keep it quick, kid! I ain't got all day!"
   ],
   good: [
@@ -65,8 +66,7 @@ var gazloweQuotes = {
     "Take these doubloons, it's the least I could do to repay ya."
   ],
   great: [
-    "Haha! Cha-ching! We're back in business, boys!",
-    "We're gonna be rich!"
+    "Haha! Cha-ching! We're back in business, boys!"
   ]
 }
 var signOuts = {
@@ -262,6 +262,7 @@ function uploadUpdate(){
 
     gazloweQuote.innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
     modalSignOut.innerHTML = out;
+    doubloonCount.innerHTML = +(doubloonCount.innerHTML) + totalDoubloons;
 
     uploadStatusIcon(1);
     clearInterval(update);
