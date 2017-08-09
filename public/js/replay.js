@@ -14,7 +14,7 @@ var team1players = document.getElementById('team1players')
 
 var timePlayed = new Date(params.TimePlayed);
 
-mapBanner.style.backgroundImage = ('url("/img/mapbanners/' + params.MapName + '.jpg")');
+mapBanner.style.backgroundImage = ('url("/img/mapbanners/' + params.MapName.toLowerCase() + '.jpg")');
 map.innerHTML = params.MapName;
 gametype.innerHTML = fullGametypes[params.GameType];
 date.innerHTML = timePlayed.getUTCDate() + ' ' + months[timePlayed.getMonth()] + ' ' + timePlayed.getFullYear();
