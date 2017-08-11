@@ -9,6 +9,11 @@ var team0level = document.getElementById('team0level');
 var team1level = document.getElementById('team1level');
 var team0bar = document.getElementById('level-blue');
 var team1bar = document.getElementById('level-red');
+var draft = document.getElementById('replay-draft');
+var team0ban1 = document.getElementById('team0ban1');
+var team0ban2 = document.getElementById('team0ban2');
+var team1ban1 = document.getElementById('team1ban1');
+var team1ban2 = document.getElementById('team1ban2');
 var team0players = document.getElementById('team0players')
 var team1players = document.getElementById('team1players')
 
@@ -26,14 +31,23 @@ team1level.innerHTML = params.Team1Level;
 team0bar.style.flexGrow = params.Team0Level - 5;
 team1bar.style.flexGrow = params.Team1Level - 5;
 
+// draft
+if(params.Draft){
+  draft.style.display = 'block';
+  team0ban1.innerHTML = heroByAttr(params.Draft.Team0Ban1).PrimaryName;
+  team0ban2.innerHTML = heroByAttr(params.Draft.Team0Ban2).PrimaryName;
+  team1ban1.innerHTML = heroByAttr(params.Draft.Team1Ban1).PrimaryName;
+  team1ban2.innerHTML = heroByAttr(params.Draft.Team1Ban2).PrimaryName;
+}
+
 // players
-var resArr = ['', ''];
-for(var i in params.Players){
+var resArr = ['', '']
+for(var i=0, j=params.Players.length; i<j; i++){
   var res = '';
   var p = params.Players[i];
 
   var Hero = p.Hero;
-  if(altNames[Hero]) Hero = altNames[Hero];
+  if(altNames[Hero]) Hero = altNames[Hero].PrimaryName;
   var BattleTag = p.BattleTag.split('#')[0];
 
   res += '<div class="row team' + p.Team + ' player" data-battletag="' + p.BattleTag + '">';
@@ -42,7 +56,7 @@ for(var i in params.Players){
   if(p.MVP) res += '<div class="item replayMVP"> MVP </div>'
   res += '</div>';
 
-  resArr[p.Team === 0 ? 0 : 1] += res;
+  resArr[p.Team] += res;
 }
 team0players.innerHTML = resArr[0];
 team1players.innerHTML = resArr[1];

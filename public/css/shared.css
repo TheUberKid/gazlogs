@@ -686,23 +686,34 @@ a{
   background-color: #444;
 }
 
-.replay-stat-table .replay-players-heading{
+.replay-stat-heading{
+  width: calc(100% - 20px);
+  margin-bottom: 10px;
   text-align: center;
   background-color: #444;
+  padding: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 15px;
   color: #fff;
 }
-.replay-players{
+
+#replay-draft{
+  display: none;
+}
+.replay-players, .replay-draft{
   display: flex;
   width: 100%;
   flex-direction: row;
-  margin-bottom: 200px;
+  margin-bottom: 20px;
 }
-.replay-players .team{
+.replay-players .team, .replay-draft .team{
   display: flex;
   flex-direction: column;
   width: calc(50% - 5px);
 }
-.replay-players .player{
+.replay-players .player, .replay-draft .ban{
   display: flex;
   background-color: #ddd;
   margin-bottom: 10px;
@@ -710,10 +721,10 @@ a{
   font-family: 'Open Sans', sans-serif;
   font-size: 15px;
   color: #444;
+  overflow: hidden;
 }
-.replay-players .replayHero{
+.replay-players .replayHero, .replay-draft .replayHero{
   font-family: 'Exo', sans-serif;
-  font-weight: 600;
   text-transform: uppercase;
   width: 35%;
 }
@@ -724,19 +735,31 @@ a{
   font-weight: 600;
   color: #888;
 }
-.replay-players #team0players{
+.replay-players #team0players, .replay-draft #team0draft{
   margin-right: 5px;
 }
-.replay-players #team1players{
+.replay-players #team1players, .replay-draft #team1draft{
   text-align: right;
   margin-left: 5px;
 }
-.replay-players #team0players .player{
+.replay-players #team0players .player, .replay-draft #team0draft .ban{
   border-left: 3px solid #55b;
 }
-.replay-players #team1players .player{
+.replay-players #team1players .player, .replay-draft #team1draft .ban{
   border-right: 3px solid #b55;
   flex-direction: row-reverse;
+}
+.replay-draft .fa{
+  font-size: 18px;
+  opacity: 0.7;
+}
+.replay-draft #team0draft .fa{
+  margin-right: 10px;
+  color: #55b;
+}
+.replay-draft #team1draft .fa{
+  margin-left: 10px;
+  color: #b55;
 }
 
 .page-info.question{

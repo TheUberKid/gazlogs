@@ -40,13 +40,40 @@
     </div>
   </div>
 
-  <div class='replay-stat-table'>
-    <div class='replay-stat replay-players-heading'>
-      <span class='label'>Players</span>
+  <div id='replay-draft'>
+    <div class='replay-stat-heading'>
+      Draft Bans
+    </div>
+    <div class='replay-draft'>
+      <div class='team' id='team0draft'>
+        <div class='row ban'>
+          <i class='fa fa-times' aria-hidden='true'></i>
+          <div class='replayHero' id='team0ban1'></div>
+        </div>
+        <div class='row ban'>
+          <i class='fa fa-times' aria-hidden='true'></i>
+          <div class='replayHero' id='team0ban2'></div>
+        </div>
+      </div>
+      <div class='team' id='team1draft'>
+        <div class='row ban'>
+          <i class='fa fa-times' aria-hidden='true'></i>
+          <div class='replayHero' id='team1ban1'></div>
+        </div>
+        <div class='row ban'>
+          <i class='fa fa-times' aria-hidden='true'></i>
+          <div class='replayHero' id='team1ban2'></div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <div class='replay-stat-heading'>
+    Players
+  </div>
   <div class='replay-players'>
-    <div class='team' id='team0players'></div>
+    <div class='team' id='team0players'>
+    </div>
     <div class='team' id='team1players'></div>
   </div>
 

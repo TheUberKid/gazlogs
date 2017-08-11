@@ -8,7 +8,7 @@ for(var i=0, j=params.replays.length; i<j; i++){
   TimePlayed = TimePlayed === 0 ? 'Today' : TimePlayed + ' Day' + (TimePlayed > 1 ? 's' : '') + ' Ago';
   var Result = p.WinningTeam === p.Players[0].Team ? 'Victory' : 'Defeat';
   var Hero = p.Players[0].Hero;
-  if(altNames[Hero]) Hero = altNames[Hero];
+  if(altNames[Hero]) Hero = altNames[Hero].PrimaryName;
 
   res += '<div class="row ' + Result + ' replay" data-replayid="' + p.Id.toString().replace('-', 'n') + '">';
   res += '<div class="item replayBuild">' + p.Build + '</div>';

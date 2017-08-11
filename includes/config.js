@@ -19,7 +19,6 @@ if(moduleAvailable('./keys')){
 
 module.exports = {
   mongodb_key: Keys.mongodb_key,
-  amqp_key: Keys.amqp_key,
   bnet_key: Keys.bnet_key,
   bnet_secret: Keys.bnet_secret,
   bnet_callback: Keys.bnet_callback,
