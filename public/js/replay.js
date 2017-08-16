@@ -75,7 +75,7 @@ for(var i=0, j=params.Players.length; i<j; i++){
 
   var MVPscore = p.SoloKill;
   MVPscore += p.Assists * ((p.Hero === 'LostVikings' || p.Hero === 'Abathur') ? 0.75 : 1);
-  MVPscore += (p.TimeSpentDead / params.GameLength) * 100 * ((p.Hero === 'Murky' || p.Hero === 'Gall') ? -1 : p.Hero === 'Cho' ? 0.85 : 0.5);
+  MVPscore += (p.TimeSpentDead / params.GameLength) * 100 * ((p.Hero === 'Murky' || p.Hero === 'Gall') ? -1 : p.Hero === 'Cho' ? -0.85 : -0.5);
   if(topStats.HeroDamage[p.Team] === p.HeroDamage) MVPscore += 1;
   if(topStats.HeroDamage[2] === p.HeroDamage) MVPscore += 1;
   if(topStats.SiegeDamage[p.Team] === p.SiegeDamage) MVPscore += 1;
