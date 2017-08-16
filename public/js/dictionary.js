@@ -14,7 +14,7 @@ var altNames = {
   Arthas: {"PrimaryName": "Arthas", "ImageURL": "Arthas", "AttributeName": "Arth", "Group": "Warrior", "SubGroup": "Bruiser", "Translations": "АРТАС,아서스,阿尔萨斯,阿薩斯,Артас"},
   Auriel: {"PrimaryName": "Auriel", "ImageURL": "Auriel", "AttributeName": "Auri", "Group": "Support", "SubGroup": "Healer", "Translations": "Ауриэль,奥莉尔,奧莉爾,아우리엘"},
   Azmodan: {"PrimaryName": "Azmodan", "ImageURL": "Azmodan", "AttributeName": "Azmo", "Group": "Specialist", "SubGroup": "Siege", "Translations": "Asmodan,Азмодан,Azmodán,Azmadan,아즈모단,阿兹莫丹,阿茲莫丹"},
-  Brightwing: {"PrimaryName": "Brightwing", "ImageURL": "Brightwing", "AttributeName": "Faer", "Group": "Support", "SubGroup": "Healer", "Translations": "Luisaile,Funkelchen,Alafeliz,Jasnoskrzydła,Alachiara,СВЕТИК,Alasol,Asaluz,빛나래,光明之翼,亮翼"},
+  FaerieDragon: {"PrimaryName": "Brightwing", "ImageURL": "Brightwing", "AttributeName": "Faer", "Group": "Support", "SubGroup": "Healer", "Translations": "Luisaile,Funkelchen,Alafeliz,Jasnoskrzydła,Alachiara,СВЕТИК,Alasol,Asaluz,빛나래,光明之翼,亮翼"},
   Amazon: {"PrimaryName": "Cassia", "ImageURL": "Cassia", "AttributeName": "Amaz", "Group": "Assassin", "SubGroup": "Sustained Damage", "Translations": "Cássia,Kasja,Кассия,카시아,卡西娅,卡西雅"},
   Chen: {"PrimaryName": "Chen", "ImageURL": "Chen", "AttributeName": "Chen", "Group": "Warrior", "SubGroup": "Bruiser", "Translations": "Чэнь,Czen,첸,老陳,陈"},
   Cho: {"PrimaryName": "Cho", "ImageURL": "Cho", "AttributeName": "CCho", "Group": "Warrior", "SubGroup": "Tank", "Translations": "Чо,초,古,Czo,丘,Cha,Che"},

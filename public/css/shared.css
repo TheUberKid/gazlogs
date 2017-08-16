@@ -723,6 +723,16 @@ a{
   color: #444;
   overflow: hidden;
 }
+.replay-players .player{
+  cursor: pointer;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+.replay-players .player:hover{
+  background-color: #ccc;
+}
+.replay-players .player.selected{
+  color: #fff;
+}
 .replay-players .replayHero, .replay-draft .replayHero{
   font-family: 'Exo', sans-serif;
   text-transform: uppercase;
@@ -734,6 +744,10 @@ a{
 .replay-players .replayMVP{
   font-weight: 600;
   color: #888;
+  transition: color 0.3s ease;
+}
+.replay-players .player.selected .replayMVP{
+  color: #fff;
 }
 .replay-players #team0players, .replay-draft #team0draft{
   margin-right: 5px;
@@ -749,6 +763,12 @@ a{
   border-right: 3px solid #b55;
   flex-direction: row-reverse;
 }
+.replay-players #team0players .player.selected{
+  background-color: #55b;
+}
+.replay-players #team1players .player.selected{
+  background-color: #b55;
+}
 .replay-draft .fa{
   font-size: 18px;
   opacity: 0.7;
@@ -760,6 +780,39 @@ a{
 .replay-draft #team1draft .fa{
   margin-left: 10px;
   color: #b55;
+}
+
+.player-details-list{
+  min-height: 200px;
+  margin-bottom: 100px;
+}
+.playerDetails{
+  display: none;
+}
+.playerDetails.selected{
+  display: block;
+}
+.replay-player-heading, .replay-player-subheading{
+  width: calc(100% - 20px);
+  margin-bottom: 10px;
+  text-align: center;
+  padding: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #fff;
+}
+.replay-player-heading.team0{
+  background-color: #55b;
+}
+.replay-player-heading.team1{
+  background-color: #b55;
+}
+.replay-player-subheading{
+  background-color: #bbb;
+  margin-top: 20px;
+  color: #444;
 }
 
 .page-info.question{

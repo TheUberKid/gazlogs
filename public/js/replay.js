@@ -14,8 +14,9 @@ var team0ban1 = document.getElementById('team0ban1');
 var team0ban2 = document.getElementById('team0ban2');
 var team1ban1 = document.getElementById('team1ban1');
 var team1ban2 = document.getElementById('team1ban2');
-var team0players = document.getElementById('team0players')
-var team1players = document.getElementById('team1players')
+var team0players = document.getElementById('team0players');
+var team1players = document.getElementById('team1players');
+var playerDetailsList = document.getElementById('player-details-list');
 
 var timePlayed = new Date(params.TimePlayed);
 
@@ -40,8 +41,30 @@ if(params.Draft){
   team1ban2.innerHTML = heroByAttr(params.Draft.Team1Ban2).PrimaryName;
 }
 
+function addReplayStat(label, value){
+  return '<div class="replay-stat"><span class="label">' + label + '</span><span class="value">' + value + '</span></div>';
+}
+
+// find top scores in each team (for MVP calculations);
+var topStats = {
+  HeroDamage: [0, 0, 0],
+  SiegeDamage: [0, 0, 0],
+  Healing: [0, 0, 0],
+  ExperienceContribution: [0, 0, 0],
+  DamageTaken: [0, 0, 0]
+}
+for(var i=0, j=params.Players.length; i<j; i++){
+  var p = params.Players[i];
+  for(var k in p)
+    if(topStats[k] && p[k] > topStats[k][p.Team]){
+      topStats[k][p.Team] = p[k];
+      if(topStats[k] && p[k] > topStats[k][2])
+        topStats[k][2] = p[k];
+    }
+}
+
 // players
-var resArr = ['', '']
+var resArr = ['', '', ''];
 for(var i=0, j=params.Players.length; i<j; i++){
   var res = '';
   var p = params.Players[i];
@@ -50,13 +73,90 @@ for(var i=0, j=params.Players.length; i<j; i++){
   if(altNames[Hero]) Hero = altNames[Hero].PrimaryName;
   var BattleTag = p.BattleTag.split('#')[0];
 
+  var MVPscore = p.SoloKill;
+  MVPscore += p.Assists * ((p.Hero === 'LostVikings' || p.Hero === 'Abathur') ? 0.75 : 1);
+  MVPscore += (p.TimeSpentDead / params.GameLength) * 100 * ((p.Hero === 'Murky' || p.Hero === 'Gall') ? -1 : p.Hero === 'Cho' ? 0.85 : 0.5);
+  if(topStats.HeroDamage[p.Team] === p.HeroDamage) MVPscore += 1;
+  if(topStats.HeroDamage[2] === p.HeroDamage) MVPscore += 1;
+  if(topStats.SiegeDamage[p.Team] === p.SiegeDamage) MVPscore += 1;
+  if(topStats.SiegeDamage[2] === p.SiegeDamage) MVPscore += 1;
+  if(topStats.Healing[p.Team] === p.Healing && p.Team === topStats.Healing[2]) MVPscore += 1;
+  if(topStats.ExperienceContribution[p.Team] === p.ExperienceContribution) MVPscore += 1;
+  if(topStats.ExperienceContribution[2] === p.ExperienceContribution) MVPscore += 1;
+  if(altNames[p.Hero].Group === 'Warrior' && topStats.DamageTaken[p.Team] === p.DamageTaken) MVPscore += 0.5;
+  if(altNames[p.Hero].Group === 'Warrior' && topStats.DamageTaken[2] === p.DamageTaken) MVPscore += 1;
+  if(p.Team === params.WinningTeam) MVPscore += 2;
+  if(topStats.SiegeDamage[0] !== topStats.SiegeDamage[1]) MVPscore += 2 * (p.SiegeDamage / topStats.SiegeDamage[2]);
+  if(topStats.HeroDamage[0] !== topStats.HeroDamage[1]) MVPscore += 2 * (p.HeroDamage / topStats.HeroDamage[2]);
+  MVPscore += 2 * (p.ExperienceContribution / topStats.ExperienceContribution[2]);
+  if(altNames[p.Hero].Group === 'Support') MVPscore += (p.Healing / topStats.Healing[2]);
+  if(altNames[p.Hero].Group === 'Warrior') MVPscore += (p.DamageTaken / topStats.DamageTaken[2]);
+
   res += '<div class="row team' + p.Team + ' player" data-battletag="' + p.BattleTag + '">';
   res += '<div class="item replayHero">' + Hero + '</div>';
-  res += '<div class="item replayBattleTag">' + p.BattleTag.split('#')[0] + '</div>';
+  res += '<div class="item replayBattleTag">' + BattleTag + '</div>';
   if(p.MVP) res += '<div class="item replayMVP"> MVP </div>'
   res += '</div>';
 
   resArr[p.Team] += res;
+
+  res = '';
+  res += '<div class="playerDetails" id="details' + p.BattleTag + '">';
+  res += '<div class="replay-player-heading team' + p.Team + '">' + BattleTag + ' / ' + Hero + '</div>';
+  res += '<div class="replay-stat-table">';
+  res += addReplayStat('kills', p.SoloKill);
+  res += addReplayStat('assists', p.Assists);
+  res += addReplayStat('deaths', p.Deaths);
+  res += '</div><div class="replay-stat-table">';
+  if(p.Healing > 0 || p.SelfHealing === 0) res += addReplayStat('healing', p.Healing);
+  if(p.SelfHealing > 0) res += addReplayStat('self healing', p.SelfHealing);
+  res += addReplayStat('exp contribution', p.ExperienceContribution);
+  res += addReplayStat('mvp score', MVPscore.toFixed(2));
+  res += '</div><div class="replay-player-subheading">Damage Breakdown</div><div class="replay-stat-table">';
+  res += addReplayStat('hero damage', p.HeroDamage);
+  res += addReplayStat('total siege damage', p.SiegeDamage);
+  res += addReplayStat('damage taken', p.DamageTaken);
+  res += '</div><div class="replay-stat-table">';
+  res += addReplayStat('structure damage', p.StructureDamage);
+  res += addReplayStat('minion damage', p.MinionDamage);
+  res += addReplayStat('creep damage', p.CreepDamage);
+  res += addReplayStat('summon damage', p.SummonDamage);
+  res += '</div><div class="replay-player-subheading">Teamfight Statistics</div><div class="replay-stat-table">';
+  res += addReplayStat('tf hero damage', p.TeamfightHeroDamage);
+  res += addReplayStat('tf damage taken', p.TeamfightDamageTaken);
+  res += addReplayStat('tf healing', p.TeamfightHealingDone);
+  res += '</div><div class="replay-stat-table">';
+  res += addReplayStat('tf escapes', p.TeamfightEscapesPerformed);
+  res += addReplayStat('outnumbered deaths', p.OutnumberedDeaths);
+  res += addReplayStat('highest kill streak', p.HighestKillStreak);
+  res += '</div><div class="replay-player-subheading">Other</div><div class="replay-stat-table">';
+  res += addReplayStat('time spent dead', p.TimeSpentDead + 's');
+  res += addReplayStat('time silencing enemies', p.TimeSilencingEnemyHeroes + 's');
+  res += addReplayStat('time rooting enemies', p.TimeRootingEnemyHeroes + 's');
+  res += addReplayStat('time stunning enemies', p.TimeStunningEnemyHeroes + 's');
+  res += '</div><div class="replay-stat-table">';
+  res += addReplayStat('clutch heals', p.ClutchHealsPerformed);
+  res += addReplayStat('escaped deaths', p.EscapesPerformed);
+  res += addReplayStat('vengeance kills', p.VengeancesPerformed);
+  res += '</div></div>';
+
+  resArr[2] += res;
 }
 team0players.innerHTML = resArr[0];
 team1players.innerHTML = resArr[1];
+playerDetailsList.innerHTML = resArr[2];
+
+var players = document.getElementsByClassName('player');
+var playerDetails = document.getElementsByClassName('playerDetails');
+
+for(var i in players)
+  if(players[i].children)
+    players[i].addEventListener('click', function(e){
+      for(var j in players)
+        if(players[j].children)
+          players[j].className = players[j].className.replace(' selected', '');
+      this.className += ' selected';
+      for(var j in playerDetails)
+        playerDetails[j].className = 'playerDetails';
+      document.getElementById('details' + this.dataset.battletag).className = 'playerDetails selected';
+  });
