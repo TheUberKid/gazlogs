@@ -80,7 +80,7 @@ for(var i=0, j=params.Players.length; i<j; i++){
   if(topStats.HeroDamage[2] === p.HeroDamage) MVPscore += 1;
   if(topStats.SiegeDamage[p.Team] === p.SiegeDamage) MVPscore += 1;
   if(topStats.SiegeDamage[2] === p.SiegeDamage) MVPscore += 1;
-  if(topStats.Healing[p.Team] === p.Healing && p.Team === topStats.Healing[2]) MVPscore += 1;
+  if(topStats.Healing[p.Team] === p.Healing && p.Healing === topStats.Healing[2]) MVPscore += 1;
   if(topStats.ExperienceContribution[p.Team] === p.ExperienceContribution) MVPscore += 1;
   if(topStats.ExperienceContribution[2] === p.ExperienceContribution) MVPscore += 1;
   if(altNames[p.Hero].Group === 'Warrior' && topStats.DamageTaken[p.Team] === p.DamageTaken) MVPscore += 0.5;

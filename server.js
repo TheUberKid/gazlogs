@@ -18,6 +18,7 @@ var queries = require('./includes/queries');
 
 // database
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongodb_key);
 var db_User = require('./models/user');
 

@@ -19,7 +19,7 @@ var altNames = {
   Chen: {"PrimaryName": "Chen", "ImageURL": "Chen", "AttributeName": "Chen", "Group": "Warrior", "SubGroup": "Bruiser", "Translations": "Чэнь,Czen,첸,老陳,陈"},
   Cho: {"PrimaryName": "Cho", "ImageURL": "Cho", "AttributeName": "CCho", "Group": "Warrior", "SubGroup": "Tank", "Translations": "Чо,초,古,Czo,丘,Cha,Che"},
   Chromie: {"PrimaryName": "Chromie", "ImageURL": "Chromie", "AttributeName": "Chro", "Group": "Assassin", "SubGroup": "Burst Damage", "Translations": "Crona,Cromi,克罗米,克羅米,Chronia,Cromie,Хроми,크로미"},
-  Dva: {"PrimaryName": "D.Va", "ImageURL": "DVa", "AttributeName": "DVA0", "Group": "Warrior", "SubGroup": "Tank", "Translations": "D.Va"},
+  DVa: {"PrimaryName": "D.Va", "ImageURL": "DVa", "AttributeName": "DVA0", "Group": "Warrior", "SubGroup": "Tank", "Translations": "D.Va"},
   Dehaka: {"PrimaryName": "Dehaka", "ImageURL": "Dehaka", "AttributeName": "Deha", "Group": "Warrior", "SubGroup": "Bruiser", "Translations": "Дехака,데하카,德哈卡"},
   Diablo: {"PrimaryName": "Diablo", "ImageURL": "Diablo", "AttributeName": "Diab", "Group": "Warrior", "SubGroup": "Tank", "Translations": "ДИАБЛО,Диабло,디아블로,迪亚波罗,迪亞布羅"},
   L90ETC: {"PrimaryName": "E.T.C.", "ImageURL": "ETC", "AttributeName": "L90E", "Group": "Warrior", "SubGroup": "Tank", "Translations": "ETC,C.T.E.,정예 타우렌 족장,精英牛头人酋长,精英牛頭大佬"},
