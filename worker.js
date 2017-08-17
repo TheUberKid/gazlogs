@@ -7,16 +7,10 @@ var tasks = require('./includes/tasks');
 
 // database
 var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongodb_key);
+mongoose.Promise = require('bluebird');
 var db_Replay = require('./models/replay');
 
 logger.log('info', 'starting worker');
-db_Replay.find({}).then(function(replays){
-  replays.forEach(function(x){
-    console.log(typeof x.Build);
-    db_Replay.update({Id: x.Id}, {
-      Build: parseInt(x.Build)
-    });
-  });
-});
+
+setInterval(tasks.createHeroStatistics, 1000*60*60);

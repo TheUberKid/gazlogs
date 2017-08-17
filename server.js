@@ -18,8 +18,8 @@ var queries = require('./includes/queries');
 
 // database
 var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
 mongoose.connect(config.mongodb_key);
+mongoose.Promise = require('bluebird');
 var db_User = require('./models/user');
 
 // server

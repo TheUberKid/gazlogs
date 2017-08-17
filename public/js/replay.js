@@ -34,11 +34,12 @@ team1bar.style.flexGrow = params.Team1Level - 5;
 
 // draft
 if(params.Draft){
+  var d = params.Draft;
   draft.style.display = 'block';
-  team0ban1.innerHTML = heroByAttr(params.Draft.Team0Ban1).PrimaryName;
-  team0ban2.innerHTML = heroByAttr(params.Draft.Team0Ban2).PrimaryName;
-  team1ban1.innerHTML = heroByAttr(params.Draft.Team1Ban1).PrimaryName;
-  team1ban2.innerHTML = heroByAttr(params.Draft.Team1Ban2).PrimaryName;
+  team0ban1.innerHTML = d.Team0Ban1.length > 0 ? heroByAttr(d.Team0Ban1).PrimaryName : 'None';
+  team0ban2.innerHTML = d.Team0Ban2.length > 0 ? heroByAttr(d.Team0Ban2).PrimaryName : 'None';
+  team1ban1.innerHTML = d.Team1Ban1.length > 0 ? heroByAttr(d.Team1Ban1).PrimaryName : 'None';
+  team1ban2.innerHTML = d.Team1Ban2.length > 0 ? heroByAttr(d.Team1Ban2).PrimaryName : 'None';
 }
 
 function addReplayStat(label, value){
