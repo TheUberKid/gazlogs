@@ -39,7 +39,7 @@ function createHeroStatistics(build, gametype){
       EnemyMatchups: {},
       Talents: [{}, {}, {}, {}, {}, {}, {}],
     }
-    if(gametype !== 6) stats.Heroes[i].GamesBanned = 0;
+    if(gametype !== 7) stats.Heroes[i].GamesBanned = 0;
     for(var j in dict.heroes){
       if(j !== i){
         stats.Heroes[i].FriendlyMatchups[j] = new winLossObject(j);
@@ -95,7 +95,7 @@ function createHeroStatistics(build, gametype){
         }
 
         // add ban information
-        if(gametype !== 6){
+        if(gametype !== 7){
           if(r.Draft.Team0Ban1.length > 0) stats.Heroes[dict.heroByAttr(r.Draft.Team0Ban1)].GamesBanned++;
           if(r.Draft.Team0Ban2.length > 0) stats.Heroes[dict.heroByAttr(r.Draft.Team0Ban2)].GamesBanned++;
           if(r.Draft.Team1Ban1.length > 0) stats.Heroes[dict.heroByAttr(r.Draft.Team1Ban1)].GamesBanned++;

@@ -103,17 +103,17 @@ module.exports.maps = {
 }
 
 module.exports.gametypes = {
-  5: 'Unranked',
-  6: 'Quick Match',
-  7: 'Hero League',
-  8: 'Team League'
+  6: 'Unranked',
+  7: 'Quick Match',
+  8: 'Hero League',
+  9: 'Team League'
 };
 
 module.exports.fullGametypes = {
-  5: 'Unranked Draft',
-  6: 'Quick Match',
-  7: 'Hero League',
-  8: 'Team League'
+  6: 'Unranked Draft',
+  7: 'Quick Match',
+  8: 'Hero League',
+  9: 'Team League'
 }
 
 module.exports.regions = {

@@ -21,12 +21,13 @@ logger.log('info', 'starting worker');
 function SWStats(){
   db_Replay.distinct('Build').exec(function(err, builds){
 
+    builds = builds.slice(0, 8);
     var gametypeIndex = 0;
     var buildIndex = 0;
 
     function generateStatistics(gametype, build){
 
-      var prom = tasks.createHeroStatistics(builds[build], gametype + 5);
+      var prom = tasks.createHeroStatistics(builds[build], gametype + 6);
 
       prom.then(function(){
         if(gametypeIndex < 3){

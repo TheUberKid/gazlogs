@@ -1,6 +1,6 @@
 'use strict';
 
-var uploader = 'https://gazlogs-uploader.herokuapp.com';
+var uploader = 'https://localhost:3000';
 
 Number.prototype.format = function(r){
   if(!r) r = '&#8198;';
@@ -38,14 +38,15 @@ var upload;
 var doesUserCare = true;
 var responseTable = {
   0: ['Error', '#833', 0],
-  1: ['Duplicate', '#bb3', 0],
-  2: ['Training', '#bb3', 0],
-  3: ['Versus AI', '#bb3', 0],
-  4: ['Brawl', '#bb3', 0],
-  5: ['Unranked', '#383', 100],
-  6: ['Quick Match', '#383', 50],
-  7: ['Hero League', '#383', 100],
-  8: ['Team League', '#383', 125]
+  1: ['Outdated', '#bb3', 0],
+  2: ['Duplicate', '#bb3', 0],
+  3: ['Training', '#bb3', 0],
+  4: ['Versus AI', '#bb3', 0],
+  5: ['Brawl', '#bb3', 0],
+  6: ['Unranked', '#383', 100],
+  7: ['Quick Match', '#383', 50],
+  8: ['Hero League', '#383', 100],
+  9: ['Team League', '#383', 125]
 };
 
 var gazloweQuotes = {

@@ -68,7 +68,7 @@ app.use(favicon(__dirname + '/public/img/favicon.png'))
       routing.render('statistics', 'HotS Statistics', 'statistics', {
         BuildList: dict.builds,
         Build: (req.query.build != null && dict.builds.indexOf(req.query.build) > -1) ? req.query.build : dict.builds[0],
-        GameType: (req.query.gametype != null && req.query.gametype >= 5 && req.query.gametype <= 8) ? req.query.gametype : 7
+        GameType: (req.query.gametype != null && req.query.gametype >= 6 && req.query.gametype <= 9) ? req.query.gametype : 8
       })(req, res);
     })
     .get('/leaderboard', routing.render('leaderboard', 'Leaderboard', 'leaderboard'))
@@ -112,7 +112,7 @@ app.use(favicon(__dirname + '/public/img/favicon.png'))
       req.query.gametype = parseInt(req.query.gametype);
       queries.getSitewideStatistics(
       (req.query.build != null && dict.builds.indexOf(req.query.build) > -1) ? req.query.build : dict.builds[0],
-      (req.query.gametype != null && req.query.gametype >= 5 && req.query.gametype <= 8) ? req.query.gametype : 7,
+      (req.query.gametype != null && req.query.gametype >= 6 && req.query.gametype <= 9) ? req.query.gametype : 8,
       function(stat){
         res.json(stat);
       });

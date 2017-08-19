@@ -86,17 +86,17 @@ function heroByAttr(attrName){
 }
 
 var gameTypes = {
-  5: 'Unranked',
-  6: 'Quick Match',
-  7: 'Hero League',
-  8: 'Team League'
+  6: 'Unranked',
+  7: 'Quick Match',
+  8: 'Hero League',
+  9: 'Team League'
 };
 
 var fullGameTypes = {
-  5: 'Unranked Draft',
-  6: 'Quick Match',
-  7: 'Hero League',
-  8: 'Team League'
+  6: 'Unranked Draft',
+  7: 'Quick Match',
+  8: 'Hero League',
+  9: 'Team League'
 }
 
 var regions = {

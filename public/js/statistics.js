@@ -35,7 +35,7 @@ for(var i in gametypeSelect)
     statisticsTable.className = statisticsTable.className.replace(' complete', '');
     queryStatistics();
   });
-for(var i in gametypeSelect)
+for(var i in buildSelect)
   if(buildSelect[i].children) buildSelect[i].addEventListener('click', function(){
     params.Build = this.dataset.build;
     statisticsSpinner.style.display = 'block';
