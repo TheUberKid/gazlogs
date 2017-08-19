@@ -21,7 +21,7 @@ logger.log('info', 'starting worker');
 function SWStats(){
   db_Replay.distinct('Build').exec(function(err, builds){
 
-    builds = builds.slice(0, 8);
+    builds = builds.slice(0, 16);
     var gametypeIndex = 0;
     var buildIndex = 0;
 
