@@ -6,6 +6,13 @@ var buildList = document.getElementById('build-list');
 var statisticsTable = document.getElementById('statistics-table');
 var statisticsSpinner = document.getElementById('statistics-spinner');
 var statistics = document.getElementById('statistics');
+var fixedLabels = document.getElementById('fixed-labels');
+
+function checkScroll(){
+  fixedLabels.style.display = document.body.scrollTop > 220 ? 'block' : 'none';
+}
+window.addEventListener('scroll', checkScroll);
+checkScroll();
 
 var buildListHTML = '';
 for(var i = 0, j = 8; i < j; i++){

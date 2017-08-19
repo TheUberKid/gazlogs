@@ -1,9 +1,10 @@
 #statistics-table{
+  margin-top: 10px;
   transition: margin 0.3s ease, opacity 0.3s ease;
 }
 #statistics-table:not(.complete){
   opacity: 0;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 #statistics-spinner{
   padding: 40px 0px;
@@ -13,20 +14,28 @@
   background-color: #eee;
 }
 
-#statistics{
-  max-height: 60vh;
-  overflow-y: scroll;
+#fixed-labels{
+  position: fixed;
+  top: 0;
+  width: calc(76vw + 1px);
+  margin: 0px 12vw;
+  border-top: 20px solid #eee;
+  border-bottom: 2px solid #aaa;
+  display: none;
+}
+#fixed-labels .row .item:nth-last-child(0n+1){
+  border-right: none;
 }
 
-#statistics-table .row { min-width: 935px; }
-#statistics-table .statHero{ width: 19vw; min-width: 120px; }
+.full-width-table .row { min-width: 935px; }
+.full-width-table .statHero{ width: 19vw; min-width: 120px; }
 #statistics-table :not(.labels) .statHero{ font-weight: 600; color: #359; }
-#statistics-table .statGamesPicked{ width: 9vw; min-width: 43px; }
-#statistics-table .statGamesBanned{ width: 9vw; min-width: 43px; }
-#statistics-table .statGamesWon{ width: 9vw; min-width: 43px; }
-#statistics-table .statPickRate{ width: 10vw; min-width: 51px; }
-#statistics-table .statBanRate{ width: 10vw; min-width: 51px; }
-#statistics-table .statWinRate{ width: 10vw; min-width: 51px; }
+.full-width-table .statGamesPicked{ width: 9vw; min-width: 43px; }
+.full-width-table .statGamesBanned{ width: 9vw; min-width: 43px; }
+.full-width-table .statGamesWon{ width: 9vw; min-width: 43px; }
+.full-width-table .statPickRate{ width: 10vw; min-width: 51px; }
+.full-width-table .statBanRate{ width: 10vw; min-width: 51px; }
+.full-width-table .statWinRate{ width: 10vw; min-width: 51px; }
 #statistics-table .row:not(.labels){ box-shadow: inset 3px 0 0 #359; cursor: pointer; }
 
 #statistics-table .row:not(:hover){ box-shadow: inset 3px 0 0 transparent; }
