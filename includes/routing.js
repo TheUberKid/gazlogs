@@ -1,3 +1,5 @@
+'use strict';
+
 var logger = require('winston');
 var db_User = require('../models/user');
 var passport = require('./passport')

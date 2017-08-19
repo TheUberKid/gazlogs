@@ -1,0 +1,32 @@
+// hero statistic schema
+
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var winLossSchema = new Schema({
+  Name: {type: String, required: true},
+  Wins: {type: Number, required: true, default: 0},
+  Losses: {type: Number, required: true, default: 0}
+});
+var heroSchema = new Schema({
+  Hero: {type: String, required: true},
+  GamesPicked: {type: Number, required: true, default: 0},
+  GamesBanned: {type: Number, default: 0},
+  Wins: {type: Number, required: true, default: 0},
+  Losses: {type: Number, required: true, default: 0},
+  Maps: {type: [winLossSchema], required: true},
+  Talents: {type: [[winLossSchema]], required: true},
+  FriendlyMatchups: {type: [winLossSchema], required: true},
+  EnemyMatchups: {type: [winLossSchema], required: true}
+});
+var statSchema = new Schema({
+  Id: {type: Number, required: true, unique: true, index: true},
+  Build: {type: Number, required: true},
+  GameType: {type: Number, required: true},
+  Time: {type: Number, required: true},
+  SampleSize: {type: Number, required: true},
+  Heroes: {type: [heroSchema], required: true}
+});
+
+var Stat = mongoose.model('Stat', statSchema);
+module.exports = Stat;

@@ -262,7 +262,7 @@ function uploadUpdate(){
 
     gazloweQuote.innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
     modalSignOut.innerHTML = out;
-    doubloonCount.innerHTML = +(doubloonCount.innerHTML) + totalDoubloons;
+    if(doubloonCount != null) doubloonCount.innerHTML = +(doubloonCount.innerHTML) + totalDoubloons;
 
     uploadStatusIcon(1);
     clearInterval(update);

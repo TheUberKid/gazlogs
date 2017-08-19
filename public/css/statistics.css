@@ -1,0 +1,218 @@
+#statistics-table{
+  transition: margin 0.3s ease, opacity 0.3s ease;
+}
+#statistics-table:not(.complete){
+  opacity: 0;
+  margin-top: 20px;
+}
+#statistics-spinner{
+  padding: 40px 0px;
+  height: 0px;
+}
+#statistics-spinner .spinner:after{
+  background-color: #eee;
+}
+
+#statistics{
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+#statistics-table .row { min-width: 935px; }
+#statistics-table .statHero{ width: 19vw; min-width: 120px; }
+#statistics-table :not(.labels) .statHero{ font-weight: 600; color: #359; }
+#statistics-table .statGamesPicked{ width: 9vw; min-width: 43px; }
+#statistics-table .statGamesBanned{ width: 9vw; min-width: 43px; }
+#statistics-table .statGamesWon{ width: 9vw; min-width: 43px; }
+#statistics-table .statPickRate{ width: 10vw; min-width: 51px; }
+#statistics-table .statBanRate{ width: 10vw; min-width: 51px; }
+#statistics-table .statWinRate{ width: 10vw; min-width: 51px; }
+#statistics-table .row:not(.labels){ box-shadow: inset 3px 0 0 #359; cursor: pointer; }
+
+#statistics-table .row:not(:hover){ box-shadow: inset 3px 0 0 transparent; }
+
+.replay-banner{
+  width: 100%;
+  height: 237px;
+  margin-top: 40px;
+  margin-bottom: -60px;
+  background-position: center;
+  background-size: cover;
+}
+.replay-map-header{
+  padding: 20px;
+  line-height: 20px;
+  font-size: 20px;
+  font-family: 'Exo', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.replay-stat-level-bar{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 30px;
+}
+.replay-stat-level-bar .replay-stat{
+  display: inline-block;
+  flex-grow: 1;
+  padding: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.replay-stat-level-bar .blue{
+  background-color: #55b;
+}
+.replay-stat-level-bar .red{
+  background-color: #b55;
+}
+.replay-stat-level-bar .red .label, .replay-stat-level-bar .blue .value{
+  float: right;
+}
+.replay-stat-level-bar .value{
+  margin: 0px 10px;
+}
+.replay-stat-level-bar .separator{
+  display: inline-block;
+  width: 5px;
+  height: 40px;
+  background-color: #444;
+}
+
+.replay-stat-heading{
+  width: calc(100% - 20px);
+  margin-bottom: 10px;
+  text-align: center;
+  background-color: #444;
+  padding: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #fff;
+}
+
+#replay-draft{
+  display: none;
+}
+.replay-players, .replay-draft{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+.replay-players .team, .replay-draft .team{
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 5px);
+}
+.replay-players .player, .replay-draft .ban{
+  display: flex;
+  background-color: #ddd;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #444;
+  overflow: hidden;
+}
+.replay-players .player{
+  cursor: pointer;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+.replay-players .player:hover{
+  background-color: #ccc;
+}
+.replay-players .player.selected{
+  color: #fff;
+}
+.replay-players .replayHero, .replay-draft .replayHero{
+  font-family: 'Exo', sans-serif;
+  text-transform: uppercase;
+  width: 35%;
+}
+.replay-players .replayBattleTag{
+  width: calc(65% - 38px);
+}
+.replay-players .replayMVP{
+  font-weight: 600;
+  color: #888;
+  transition: color 0.3s ease;
+}
+.replay-players .player.selected .replayMVP{
+  color: #fff;
+}
+.replay-players #team0players, .replay-draft #team0draft{
+  margin-right: 5px;
+}
+.replay-players #team1players, .replay-draft #team1draft{
+  text-align: right;
+  margin-left: 5px;
+}
+.replay-players #team0players .player, .replay-draft #team0draft .ban{
+  border-left: 3px solid #55b;
+}
+.replay-players #team1players .player, .replay-draft #team1draft .ban{
+  border-right: 3px solid #b55;
+  flex-direction: row-reverse;
+}
+.replay-players #team0players .player.selected{
+  background-color: #55b;
+}
+.replay-players #team1players .player.selected{
+  background-color: #b55;
+}
+.replay-draft .fa{
+  font-size: 18px;
+  opacity: 0.7;
+}
+.replay-draft #team0draft .fa{
+  margin-right: 10px;
+  color: #55b;
+}
+.replay-draft #team1draft .fa{
+  margin-left: 10px;
+  color: #b55;
+}
+
+.player-details-list{
+  min-height: 200px;
+  margin-bottom: 100px;
+}
+.playerDetails{
+  display: none;
+}
+.playerDetails.selected{
+  display: block;
+}
+.replay-player-heading, .replay-player-subheading{
+  width: calc(100% - 20px);
+  margin-bottom: 10px;
+  text-align: center;
+  padding: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #fff;
+}
+.replay-player-heading.team0{
+  background-color: #55b;
+}
+.replay-player-heading.team1{
+  background-color: #b55;
+}
+.replay-player-subheading{
+  background-color: #bbb;
+  margin-top: 20px;
+  color: #444;
+}

@@ -1,3 +1,5 @@
+'use strict';
+
 var logger = require('winston');
 const config = require('./config');
 
@@ -6,8 +8,6 @@ var passport = require('passport');
 
 // database
 var db_User = require('../models/user');
-var mongoose = require('mongoose');
-mongoose.connect(config.mongodb_key);
 
 passport.use(new BnetStrategy({
     clientID: config.bnet_key,

@@ -27,9 +27,6 @@
   left: 0;
   content: '';
 }
-#upload-modal .spinner:after{
-  background-color: #fff;
-}
 .spinner:after{
   width: 90%;
   height: 90%;

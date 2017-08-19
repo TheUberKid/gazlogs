@@ -29,7 +29,7 @@
     "fs-extra": "^4.0.0",
     "mongodb": "^2.2.26",
     "mongoose": "^4.9.8",
-    "passport": "^0.3.2",
+    "passport": "^0.4.0",
     "passport-bnet": "^1.2.1",
     "serve-favicon": "^2.4.2",
     "winston": "^2.3.1"

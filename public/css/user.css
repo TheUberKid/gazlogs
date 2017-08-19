@@ -1,0 +1,76 @@
+.profile-table{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: calc(100% + 10px);
+}
+.profile-table .profile-block{
+  display: inline-block;
+  flex-grow: 1;
+  margin: 0px 10px 10px 0px;
+  min-width: 180px;
+  padding: 10px;
+  background-color: #fff;
+  text-align: center;
+  border-left: 3px solid #ddd;
+  border-top: 3px solid #ddd;
+  border-bottom: 3px solid #aaa;
+  border-right: 3px solid #aaa;
+  cursor: pointer;
+  transition: border 0.3s ease;
+}
+.profile-block:hover{
+  border-left: 3px solid #79c;
+  border-top: 3px solid #79d;
+  border-bottom: 3px solid #359;
+  border-right: 3px solid #359;
+}
+.profile-block .profile-block-label{
+  font-family: 'Exo', sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: #777;
+  transition: color 0.3s ease;
+}
+.profile-block:hover .profile-block-label{
+  color: #359;
+}
+.profile-block .profile-block-value{
+  font-family: 'Exo', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  text-transform: uppercase;
+  color: #777;
+  transition: color 0.3s ease;
+}
+.profile-block:hover .profile-block-value{
+  color: #359;
+}
+.profile-block .coin{
+  width: 20px;
+  height: 20px;
+  margin-bottom: -2px;
+  margin-right: -2px;
+}
+
+#recent-replays-table .row { min-width: 935px; }
+#recent-replays-table .replayBuild{ width: 46px; min-width: 46px; flex-grow: 0 }
+#recent-replays-list .replayBuild{ color: #777; }
+#recent-replays-table .replayGameType{ width: 10vw; min-width: 100px; }
+#recent-replays-table .replayResult{ width: 6vw; min-width: 63px; font-weight: 600; }
+#recent-replays-table .replayMapName{ width: 18vw; min-width: 211px; }
+#recent-replays-table .replayHero{ width: 10vw; min-width: 120px; }
+#recent-replays-table .replayGameLength{ width: 5vw; min-width: 60px; }
+#recent-replays-table .replayTimePlayed{ width: 8vw; min-width: 110px; }
+#recent-replays-table .row.Victory .replayResult{ color: #383; }
+#recent-replays-table .row.Defeat .replayResult{ color: #833; }
+#recent-replays-table .row.Victory{ box-shadow: inset 3px 0 0 #383; }
+#recent-replays-table .row.Defeat{ box-shadow: inset 3px 0 0 #833; }
+
+#recent-replays-table .row:not(:hover){ box-shadow: inset 3px 0 0 transparent; }
+
+#recent-replays-list .row{
+  cursor: pointer;
+}

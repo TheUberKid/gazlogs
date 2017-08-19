@@ -1,3 +1,5 @@
+'use strict';
+
 var mapBanner = document.getElementById('map-banner');
 var map = document.getElementById('map');
 var gametype = document.getElementById('gametype');
@@ -22,7 +24,7 @@ var timePlayed = new Date(params.TimePlayed);
 
 mapBanner.style.backgroundImage = ('url("/img/mapbanners/' + params.MapName.toLowerCase() + '.jpg")');
 map.innerHTML = params.MapName;
-gametype.innerHTML = fullGametypes[params.GameType];
+gametype.innerHTML = fullGameTypes[params.GameType];
 date.innerHTML = timePlayed.getUTCDate() + ' ' + months[timePlayed.getMonth()] + ' ' + timePlayed.getFullYear();
 build.innerHTML = params.Build;
 region.innerHTML = regions[params.Region];
@@ -43,7 +45,7 @@ if(params.Draft){
 }
 
 function addReplayStat(label, value){
-  return '<div class="replay-stat"><span class="label">' + label + '</span><span class="value">' + value + '</span></div>';
+  return '<div class="stat"><span class="label">' + label + '</span><span class="value">' + value + '</span></div>';
 }
 
 // find top scores in each team (for MVP calculations);
@@ -104,38 +106,38 @@ for(var i=0, j=params.Players.length; i<j; i++){
   res = '';
   res += '<div class="playerDetails" id="details' + p.BattleTag + '">';
   res += '<div class="replay-player-heading team' + p.Team + '">' + BattleTag + ' / ' + Hero + '</div>';
-  res += '<div class="replay-stat-table">';
+  res += '<div class="stat-table">';
   res += addReplayStat('kills', p.SoloKill);
   res += addReplayStat('assists', p.Assists);
   res += addReplayStat('deaths', p.Deaths);
-  res += '</div><div class="replay-stat-table">';
+  res += '</div><div class="stat-table">';
   if(p.Healing > 0 || p.SelfHealing === 0) res += addReplayStat('healing', p.Healing);
   if(p.SelfHealing > 0) res += addReplayStat('self healing', p.SelfHealing);
   res += addReplayStat('exp contribution', p.ExperienceContribution);
   res += addReplayStat('mvp score', MVPscore.toFixed(2));
-  res += '</div><div class="replay-player-subheading">Damage Breakdown</div><div class="replay-stat-table">';
+  res += '</div><div class="replay-player-subheading">Damage Breakdown</div><div class="stat-table">';
   res += addReplayStat('hero damage', p.HeroDamage);
   res += addReplayStat('total siege damage', p.SiegeDamage);
   res += addReplayStat('damage taken', p.DamageTaken);
-  res += '</div><div class="replay-stat-table">';
+  res += '</div><div class="stat-table">';
   res += addReplayStat('structure damage', p.StructureDamage);
   res += addReplayStat('minion damage', p.MinionDamage);
   res += addReplayStat('creep damage', p.CreepDamage);
   res += addReplayStat('summon damage', p.SummonDamage);
-  res += '</div><div class="replay-player-subheading">Teamfight Statistics</div><div class="replay-stat-table">';
+  res += '</div><div class="replay-player-subheading">Teamfight Statistics</div><div class="stat-table">';
   res += addReplayStat('tf hero damage', p.TeamfightHeroDamage);
   res += addReplayStat('tf damage taken', p.TeamfightDamageTaken);
   res += addReplayStat('tf healing', p.TeamfightHealingDone);
-  res += '</div><div class="replay-stat-table">';
+  res += '</div><div class="stat-table">';
   res += addReplayStat('tf escapes', p.TeamfightEscapesPerformed);
   res += addReplayStat('outnumbered deaths', p.OutnumberedDeaths);
   res += addReplayStat('highest kill streak', p.HighestKillStreak);
-  res += '</div><div class="replay-player-subheading">Other</div><div class="replay-stat-table">';
+  res += '</div><div class="replay-player-subheading">Other</div><div class="stat-table">';
   res += addReplayStat('time spent dead', p.TimeSpentDead + 's');
   res += addReplayStat('time silencing enemies', p.TimeSilencingEnemyHeroes + 's');
   res += addReplayStat('time rooting enemies', p.TimeRootingEnemyHeroes + 's');
   res += addReplayStat('time stunning enemies', p.TimeStunningEnemyHeroes + 's');
-  res += '</div><div class="replay-stat-table">';
+  res += '</div><div class="stat-table">';
   res += addReplayStat('clutch heals', p.ClutchHealsPerformed);
   res += addReplayStat('escaped deaths', p.EscapesPerformed);
   res += addReplayStat('vengeance kills', p.VengeancesPerformed);
@@ -158,6 +160,6 @@ for(var i in players)
           players[j].className = players[j].className.replace(' selected', '');
       this.className += ' selected';
       for(var j in playerDetails)
-        playerDetails[j].className = 'playerDetails';
+        if(playerDetails[j].nodeType > 0) playerDetails[j].className = 'playerDetails';
       document.getElementById('details' + this.dataset.battletag).className = 'playerDetails selected';
   });

@@ -1,7 +1,9 @@
+'use strict';
+
 var recentReplaysList = document.getElementById('recent-replays-list');
 
 var res = '';
-for(var i=0, j=params.replays.length; i<j; i++){
+for(var i = 0, j = params.replays.length; i < j; i++){
   var p = params.replays[i];
   var GameLength = Math.floor(p.GameLength / (16 * 60)) + ':' + (Math.round(p.GameLength / 16) % 60).pad(2);
   var TimePlayed = Math.floor((Date.now() - p.TimePlayed) / (1000 * 60 * 60 * 24));
@@ -12,7 +14,7 @@ for(var i=0, j=params.replays.length; i<j; i++){
 
   res += '<div class="row ' + Result + ' replay" data-replayid="' + p.Id.toString().replace('-', 'n') + '">';
   res += '<div class="item replayBuild">' + p.Build + '</div>';
-  res += '<div class="item replayGameType">' + gametypes[p.GameType] + '</div>';
+  res += '<div class="item replayGameType">' + gameTypes[p.GameType] + '</div>';
   res += '<div class="item replayResult">' + Result + '</div>';
   res += '<div class="item replayMapName">' + p.MapName + '</div>';
   res += '<div class="item replayHero">' + Hero + '</div>';

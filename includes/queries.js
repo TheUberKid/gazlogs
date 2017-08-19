@@ -1,5 +1,8 @@
+'use strict';
+
 var logger = require('winston');
 var db_Replay = require('../models/replay');
+var db_Stat = require('../models/stat');
 
 // count number of replays a user has been in
 function countReplaysWithUser(battletag, callback){
@@ -68,7 +71,7 @@ function getReplaysByUser(battletag, page, callback){
     limit(20).
     skip(page * 20).
     exec(function(err, replays){
-      if(err) logger.log('info', '[QUERY] error: ' + err);
+      if(err) logger.log('info', '[QUERY] error: ' + err.message);
       if(callback) callback(replays);
     });
 }
@@ -79,8 +82,33 @@ function getReplay(id, callback){
     Id: id.replace('n', '-')
   }).
   exec(function(err, replay){
-    if(err) logger.log('info', '[QUERY] error: ' + err);
+    if(err) logger.log('info', '[QUERY] error: ' + err.message);
     if(callback) callback(replay);
   })
 }
 module.exports.getReplay = getReplay;
+
+function getBuilds(callback){
+  db_Stat.distinct('Build').
+  exec(function(err, builds){
+    builds = builds.sort(function(a, b){return b - a});
+    if(err) logger.log('info', '[QUERY] error: ' + err.message);
+    if(callback) callback(builds);
+  });
+}
+module.exports.getBuilds = getBuilds;
+
+function getSitewideStatistics(build, gametype, callback){
+  db_Stat.findOne({
+    Id: build * 10 + gametype
+  }).
+  select({
+    '_id': 0,
+    'Heroes._id': 0
+  }).
+  exec(function(err, stat){
+    if(err) callback(err);
+    if(callback) callback(stat);
+  });
+}
+module.exports.getSitewideStatistics = getSitewideStatistics;

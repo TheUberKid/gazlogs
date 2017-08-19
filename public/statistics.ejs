@@ -1,10 +1,59 @@
 <% include ../public/partials/header %>
 
-<div class='page-content centered'>
-  <div class='page-padding-block'></div>
-  <div class='page-large-title'>
-    Coming Soon
+<div class='page-content'>
+  <div class='page-heading divider'>
+    Global Statistics
+  </div>
+
+  <div class='stat-table'>
+    <div class='dropdown'>
+      <span class='label'>GameType: </span>
+      <div class='triangle'></div>
+      <span class='value' id='gametype'></span>
+      <div class='menu'>
+        <div class='item gametype' data-gametype=5>Unranked Draft</div>
+        <div class='item gametype' data-gametype=6>Quick Match</div>
+        <div class='item gametype' data-gametype=7>Hero League</div>
+        <div class='item gametype' data-gametype=8>Team League</div>
+      </div>
+    </div>
+    <div class='dropdown'>
+      <span class='label'>Build: </span>
+      <div class='triangle'></div>
+      <span class='value' id='build'></span>
+      <div class='menu' id='build-list'></div>
+    </div>
+    <div class='stat'>
+      <span class='label'>Last Updated: </span>
+      <span class='value' id='updated'>~1 Hour Ago</span>
+    </div>
+  </div>
+
+  <div id='statistics-spinner'>
+    <div class='spinner'></div>
+  </div>
+
+  <div id='statistics-table' class='full-width-table'>
+    <div class='labels row'>
+      <div class='item statHero'>Hero</div>
+      <div class='item statWinRate'>Win Rate</div>
+      <div class='item statPickRate'>Pick Rate</div>
+      <div class='item statBanRate'>Ban Rate</div>
+      <div class='item statGamesWon'>Won</div>
+      <div class='item statGamesPicked'>Picked</div>
+      <div class='item statGamesBanned'>Banned</div>
+    </div>
+    <div id='statistics'></div>
   </div>
 </div>
+
+<% if(locals.params){ %>
+  <script>
+    var params = <%- JSON.stringify(params) %>;
+  </script>
+<% } %>
+
+<script type='text/javascript' src='/js/dictionary.js'></script>
+<script type='text/javascript' src='/js/statistics.js'></script>
 
 <% include ../public/partials/footer %>

@@ -1,8 +1,17 @@
 'use strict';
 
-// includes
 var logger = require('winston');
 const config = require('./includes/config');
+
+// database
+var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+mongoose.connect(config.mongodb_key, {
+  keepAlive: true,
+  reconnectTries: Number.MAX_VALUE,
+  useMongoClient: true
+});
+var db_User = require('./models/user');
 
 // authentication
 var passport = require('./includes/passport');
@@ -15,12 +24,7 @@ var minify = require('express-minify');
 var favicon = require('serve-favicon');
 var routing = require('./includes/routing');
 var queries = require('./includes/queries');
-
-// database
-var mongoose = require('mongoose');
-mongoose.connect(config.mongodb_key);
-mongoose.Promise = require('bluebird');
-var db_User = require('./models/user');
+var dict = require('./includes/dictionary');
 
 // server
 var express = require('express'),
@@ -58,7 +62,15 @@ app.use(favicon(__dirname + '/public/img/favicon.png'))
     .use('/js', express.static('public/js'))
     .use('/img', express.static('public/img'))
     .get('/', routing.render('index', false, false))
-    .get('/statistics', routing.render('statistics', 'HotS Statistics', 'statistics'))
+    .get('/statistics', function(req, res){
+      req.query.build = parseInt(req.query.build);
+      req.query.gametype = parseInt(req.query.gametype);
+      routing.render('statistics', 'HotS Statistics', 'statistics', {
+        BuildList: dict.builds,
+        Build: (req.query.build != null && dict.builds.indexOf(req.query.build) > -1) ? req.query.build : dict.builds[0],
+        GameType: (req.query.gametype != null && req.query.gametype >= 5 && req.query.gametype <= 8) ? req.query.gametype : 7
+      })(req, res);
+    })
     .get('/leaderboard', routing.render('leaderboard', 'Leaderboard', 'leaderboard'))
     .get('/exchange', routing.render('exchange', 'Doubloon Exchange', 'exchange'))
     .get('/upload', function(req, res){
@@ -95,6 +107,16 @@ app.use(favicon(__dirname + '/public/img/favicon.png'))
         }
       });
     })
+    .get('/api/statistics', function(req, res){
+      req.query.build = parseInt(req.query.build);
+      req.query.gametype = parseInt(req.query.gametype);
+      queries.getSitewideStatistics(
+      (req.query.build != null && dict.builds.indexOf(req.query.build) > -1) ? req.query.build : dict.builds[0],
+      (req.query.gametype != null && req.query.gametype >= 5 && req.query.gametype <= 8) ? req.query.gametype : 7,
+      function(stat){
+        res.json(stat);
+      });
+    })
     .get('/auth', routing.noAuth, function(req, res){
       res.redirect('/auth/login');
     })
@@ -112,7 +134,8 @@ app.use(favicon(__dirname + '/public/img/favicon.png'))
     }, passport.authenticate('bnet'))
     .get('/faq', routing.render('faq', 'Frequently Asked Questions', false))
     .get('*', function(req, res){
-      res.status(404).render('404', {title: '404', nav: false, auth: req.user.profile});
+      res.status(404);
+      routing.render('404', '404', false)(req, res);
     });
 
 // start the server
