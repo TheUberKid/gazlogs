@@ -124,3 +124,19 @@ for(var i in dropdowns){
     this.className = this.className === 'dropdown' ? 'dropdown active' : 'dropdown';
   })
 }
+
+function getTimeSince(date){
+  var elapsed = Date.now() - date;
+  var unit;
+  if(elapsed > 1000 * 60 * 60){
+    unit = 'hour';
+    elapsed = Math.floor(elapsed / (1000 * 60 * 60));
+  } else if(elapsed > 1000 * 60){
+    unit = 'minute';
+    elapsed = Math.floor(elapsed / (1000 * 60));
+  } else {
+    unit = 'second';
+    elapsed = Math.floor(elapsed / 1000);
+  }
+  return elapsed + ' ' + unit + (elapsed === 1 ? '' : 's');
+}

@@ -17,7 +17,7 @@
 #fixed-labels{
   position: fixed;
   top: 0;
-  width: 76vw;
+  width: calc(76vw + 1px);
   margin: 0px 12vw;
   border-bottom: 2px solid #aaa;
   border-top: 20px solid #eee;

@@ -3,6 +3,7 @@
 var gametype = document.getElementById('gametype');
 var build = document.getElementById('build');
 var buildList = document.getElementById('build-list');
+var updated = document.getElementById('updated');
 var statisticsTable = document.getElementById('statistics-table');
 var statisticsSpinner = document.getElementById('statistics-spinner');
 var statistics = document.getElementById('statistics');
@@ -10,9 +11,7 @@ var fixedLabels = document.getElementById('fixed-labels');
 
 function checkScroll(){
   fixedLabels.style.display = document.body.scrollTop > 220 ? 'block' : 'none';
-  fixedLabels.style.width = (statistics.offsetWidth - 3) + 'px';
 }
-window.addEventListener('resize', checkScroll);
 window.addEventListener('scroll', checkScroll);
 checkScroll();
 
@@ -91,4 +90,5 @@ function showStatistics(statRes){
   statistics.innerHTML = res;
   statisticsSpinner.style.display = 'none';
   statisticsTable.className += ' complete';
+  updated.innerHTML = getTimeSince(statRes.Time) + ' ago';
 }
