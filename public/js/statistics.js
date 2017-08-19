@@ -10,7 +10,9 @@ var fixedLabels = document.getElementById('fixed-labels');
 
 function checkScroll(){
   fixedLabels.style.display = document.body.scrollTop > 220 ? 'block' : 'none';
+  fixedLabels.style.width = (statistics.offsetWidth - 3) + 'px';
 }
+window.addEventListener('resize', checkScroll);
 window.addEventListener('scroll', checkScroll);
 checkScroll();
 

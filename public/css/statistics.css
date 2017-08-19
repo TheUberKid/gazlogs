@@ -17,10 +17,10 @@
 #fixed-labels{
   position: fixed;
   top: 0;
-  width: calc(76vw + 1px);
+  width: 76vw;
   margin: 0px 12vw;
-  border-top: 20px solid #eee;
   border-bottom: 2px solid #aaa;
+  border-top: 20px solid #eee;
   display: none;
 }
 #fixed-labels .row .item:nth-last-child(0n+1){

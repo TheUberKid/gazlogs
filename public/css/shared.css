@@ -21,6 +21,7 @@ a{
 #navbar{
   height: 40px;
   padding: 20px 12vw;
+  width: 76vw;
   min-width: 850px;
   background-color: #fff;
   border-bottom: 1px solid #ccc;
@@ -80,6 +81,7 @@ a{
 
 .page-content{
   padding: 0px 12vw;
+  width: 76vw;
 }
 .page-content.centered{
   text-align: center;
