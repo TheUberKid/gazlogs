@@ -1,5 +1,6 @@
 'use strict';
 
+var logger = require('winston');
 var queries = require('./queries');
 
 module.exports.objectToArray = function(object, array){
@@ -120,6 +121,16 @@ module.exports.regions = {
   1: 'North America'
 }
 
-queries.getBuilds(function(res){
-  module.exports.builds = res.sort(function(a, b){return b - a});
-});
+module.exports.builds = [];
+function updateBuilds(){
+  queries.getBuilds(function(res){
+    module.exports.builds = res.sort(function(a, b){return b - a});
+    logger.log('info', 'Updated Build List: ' + module.exports.builds);
+  });
+}
+updateBuilds();
+
+// staggered build fetching to give time for builds to generate
+setTimeout(function(){
+  setInterval(updateBuilds, 2*60*60*1000);
+}, 30*60*1000);
