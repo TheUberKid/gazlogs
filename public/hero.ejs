@@ -1,0 +1,128 @@
+<% include ../public/partials/header %>
+
+<div class='page-content'>
+
+  <div class='stat-table' id='hero-stat-table'>
+    <div class='dropdown'>
+      <span class='label'>GameType: </span>
+      <div class='triangle'></div>
+      <span class='value' id='gametype'></span>
+      <div class='menu'>
+        <div class='item gametype' data-gametype=6>Unranked Draft</div>
+        <div class='item gametype' data-gametype=7>Quick Match</div>
+        <div class='item gametype' data-gametype=8>Hero League</div>
+        <div class='item gametype' data-gametype=9>Team League</div>
+      </div>
+    </div>
+    <div class='dropdown'>
+      <span class='label'>Build: </span>
+      <div class='triangle'></div>
+      <span class='value' id='build'></span>
+      <div class='menu' id='build-list'></div>
+    </div>
+    <div class='stat'>
+      <span class='label'>Last Updated: </span>
+      <span class='value' id='updated'>-/-</span>
+    </div>
+  </div>
+
+  <div class='hero-banner'>
+    <div id='hero-portrait'>
+    </div>
+    <div class='hero-info'>
+      <div class='hero-title' id='hero-title'>
+      </div>
+      <div class='hero-info-table'>
+        <div class='hero-info-block'>
+          <div class='hero-info-block-label'>Win Rate</div>
+          <div class='hero-info-block-value' id='winrate'>-/-</div>
+        </div>
+        <div class='hero-info-block'>
+          <div class='hero-info-block-label'>Pick Rate</div>
+          <div class='hero-info-block-value' id='pickrate'>-/-</div>
+        </div>
+        <div class='hero-info-block'>
+          <div class='hero-info-block-label'>Ban Rate</div>
+          <div class='hero-info-block-value' id='banrate'>-/-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id='statistics-spinner'>
+    <div class='spinner'></div>
+  </div>
+
+  <div class='hero-details' id='hero-details'>
+    <div class='hero-details-nav'>
+      <div class='nav-button selected' data-target='talents'>
+        Talents
+      </div>
+      <div class='nav-button' data-target='maps'>
+        Maps
+      </div>
+      <div class='nav-button' data-target='matchups'>
+        Matchups
+      </div>
+    </div>
+
+    <div class='hero-details-target selected' id='talents'>
+      <div class='talent-tier'>
+        <div class='label'>Level</div>
+        <div class='level'> 1 </div>
+        <div id='tier1'></div>
+      </div>
+      <div class='talent-tier'>
+        <div class='label'>Level</div>
+        <div class='level'> 4 </div>
+        <div id='tier2'></div>
+      </div>
+      <div class='talent-tier'>
+        <div class='label'>Level</div>
+        <div class='level'> 7 </div>
+        <div id='tier3'></div>
+      </div>
+      <div class='talent-tier heroic'>
+        <div class='label'>Level</div>
+        <div class='level'> 10 </div>
+        <div id='tier4'></div>
+      </div>
+      <div class='talent-tier'>
+        <div class='label'>Level</div>
+        <div class='level'> 13 </div>
+        <div id='tier5'></div>
+      </div>
+      <div class='talent-tier'>
+        <div class='label'>Level</div>
+        <div class='level'> 16 </div>
+        <div id='tier6'></div>
+      </div>
+      <div class='talent-tier heroic'>
+        <div class='label'>Level</div>
+        <div class='level'> 20 </div>
+        <div id='tier7'></div>
+      </div>
+    </div>
+
+    <div class='hero-details-target' id='maps'>
+      Maps
+    </div>
+
+    <div class='hero-details-target' id='matchups'>
+      Matchups
+    </div>
+
+  </div>
+
+</div>
+
+<% if(locals.params){ %>
+  <script>
+    var params = <%- JSON.stringify(params) %>;
+  </script>
+<% } %>
+
+<script type='text/javascript' src='/js/dictionary.js'></script>
+<script type='text/javascript' src='/js/hero.js'></script>
+
+<% include ../public/partials/footer %>

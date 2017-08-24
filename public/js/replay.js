@@ -20,12 +20,10 @@ var team0players = document.getElementById('team0players');
 var team1players = document.getElementById('team1players');
 var playerDetailsList = document.getElementById('player-details-list');
 
-var timePlayed = new Date(params.TimePlayed);
-
 mapBanner.style.backgroundImage = ('url("/img/mapbanners/' + params.MapName.toLowerCase() + '.jpg")');
 map.innerHTML = params.MapName;
 gametype.innerHTML = fullGameTypes[params.GameType];
-date.innerHTML = timePlayed.getUTCDate() + ' ' + months[timePlayed.getMonth()] + ' ' + timePlayed.getFullYear();
+date.innerHTML = getDate(params.timePlayed);
 build.innerHTML = params.Build;
 region.innerHTML = regions[params.Region];
 duration.innerHTML = Math.floor(params.GameLength / (16 * 60)) + ':' + (Math.round(params.GameLength / 16) % 60).pad(2);
@@ -38,10 +36,10 @@ team1bar.style.flexGrow = params.Team1Level - 5;
 if(params.Draft){
   var d = params.Draft;
   draft.style.display = 'block';
-  team0ban1.innerHTML = d.Team0Ban1.length > 0 ? heroByAttr(d.Team0Ban1).PrimaryName : 'None';
-  team0ban2.innerHTML = d.Team0Ban2.length > 0 ? heroByAttr(d.Team0Ban2).PrimaryName : 'None';
-  team1ban1.innerHTML = d.Team1Ban1.length > 0 ? heroByAttr(d.Team1Ban1).PrimaryName : 'None';
-  team1ban2.innerHTML = d.Team1Ban2.length > 0 ? heroByAttr(d.Team1Ban2).PrimaryName : 'None';
+  team0ban1.innerHTML = d.Team0Ban1.length > 0 ? altNames[heroByAttr(d.Team0Ban1)].PrimaryName : 'None';
+  team0ban2.innerHTML = d.Team0Ban2.length > 0 ? altNames[heroByAttr(d.Team0Ban2)].PrimaryName : 'None';
+  team1ban1.innerHTML = d.Team1Ban1.length > 0 ? altNames[heroByAttr(d.Team1Ban1)].PrimaryName : 'None';
+  team1ban2.innerHTML = d.Team1Ban2.length > 0 ? altNames[heroByAttr(d.Team1Ban2)].PrimaryName : 'None';
 }
 
 function addReplayStat(label, value){

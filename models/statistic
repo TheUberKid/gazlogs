@@ -19,7 +19,7 @@ var heroSchema = new Schema({
   FriendlyMatchups: {type: [winLossSchema], required: true},
   EnemyMatchups: {type: [winLossSchema], required: true}
 });
-var statSchema = new Schema({
+var statisticSchema = new Schema({
   Id: {type: Number, required: true, unique: true, index: true},
   Build: {type: Number, required: true},
   GameType: {type: Number, required: true},
@@ -28,5 +28,5 @@ var statSchema = new Schema({
   Heroes: {type: [heroSchema], required: true}
 });
 
-var Stat = mongoose.model('Stat', statSchema);
-module.exports = Stat;
+var Statistic = mongoose.model('Statistic', statisticSchema);
+module.exports = Statistic;

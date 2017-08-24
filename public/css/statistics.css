@@ -40,6 +40,171 @@
 
 #statistics-table .row:not(:hover){ box-shadow: inset 3px 0 0 transparent; }
 
+#hero-stat-table{
+  margin-top: 40px;
+}
+.hero-banner{
+  width: 100%;
+  min-height: 152px;
+  display: flex;
+  flex-direction: row;
+}
+#hero-portrait{
+  width: 152px;
+  height: 152px;
+  margin-right: 10px;
+}
+#hero-portrait img{
+  width: 152px;
+  height: 152px;
+}
+.hero-info{
+  background-color: #ddd;
+  min-height: 112px;
+  padding: 20px;
+  flex-grow: 1;
+}
+.hero-title{
+  font-size: 22px;
+  font-family: 'Exo', sans-serif;
+  text-transform: uppercase;
+  color: #444;
+}
+.hero-title .subgroup{
+  margin-left: 10px;
+  color: #888;
+}
+
+#hero-details{
+  margin-top: 20px;
+  transition: margin 0.3s ease, opacity 0.3s ease;
+}
+#hero-details:not(.complete){
+  opacity: 0;
+  margin-top: 40px;
+}
+.hero-info-table{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: calc(100% + 20px);
+  margin-top: 14px;
+  margin-bottom: -20px;
+}
+.hero-info-table .hero-info-block{
+  display: inline-block;
+  flex-grow: 1;
+  margin: 0px 20px 20px 0px;
+  min-width: 180px;
+  height: 49px;
+  padding: 10px;
+  background-color: #eee;
+  text-align: center;
+  cursor: pointer;
+}
+.hero-info-block .hero-info-block-label{
+  font-family: 'Exo', sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: #444;
+  transition: color 0.3s ease;
+}
+.hero-info-block:hover .hero-info-block-label{
+  color: #359;
+}
+.hero-info-block .hero-info-block-value{
+  font-family: 'Exo', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  text-transform: uppercase;
+  color: #444;
+  transition: color 0.3s ease;
+}
+.hero-info-block:hover .hero-info-block-value{
+  color: #359;
+}
+
+.hero-details-nav{
+  display: flex;
+  flex-direction: row;
+  width: calc(100% + 10px);
+  justify-content: space-between;
+}
+.hero-details-nav .nav-button{
+  display: inline-block;
+  width: 200px;
+  min-width: 200px;
+  margin: 0px 10px 17px 0px;
+  padding: 10px;
+  border-bottom: 3px solid #eee;
+  flex-grow: 1;
+  background-color: #ddd;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #444;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.hero-details-nav .nav-button.selected{
+  background-color: #ccc;
+  border-bottom: 3px solid #359;
+}
+.hero-details-nav .nav-button:hover{
+  background-color: #ccc;
+}
+.hero-details-target:not(.selected){
+  display: none;
+}
+
+#talents{
+  width: 100%;
+  flex-direction: column;
+}
+#talents.selected{
+  display: flex;
+}
+#talents .talent-tier{
+  display: flex;
+  width: calc(100% + 10px);
+  flex-direction: row;
+  margin-bottom: 10px;
+  background-color: #e4e4e4;
+}
+#talents .talent-tier.heroic{
+  background-color: #ccc;
+}
+#talents .talent-tier .label{
+  padding: 15px;
+  background-color: #ddd;
+  font-family: 'Exo', sans-serif;
+  font-size: 15px;
+  color: #444;
+  text-transform: uppercase;
+}
+#talents .talent-tier .level{
+  width: 20px;
+  margin-right: 10px;
+  padding: 15px;
+  background-color: #ccc;
+  font-family: 'Exo', sans-serif;
+  font-size: 15px;
+  color: #444;
+  text-align: center;
+}
+#talents .talent-tier.heroic .label{
+  background-color: #359;
+  color: #fff;
+}
+#talents .talent-tier.heroic .level{
+  background-color: #444;
+  color: #fff;
+}
+
 .replay-banner{
   width: 100%;
   height: 237px;
@@ -182,7 +347,8 @@
 }
 .replay-draft .fa{
   font-size: 18px;
-  opacity: 0.7;
+  -webkit-text-stroke: 2px #ddd;
+  text-stroke: 2px #ddd;
 }
 .replay-draft #team0draft .fa{
   margin-right: 10px;

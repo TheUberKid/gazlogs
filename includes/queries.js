@@ -2,7 +2,7 @@
 
 var logger = require('winston');
 var db_Replay = require('../models/replay');
-var db_Stat = require('../models/stat');
+var db_Statistic = require('../models/statistic');
 
 // count number of replays a user has been in
 function countReplaysWithUser(battletag, callback){
@@ -89,7 +89,7 @@ function getReplay(id, callback){
 module.exports.getReplay = getReplay;
 
 function getBuilds(callback){
-  db_Stat.distinct('Build').
+  db_Statistic.distinct('Build').
   exec(function(err, builds){
     builds = builds.sort(function(a, b){return b - a});
     if(err) logger.log('info', '[QUERY] error: ' + err.message);
@@ -99,7 +99,7 @@ function getBuilds(callback){
 module.exports.getBuilds = getBuilds;
 
 function getSitewideStatistics(build, gametype, callback){
-  db_Stat.findOne({
+  db_Statistic.findOne({
     Id: build * 10 + gametype
   }).
   select({

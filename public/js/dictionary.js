@@ -82,7 +82,8 @@ var altNames = {
 };
 function heroByAttr(attrName){
   for(var i in altNames)
-    if(altNames[i].AttributeName === attrName) return altNames[i];
+    if(altNames[i].AttributeName === attrName) return i;
+  return null;
 }
 
 var gameTypes = {
@@ -123,6 +124,12 @@ for(var i in dropdowns){
   if(dropdowns[i].children) dropdowns[i].addEventListener('click', function(){
     this.className = this.className === 'dropdown' ? 'dropdown active' : 'dropdown';
   })
+}
+
+function getDate(date){
+  if(date == null) date = Date.now();
+  date = new Date(date);
+  return date.getUTCDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
 }
 
 function getTimeSince(date){

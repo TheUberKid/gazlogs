@@ -26,6 +26,6 @@ recentReplaysList.innerHTML = res;
 
 var replays = document.getElementsByClassName('replay');
 for(var i in replays)
-  if(replays[i].children) replays[i].addEventListener('click', function(e){
+  if(replays[i].children) replays[i].addEventListener('click', function(){
     window.location.href = '/replay/' + this.dataset.replayid;
   });

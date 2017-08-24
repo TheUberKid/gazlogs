@@ -211,6 +211,7 @@ a{
   position: relative;
   flex-grow: 1;
   margin: 0px 10px 10px 0px;
+  width: 200px;
   min-width: 200px;
   padding: 10px;
   background-color: #ddd;

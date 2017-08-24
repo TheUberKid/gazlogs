@@ -71,6 +71,22 @@ app.use(favicon(__dirname + '/public/img/favicon.png'))
         GameType: (req.query.gametype != null && req.query.gametype >= 6 && req.query.gametype <= 9) ? req.query.gametype : 8
       })(req, res);
     })
+    .get('/statistics/hero/*', function(req, res, next){
+      var hero = routing.getPath(req.url).toLowerCase();
+      var h = dict.lowerCaseNames[hero];
+      if(h != null){
+        req.query.build = parseInt(req.query.build);
+        req.query.gametype = parseInt(req.query.gametype);
+        routing.render('hero', h.PrimaryName + ' (Hero)', 'statistics', {
+          Hero: h.AttributeName,
+          BuildList: dict.builds,
+          Build: (req.query.build != null && dict.builds.indexOf(req.query.build) > -1) ? req.query.build : dict.builds[0],
+          GameType: (req.query.gametype != null && req.query.gametype >= 6 && req.query.gametype <= 9) ? req.query.gametype : 8
+        })(req, res);
+      } else {
+        next();
+      }
+    })
     .get('/leaderboard', routing.render('leaderboard', 'Leaderboard', 'leaderboard'))
     .get('/exchange', routing.render('exchange', 'Doubloon Exchange', 'exchange'))
     .get('/upload', function(req, res){
@@ -99,7 +115,7 @@ app.use(favicon(__dirname + '/public/img/favicon.png'))
       })
     })
     .get('/replay/*', function(req, res){
-      queries.getReplay(req.originalUrl.substring(8), function(replay){
+      queries.getReplay(routing.getPath(req.url), function(replay){
         if(replay){
           routing.render('replay', 'Replay Viewer', 'statistics', replay)(req, res);
         } else {

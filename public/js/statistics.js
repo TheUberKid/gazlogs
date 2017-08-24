@@ -1,5 +1,6 @@
 'use strict';
 
+var date = document.getElementById('date');
 var gametype = document.getElementById('gametype');
 var build = document.getElementById('build');
 var buildList = document.getElementById('build-list');
@@ -8,6 +9,8 @@ var statisticsTable = document.getElementById('statistics-table');
 var statisticsSpinner = document.getElementById('statistics-spinner');
 var statistics = document.getElementById('statistics');
 var fixedLabels = document.getElementById('fixed-labels');
+
+date.innerHTML = getDate();
 
 function checkScroll(){
   fixedLabels.style.display = document.body.scrollTop > 220 ? 'block' : 'none';
@@ -63,6 +66,10 @@ function showStatistics(statRes){
   statRes.Heroes.sort(function(a, b){
     var aWR = a.GamesPicked === 0 ? -1 : (a.Wins / (a.Wins + a.Losses));
     var bWR = b.GamesPicked === 0 ? -1 : (b.Wins / (b.Wins + b.Losses));
+    if(aWR === bWR){
+      aWR = a.GamesPicked;
+      bWR = b.GamesPicked;
+    }
     return bWR - aWR;
   });
 
@@ -73,11 +80,11 @@ function showStatistics(statRes){
 
     var Hero = p.Hero;
     if(altNames[Hero]) Hero = altNames[Hero].PrimaryName;
-    var PickRate = (p.GamesPicked / statRes.SampleSize * 100).toFixed(1) + '%';
-    var BanRate = (p.GamesBanned / statRes.SampleSize * 100).toFixed(1) + '%';
+    var PickRate = statRes.SampleSize === 0 ? 'no data' : (p.GamesPicked / statRes.SampleSize * 100).toFixed(1) + '%';
+    var BanRate = statRes.SampleSize === 0 ? 'no data' : (p.GamesBanned / statRes.SampleSize * 100).toFixed(1) + '%';
     var WinRate = p.GamesPicked === 0 ? 'no data' : (p.Wins / (p.Wins + p.Losses) * 100).toFixed(1) + '%';
 
-    res += '<div class="row hero">';
+    res += '<div class="row hero" data-hero="' + p.Hero + '">';
     res += '<div class="item statHero">' + Hero + '</div>';
     res += '<div class="item statWinRate">' + WinRate + '</div>';
     res += '<div class="item statPickRate">' + PickRate + '</div>';
@@ -91,4 +98,10 @@ function showStatistics(statRes){
   statisticsSpinner.style.display = 'none';
   statisticsTable.className += ' complete';
   updated.innerHTML = getTimeSince(statRes.Time) + ' ago';
+
+  var hero = document.getElementsByClassName('hero');
+  for(var i in hero)
+    if(hero[i].children) hero[i].addEventListener('click', function(){
+      window.location.href = '/statistics/hero/' + this.dataset.hero + '?gametype=' + params.GameType + '&build=' + params.Build;
+    });
 }

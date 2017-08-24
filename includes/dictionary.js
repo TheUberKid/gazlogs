@@ -81,6 +81,9 @@ var heroes = module.exports.heroes = {
   Zeratul: {"PrimaryName": "Zeratul", "ImageURL": "Zeratul", "AttributeName": "Zera", "Group": "Assassin", "SubGroup": "Ambusher", "Translations": "ЗЕРАТУЛ,제라툴,泽拉图,澤拉圖"},
   Zuljin: {"PrimaryName": "Zul'jin", "ImageURL": "Zuljin", "AttributeName": "ZULJ", "Group": "Assassin", "SubGroup": "Sustained Damage", "Translations": "Zul’jin,祖爾金,祖尔金,줄진,Зул'джин"}
 };
+var lowerCaseNames = {};
+for(var i in heroes) lowerCaseNames[i.toLowerCase()] = heroes[i];
+module.exports.lowerCaseNames = lowerCaseNames;
 
 module.exports.heroByAttr = function(attrName){
   for(var i in heroes)

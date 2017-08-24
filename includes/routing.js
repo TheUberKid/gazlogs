@@ -1,8 +1,9 @@
 'use strict';
 
 var logger = require('winston');
+var url = require('url');
 var db_User = require('../models/user');
-var passport = require('./passport')
+var passport = require('./passport');
 
 // redirect non-secure users to https
 function forceHTTPS(req, res, next){
@@ -63,3 +64,10 @@ function render(view, title, nav, params){
   return callback;
 }
 module.exports.render = render;
+
+// get last word in path from url
+function getPath(requrl){
+  requrl = url.parse(requrl).pathname.split('/');
+  return requrl[requrl.length-1];
+}
+module.exports.getPath = getPath;

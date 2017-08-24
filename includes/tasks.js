@@ -7,7 +7,7 @@ var logger = require('winston');
 
 // database
 var db_Replay = require('../models/replay');
-var db_Stat = require('../models/stat');
+var db_Statistic = require('../models/statistic');
 
 var winLossObject = function(name){
   this.Name = name;
@@ -115,7 +115,7 @@ function createHeroStatistics(build, gametype){
       }
       stats.Heroes = dict.objectToArray(stats.Heroes);
 
-      db_Stat.findOneAndUpdate({
+      db_Statistic.findOneAndUpdate({
         Id: Id,
       }, stats, {upsert: true}, function(err){
         if(err){
