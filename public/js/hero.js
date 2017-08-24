@@ -11,7 +11,6 @@ var updated = document.getElementById('updated');
 var winrate = document.getElementById('winrate');
 var pickrate = document.getElementById('pickrate');
 var banrate = document.getElementById('banrate');
-var statisticsSpinner = document.getElementById('statistics-spinner');
 var heroDetails = document.getElementById('hero-details');
 
 portrait.innerHTML = '<img src="/img/heroportraits/' + hero.toLowerCase() + '.png">';
@@ -43,14 +42,12 @@ var buildSelect = document.getElementsByClassName('build');
 for(var i in gametypeSelect)
   if(gametypeSelect[i].children) gametypeSelect[i].addEventListener('click', function(){
     params.GameType = this.dataset.gametype;
-    statisticsSpinner.style.display = 'block';
     heroDetails.className = heroDetails.className.replace(' complete', '');
     queryStatistics();
   });
 for(var i in buildSelect)
   if(buildSelect[i].children) buildSelect[i].addEventListener('click', function(){
     params.Build = this.dataset.build;
-    statisticsSpinner.style.display = 'block';
     heroDetails.className = heroDetails.className.replace(' complete', '');
     queryStatistics();
   });
@@ -65,21 +62,23 @@ function queryStatistics(){
       showStatistics(JSON.parse(req.responseText));
     }
   }
-  req.open('GET', '/api/statistics?gametype=' + params.GameType + '&build=' + params.Build, true);
+  req.open('GET', '/api/statistics/hero/' + hero + '?gametype=' + params.GameType + '&build=' + params.Build, true);
   req.send();
 }
 
 queryStatistics();
 
+function newTalent(name, win, loss){
+
+}
+
 function showStatistics(statRes){
 
-  statisticsSpinner.style.display = 'none';
   heroDetails.className += ' complete';
   updated.innerHTML = getTimeSince(statRes.Time) + ' ago';
 
-  var p;
-  for(var i = 0, j = statRes.Heroes.length; i < j; i++)
-    if(statRes.Heroes[i].Hero === hero) p = statRes.Heroes[i];
+  console.log(statRes);
+  var p = statRes.Heroes[0];
 
   var PickRate = p.GamesPicked === 0 ? 'no data' : (p.GamesPicked / statRes.SampleSize * 100).toFixed(1) + '%';
   var BanRate = p.GamesBanned === 0 ? 'no data' : (p.GamesBanned / statRes.SampleSize * 100).toFixed(1) + '%';
@@ -90,7 +89,11 @@ function showStatistics(statRes){
   banrate.innerHTML = BanRate;
 
   for(var i = 0; i < 7; i++){
-    
+    for(var j = 0, k = p.Talents[i].length; j < k; j++){
+      var s = p.Talents[i][j];
+      var res = '';
+
+    }
   }
 
 }

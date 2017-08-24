@@ -133,6 +133,17 @@ app.use(favicon(__dirname + '/public/img/favicon.png'))
         res.json(stat);
       });
     })
+    .get('/api/statistics/hero/*', function(req, res){
+      req.query.build = parseInt(req.query.build);
+      req.query.gametype = parseInt(req.query.gametype);
+      queries.getHeroStatistics(
+      (req.query.build != null && dict.builds.indexOf(req.query.build) > -1) ? req.query.build : dict.builds[0],
+      (req.query.gametype != null && req.query.gametype >= 6 && req.query.gametype <= 9) ? req.query.gametype : 8,
+      routing.getPath(req.url),
+      function(stat){
+        res.json(stat);
+      });
+    })
     .get('/auth', routing.noAuth, function(req, res){
       res.redirect('/auth/login');
     })

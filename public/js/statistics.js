@@ -6,7 +6,6 @@ var build = document.getElementById('build');
 var buildList = document.getElementById('build-list');
 var updated = document.getElementById('updated');
 var statisticsTable = document.getElementById('statistics-table');
-var statisticsSpinner = document.getElementById('statistics-spinner');
 var statistics = document.getElementById('statistics');
 var fixedLabels = document.getElementById('fixed-labels');
 
@@ -34,14 +33,12 @@ var buildSelect = document.getElementsByClassName('build');
 for(var i in gametypeSelect)
   if(gametypeSelect[i].children) gametypeSelect[i].addEventListener('click', function(){
     params.GameType = this.dataset.gametype;
-    statisticsSpinner.style.display = 'block';
     statisticsTable.className = statisticsTable.className.replace(' complete', '');
     queryStatistics();
   });
 for(var i in buildSelect)
   if(buildSelect[i].children) buildSelect[i].addEventListener('click', function(){
     params.Build = this.dataset.build;
-    statisticsSpinner.style.display = 'block';
     statisticsTable.className = statisticsTable.className.replace(' complete', '');
     queryStatistics();
   });
@@ -95,7 +92,6 @@ function showStatistics(statRes){
     res += '</div>';
   }
   statistics.innerHTML = res;
-  statisticsSpinner.style.display = 'none';
   statisticsTable.className += ' complete';
   updated.innerHTML = getTimeSince(statRes.Time) + ' ago';
 

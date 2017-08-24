@@ -53,7 +53,23 @@ function createHeroStatistics(build, gametype){
   return new Promise(function(resolve, reject){
 
     // look through all replays of the relevant build
-    db_Replay.find({Build: build, GameType: gametype}).exec(function(err, replays){
+    db_Replay.find({Build: build, GameType: gametype}).
+    select({
+      'MapName': 1,
+      'Players': 1,
+      'Draft': 1,
+      'WinningTeam': 1,
+      'Players.Hero': 1,
+      'Players.Team': 1,
+      'Players.Tier1Talent': 1,
+      'Players.Tier2Talent': 1,
+      'Players.Tier3Talent': 1,
+      'Players.Tier4Talent': 1,
+      'Players.Tier5Talent': 1,
+      'Players.Tier6Talent': 1,
+      'Players.Tier7Talent': 1
+    }).
+    exec(function(err, replays){
       if(err) return logger.log('info', err.message);
 
       for(var i = 0, j = replays.length; i < j; i++){ // i = replay index
@@ -83,8 +99,8 @@ function createHeroStatistics(build, gametype){
           if(!mirrorMatch){
             h[category]++;
             h.Maps[r.MapName][category]++;
-            for(var m = 0; m < 7; m++){ // m = talent
-              var t = p['Tier' + m + 'Talent'];
+            for(var m = 0; m < 7; m++){ // m = talent index
+              var t = p['Tier' + (m + 1) + 'Talent'];
               var talentTier = h.Talents[m];
               if(!h.Talents[m][t]) h.Talents[m][t] = new winLossObject(t);
               h.Talents[m][t][category]++;
