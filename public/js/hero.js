@@ -68,8 +68,21 @@ function queryStatistics(){
 
 queryStatistics();
 
-function newTalent(name, win, loss){
-
+var filters = [
+  'Mastery',
+  'HeroicAbility',
+  'CombatStyle',
+  'GenericTalent',
+  'Talent'
+]
+function formatTalent(name){
+  name = name.replace(hero, '');
+  for(var i = 0, j = filters.length; i < j; i++)
+    name = name.replace(filters[i], '');
+  var res = '';
+  for(var i = 0, j = name.length; i < j; i++)
+    res += (name.charCodeAt(i) < 97 ? ' ' : '') + name[i];
+  return res;
 }
 
 function showStatistics(statRes){
@@ -77,7 +90,6 @@ function showStatistics(statRes){
   heroDetails.className += ' complete';
   updated.innerHTML = getTimeSince(statRes.Time) + ' ago';
 
-  console.log(statRes);
   var p = statRes.Heroes[0];
 
   var PickRate = p.GamesPicked === 0 ? 'no data' : (p.GamesPicked / statRes.SampleSize * 100).toFixed(1) + '%';
@@ -89,11 +101,23 @@ function showStatistics(statRes){
   banrate.innerHTML = BanRate;
 
   for(var i = 0; i < 7; i++){
+    var res = '';
+    var size = 0;
+    for(var j = 0, k = p.Talents[i].length; j < k; j++)
+      size += p.Talents[i][j].Wins + p.Talents[i][j].Losses;
+
     for(var j = 0, k = p.Talents[i].length; j < k; j++){
       var s = p.Talents[i][j];
-      var res = '';
+      var talentPopularity = ((s.Wins + s.Losses) / size * 100).toFixed(1) + '%';
+      var talentWinRate = ((s.Wins) / (s.Wins + s.Losses) * 100).toFixed(1) + '%';
 
+      res += '<div class="talent">';
+      res += '<div class="name">' + formatTalent(s.Name) + '</div>';
+      res += '<div class="popularity stat"><span class="tlabel">Popularity</span><span class="value">' + talentPopularity + '</span></div>';
+      res += '<div class="winrate stat"><span class="tlabel">Winrate</span><span class="value">' + talentWinRate + '</span></div>';
+      res += '</div>';
     }
+    document.getElementById('tier' + (i + 1)).innerHTML = res;
   }
 
 }

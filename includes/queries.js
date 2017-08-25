@@ -66,8 +66,8 @@ function getReplaysByUser(battletag, page, callback){
     }
   }]).
   sort({TimePlayed: -1}).
-  limit(20).
   skip(page * 20).
+  limit(20).
   exec(function(err, replays){
     if(err) logger.log('info', '[QUERY] error: ' + err.message);
     if(callback) callback(replays);

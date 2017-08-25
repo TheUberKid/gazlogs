@@ -101,9 +101,11 @@ function createHeroStatistics(build, gametype){
             h.Maps[r.MapName][category]++;
             for(var m = 0; m < 7; m++){ // m = talent index
               var t = p['Tier' + (m + 1) + 'Talent'];
-              var talentTier = h.Talents[m];
-              if(!h.Talents[m][t]) h.Talents[m][t] = new winLossObject(t);
-              h.Talents[m][t][category]++;
+              if(t.length > 0){
+                var talentTier = h.Talents[m];
+                if(!h.Talents[m][t]) h.Talents[m][t] = new winLossObject(t);
+                h.Talents[m][t][category]++;
+              }
             }
           } else {
             h.GamesPicked -= 0.5; // when iterating over both players in mirror match, becomes -1 (prevents double counting)

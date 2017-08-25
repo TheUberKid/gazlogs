@@ -125,8 +125,8 @@
 }
 .hero-details-nav .nav-button{
   display: inline-block;
-  width: 200px;
-  min-width: 200px;
+  width: 100px;
+  min-width: 100px;
   margin: 0px 10px 17px 0px;
   padding: 10px;
   border-bottom: 3px solid #eee;
@@ -161,11 +161,16 @@
 }
 #talents .talent-tier{
   display: flex;
-  width: calc(100% + 10px);
+  width: calc(100% - 20px);
   flex-direction: row;
-  margin-bottom: 10px;
+  padding: 10px 10px 0px 10px;
+  margin-bottom: 20px;
+}
+#talents .talent-tier:nth-child(odd){
+  background-color: #e4e4e4;
 }
 #talents .talent-tier .label{
+  height: 20px;
   padding: 15px;
   background-color: #ddd;
   font-family: 'Exo', sans-serif;
@@ -173,7 +178,11 @@
   color: #444;
   text-transform: uppercase;
 }
+#talents .talent-tier:nth-child(odd) .label{
+  background-color: #ccc;
+}
 #talents .talent-tier .level{
+  height: 20px;
   width: 20px;
   margin-right: 10px;
   padding: 15px;
@@ -183,6 +192,9 @@
   color: #444;
   text-align: center;
 }
+#talents .talent-tier:nth-child(odd) .level{
+  background-color: #bbb;
+}
 #talents .talent-tier.heroic .label{
   background-color: #359;
   color: #fff;
@@ -191,16 +203,54 @@
   background-color: #444;
   color: #fff;
 }
-#talents .talent-tier .talent{
-  width: 200px;
-  min-width: 200px;
-  margin-right: 10px;
-  padding: 15px;
-  flex-grow: 1;
-  background-color: #ccc;
-  font-family: 'Exo', sans-serif;
+#talents .talent-tier .talent-list{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+#talents .talent{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: calc(100% + 10px);
+  font-family: 'Open Sans', sans-serif;
   font-size: 15px;
   color: #444;
+}
+#talents .talent .name{
+  display: inline-block;
+  margin: 0px 10px 10px 0px;
+  width: 150px;
+  height: 20px;
+  min-width: 150px;
+  padding: 15px;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: right;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #359;
+}
+#talents .talent .stat{
+  display: inline-block;
+  flex-grow: 1;
+  margin: 0px 10px 10px 0px;
+  width: 200px;
+  min-width: 200px;
+  padding: 15px;
+  background-color: #ddd;
+}
+#talents .talent-tier:nth-child(odd) .talent .stat{
+  background-color: #ccc;
+}
+#talents .talent .stat .tlabel{
+  font-weight: 600;
+  text-transform: uppercase;
+}
+#talents .talent .stat .value{
+  float: right;
+  margin-right: 5px;
 }
 
 .replay-banner{
