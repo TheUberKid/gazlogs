@@ -73,7 +73,8 @@ var filters = [
   'HeroicAbility',
   'CombatStyle',
   'GenericTalent',
-  'Talent'
+  'Talent',
+  'Quest'
 ]
 function formatTalent(name){
   name = name.replace(hero, '');
@@ -106,18 +107,33 @@ function showStatistics(statRes){
     for(var j = 0, k = p.Talents[i].length; j < k; j++)
       size += p.Talents[i][j].Wins + p.Talents[i][j].Losses;
 
+    p.Talents[i].sort(function(a, b){
+      return b.Wins - a.Wins;
+    });
+
     for(var j = 0, k = p.Talents[i].length; j < k; j++){
       var s = p.Talents[i][j];
       var talentPopularity = ((s.Wins + s.Losses) / size * 100).toFixed(1) + '%';
       var talentWinRate = ((s.Wins) / (s.Wins + s.Losses) * 100).toFixed(1) + '%';
 
       res += '<div class="talent">';
-      res += '<div class="name">' + formatTalent(s.Name) + '</div>';
-      res += '<div class="popularity stat"><span class="tlabel">Popularity</span><span class="value">' + talentPopularity + '</span></div>';
-      res += '<div class="winrate stat"><span class="tlabel">Winrate</span><span class="value">' + talentWinRate + '</span></div>';
+        res += '<div class="name">' + formatTalent(s.Name) + '</div>';
+        res += '<div class="popularity stat" data-percent="' + talentPopularity + '">';
+          res += '<span class="tlabel">Popularity</span>';
+          res += '<span class="value">' + talentPopularity + '</span>';
+        res += '</div>';
+        res += '<div class="winrate stat" data-percent="' + talentWinRate + '">';
+          res += '<span class="tlabel">Winrate</span>';
+          res += '<span class="value">' + talentWinRate + '</span>';
+        res += '</div>';
       res += '</div>';
     }
     document.getElementById('tier' + (i + 1)).innerHTML = res;
   }
+
+  var stats = document.getElementsByClassName('stat');
+  for(var i in stats)
+    if(stats[i].children)
+      stats[i].style.background = 'linear-gradient(90deg, #abc ' + stats[i].dataset.percent + ', #ccc ' + stats[i].dataset.percent + ')';
 
 }

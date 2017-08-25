@@ -34,12 +34,14 @@ for(var i in gametypeSelect)
   if(gametypeSelect[i].children) gametypeSelect[i].addEventListener('click', function(){
     params.GameType = this.dataset.gametype;
     statisticsTable.className = statisticsTable.className.replace(' complete', '');
+    history.replaceState(null, '', '/statistics?gametype=' + params.GameType + '&build=' + params.Build);
     queryStatistics();
   });
 for(var i in buildSelect)
   if(buildSelect[i].children) buildSelect[i].addEventListener('click', function(){
     params.Build = this.dataset.build;
     statisticsTable.className = statisticsTable.className.replace(' complete', '');
+    history.replaceState(null, '', '/statistics?gametype=' + params.GameType + '&build=' + params.Build);
     queryStatistics();
   });
 

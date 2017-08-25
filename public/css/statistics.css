@@ -161,9 +161,10 @@
 }
 #talents .talent-tier{
   display: flex;
-  width: calc(100% - 20px);
+  width: calc(100% - 50px);
   flex-direction: row;
-  padding: 10px 10px 0px 10px;
+  padding: 25px;
+  overflow-x: auto;
   margin-bottom: 20px;
 }
 #talents .talent-tier:nth-child(odd){
@@ -210,20 +211,23 @@
 }
 #talents .talent{
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
   width: calc(100% + 10px);
+  margin-bottom: 5px;
   font-family: 'Open Sans', sans-serif;
   font-size: 15px;
   color: #444;
 }
+#talents .talent:nth-last-child(0n+1){
+  margin-bottom: 0px;
+}
 #talents .talent .name{
   display: inline-block;
-  margin: 0px 10px 10px 0px;
-  width: 150px;
+  margin-right: 5px;
+  width: 250px;
   height: 20px;
-  min-width: 150px;
+  min-width: 180px;
   padding: 15px;
   overflow: hidden;
   background-color: transparent;
@@ -235,14 +239,10 @@
 #talents .talent .stat{
   display: inline-block;
   flex-grow: 1;
-  margin: 0px 10px 10px 0px;
+  margin-right: 5px;
   width: 200px;
   min-width: 200px;
   padding: 15px;
-  background-color: #ddd;
-}
-#talents .talent-tier:nth-child(odd) .talent .stat{
-  background-color: #ccc;
 }
 #talents .talent .stat .tlabel{
   font-weight: 600;
