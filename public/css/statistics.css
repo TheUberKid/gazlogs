@@ -152,6 +152,10 @@
   display: none;
 }
 
+#talents, #maps, #matchups{
+  margin-bottom: 100px;
+}
+
 #talents{
   width: 100%;
   flex-direction: column;
@@ -249,6 +253,52 @@
   text-transform: uppercase;
 }
 #talents .talent .stat .value{
+  float: right;
+  margin-right: 5px;
+}
+
+#maps{
+  background-color: #e4e4e4;
+  width: calc(100% - 50px);
+  padding: 25px;
+}
+#maps .map{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: calc(100% + 10px);
+  margin-bottom: 5px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #444;
+}
+#maps .map .name{
+  display: inline-block;
+  margin-right: 5px;
+  width: 250px;
+  height: 20px;
+  min-width: 180px;
+  padding: 15px;
+  overflow: hidden;
+  background-color: transparent;
+  font-weight: 600;
+  text-align: right;
+  text-transform: uppercase;
+  color: #359;
+}
+#maps .map .stat{
+  display: inline-block;
+  flex-grow: 1;
+  margin-right: 5px;
+  width: 200px;
+  min-width: 200px;
+  padding: 15px;
+}
+#maps .map .stat .mlabel{
+  font-weight: 600;
+  text-transform: uppercase;
+}
+#maps .map .stat .value{
   float: right;
   margin-right: 5px;
 }

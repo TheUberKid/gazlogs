@@ -86,6 +86,23 @@ function heroByAttr(attrName){
   return null;
 }
 
+var heroSpecificKeywords = {
+  Artanis: ['TwinBlades', 'ShieldOverload', 'PhasePrism', 'SpearofAdun'],
+  Dehaka: ['EssenceCollection', 'Drag', 'Brushstalker'],
+  Illidan: ['SweepingStrike', 'Dive', 'Evasion'],
+  Kaelthas: ['Flamestrike', 'VerdantSpheres', 'GravityLapse', 'LivingBomb'],
+  Monk: ['FistsofFury', 'RadiantDash', 'BreathofHeaven'],
+  Leoric: ['DrainHope', 'SkeletalSwing'],
+  Wizard: ['Teleport', 'MagicMissiles'],
+  Malfurion: ['EntanglingRoots', 'Innervate'],
+  Muradin: ['Stormbolt', 'Thunderclap', 'Executioner60DamageBonus'],
+  Butcher: ['RuthlessOnslaught', 'ButchersBrand', 'Butcher', 'FreshMeat'],
+  Tychus: ['FragGrenade'],
+  Uther: ['HolyRadiance', 'HolyLight', 'HammerOfJustice', 'EternalDevotion'],
+  Valeera: ['SinisterStrike', 'BladeFlurry', 'Vanish'],
+  Zarya: ['Weapon', 'PersonalBarrier', 'ShieldAlly']
+}
+
 var gameTypes = {
   6: 'Unranked',
   7: 'Quick Match',

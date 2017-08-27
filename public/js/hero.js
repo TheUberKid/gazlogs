@@ -12,6 +12,7 @@ var winrate = document.getElementById('winrate');
 var pickrate = document.getElementById('pickrate');
 var banrate = document.getElementById('banrate');
 var heroDetails = document.getElementById('hero-details');
+var maps = document.getElementById('maps');
 
 portrait.innerHTML = '<img src="/img/heroportraits/' + hero.toLowerCase() + '.png">';
 heroTitle.innerHTML = altNames[hero].PrimaryName + '<span class="subgroup">(' + altNames[hero].Group + ')</span>';
@@ -43,12 +44,14 @@ for(var i in gametypeSelect)
   if(gametypeSelect[i].children) gametypeSelect[i].addEventListener('click', function(){
     params.GameType = this.dataset.gametype;
     heroDetails.className = heroDetails.className.replace(' complete', '');
+    history.replaceState(null, '', '/statistics/hero/' + hero + '?gametype=' + params.GameType + '&build=' + params.Build);
     queryStatistics();
   });
 for(var i in buildSelect)
   if(buildSelect[i].children) buildSelect[i].addEventListener('click', function(){
     params.Build = this.dataset.build;
     heroDetails.className = heroDetails.className.replace(' complete', '');
+    history.replaceState(null, '', '/statistics/hero/' + hero + '?gametype=' + params.GameType + '&build=' + params.Build);
     queryStatistics();
   });
 
@@ -81,6 +84,9 @@ function formatTalent(name){
   for(var i = 0, j = filters.length; i < j; i++)
     name = name.replace(filters[i], '');
   var res = '';
+  if(heroSpecificKeywords[hero])
+    for(var i = 0, j = heroSpecificKeywords[hero].length; i < j; i++)
+      name = name.replace(heroSpecificKeywords[hero][i], '');
   for(var i = 0, j = name.length; i < j; i++)
     res += (name.charCodeAt(i) < 97 ? ' ' : '') + name[i];
   return res;
@@ -88,18 +94,23 @@ function formatTalent(name){
 
 function showStatistics(statRes){
 
+  // OVERVIEW
+
   heroDetails.className += ' complete';
   updated.innerHTML = getTimeSince(statRes.Time) + ' ago';
 
   var p = statRes.Heroes[0];
 
-  var PickRate = p.GamesPicked === 0 ? 'no data' : (p.GamesPicked / statRes.SampleSize * 100).toFixed(1) + '%';
-  var BanRate = p.GamesBanned === 0 ? 'no data' : (p.GamesBanned / statRes.SampleSize * 100).toFixed(1) + '%';
+  var PickRate = statRes.sampleSize === 0 ? 'no data' : (p.GamesPicked / statRes.SampleSize * 100).toFixed(1) + '%';
+  var BanRate = statRes.sampleSize === 0 ? 'no data' : (p.GamesBanned / statRes.SampleSize * 100).toFixed(1) + '%';
   var WinRate = p.GamesPicked === 0 ? 'no data' : (p.Wins / (p.Wins + p.Losses) * 100).toFixed(1) + '%';
 
   winrate.innerHTML = WinRate;
   pickrate.innerHTML = PickRate;
   banrate.innerHTML = BanRate;
+
+
+  // TALENTS
 
   for(var i = 0; i < 7; i++){
     var res = '';
@@ -131,9 +142,46 @@ function showStatistics(statRes){
     document.getElementById('tier' + (i + 1)).innerHTML = res;
   }
 
+
+  // MAPS
+
+  p.Maps.sort(function(a, b){
+    var aTotal = a.Wins + a.Losses;
+    var bTotal = b.Wins + b.Losses;
+    var aWR = aTotal === 0 ? -1 : (a.Wins / aTotal);
+    var bWR = bTotal === 0 ? -1 : (b.Wins / bTotal);
+    if(aWR === bWR){
+      aWR = aTotal;
+      bWR = bTotal;
+    }
+    return bWR - aWR;
+  });
+
+  var res = '';
+  for(var i = 0, j = p.Maps.length; i < j; i++){
+    var m = p.Maps[i];
+    var mapPopularity = statRes.SampleSize === 0 ? 'no data' : ((m.Wins + m.Losses) / statRes.SampleSize * 100).toFixed(1) + '%';
+    var mapWinRate = (m.Wins + m.Losses === 0) ? 'no data' : (m.Wins / (m.Wins + m.Losses) * 100).toFixed(1) + '%';
+
+    res += '<div class="map" data-map="' + m.Name + '">';
+      res += '<div class="name">' + m.Name + '</div>';
+      res += '<div class="popularity stat" data-percent="' + mapPopularity + '">';
+        res += '<span class="mlabel">Popularity</span>';
+        res += '<span class="value">' + mapPopularity + '</span>';
+      res += '</div>';
+      res += '<div class="winrate stat" data-percent="' + mapWinRate + '">';
+        res += '<span class="mlabel">Winrate</span>';
+        res += '<span class="value">' + mapWinRate + '</span>';
+      res += '</div>';
+    res += '</div>';
+  }
+  maps.innerHTML = res;
+
   var stats = document.getElementsByClassName('stat');
   for(var i in stats)
     if(stats[i].children)
       stats[i].style.background = 'linear-gradient(90deg, #abc ' + stats[i].dataset.percent + ', #ccc ' + stats[i].dataset.percent + ')';
+
+      console.log(statRes);
 
 }
