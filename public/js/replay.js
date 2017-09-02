@@ -64,17 +64,23 @@ for(var i=0, j=params.Players.length; i<j; i++){
     }
 }
 
-function formatTalent(hero, name){
-  if(name.length === 0) return 'None';
+function formatTalent(hero, name, filter){
   name = name.replace(hero, '');
   for(var i = 0, j = universalKeywords.length; i < j; i++)
     name = name.replace(universalKeywords[i], '');
+  for(var i = 0, j = universalReplaces.length; i < j; i++)
+    name = name.replace(universalReplaces[i][0], universalReplaces[i][1]);
   var res = '';
   if(heroSpecificKeywords[hero])
     for(var i = 0, j = heroSpecificKeywords[hero].length; i < j; i++)
       name = name.replace(heroSpecificKeywords[hero][i], '');
   for(var i = 0, j = name.length; i < j; i++)
     res += (name.charCodeAt(i) < 97 ? ' ' : '') + name[i];
+
+  if(filter != null)
+    for(var i = 0, j = filter.length; i < j; i++)
+      res = res.replace(formatTalent(hero, filter), '');
+
   return res;
 }
 
@@ -151,7 +157,7 @@ for(var i = 0, j = params.Players.length; i < j; i++){
   res += addReplayStat('level 10', formatTalent(p.Hero, p.Tier4Talent));
   res += addReplayStat('level 13', formatTalent(p.Hero, p.Tier5Talent));
   res += addReplayStat('level 16', formatTalent(p.Hero, p.Tier6Talent));
-  res += addReplayStat('level 20', formatTalent(p.Hero, p.Tier7Talent));
+  res += addReplayStat('level 20', formatTalent(p.Hero, p.Tier7Talent, p.Tier4Talent));
   res += '</div><div class="replay-player-subheading">Other</div><div class="stat-table">';
   res += addReplayStat('time spent dead', p.TimeSpentDead + 's');
   res += addReplayStat('time silencing enemies', p.TimeSilencingEnemyHeroes + 's');

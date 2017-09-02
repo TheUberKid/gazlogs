@@ -73,16 +73,23 @@ function queryStatistics(){
 
 queryStatistics();
 
-function formatTalent(name){
+function formatTalent(name, filters){
   name = name.replace(hero, '');
   for(var i = 0, j = universalKeywords.length; i < j; i++)
     name = name.replace(universalKeywords[i], '');
+  for(var i = 0, j = universalReplaces.length; i < j; i++)
+    name = name.replace(universalReplaces[i][0], universalReplaces[i][1]);
   var res = '';
   if(heroSpecificKeywords[hero])
     for(var i = 0, j = heroSpecificKeywords[hero].length; i < j; i++)
       name = name.replace(heroSpecificKeywords[hero][i], '');
   for(var i = 0, j = name.length; i < j; i++)
     res += (name.charCodeAt(i) < 97 ? ' ' : '') + name[i];
+
+  if(filters != null)
+    for(var i = 0, j = filters.length; i < j; i++)
+      res = res.replace(formatTalent(filters[i].Name), '');
+
   return res;
 }
 
@@ -118,11 +125,12 @@ function showStatistics(statRes){
 
     for(var j = 0, k = p.Talents[i].length; j < k; j++){
       var s = p.Talents[i][j];
+      var talentName = (i === 6) ? formatTalent(s.Name, p.Talents[3]) : formatTalent(s.Name);
       var talentPopularity = ((s.Wins + s.Losses) / size * 100).toFixed(1) + '%';
       var talentWinRate = ((s.Wins) / (s.Wins + s.Losses) * 100).toFixed(1) + '%';
 
       res += '<div class="talent">';
-        res += '<div class="name">' + formatTalent(s.Name) + '</div>';
+        res += '<div class="name">' + talentName + '</div>';
         res += '<div class="popularity stat" data-percent="' + talentPopularity + '">';
           res += '<span class="tlabel">Popularity</span>';
           res += '<span class="value">' + talentPopularity + '</span>';

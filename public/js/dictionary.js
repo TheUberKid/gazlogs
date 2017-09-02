@@ -88,26 +88,42 @@ function heroByAttr(attrName){
 
 var universalKeywords = [
   'Mastery',
-  'HeroicAbility',
+  'Heroic',
+  'Ability',
   'CombatStyle',
   'GenericTalent',
   'Talent',
-  'Quest'
+  'Quest',
+  'HeroGeneric',
+  'Passive'
+];
+var universalReplaces = [
+  ['of', ' of'],
+  ['the', ' the']
 ];
 var heroSpecificKeywords = {
+  Abathur: ['Symbiote', 'Carapace', 'SpikeBurst'],
+  Anubarak: ['BurrowCharge', 'BeetleJuice'],
   Artanis: ['TwinBlades', 'ShieldOverload', 'PhasePrism', 'SpearofAdun'],
+  Auriel: ['SacredSweep', 'DetainmentStrike', 'RayOfHeaven', 'BestowHope'],
   Dehaka: ['EssenceCollection', 'Drag', 'Brushstalker'],
+  Greymane: ['GilneanCocktail', 'DarkflightDisengage', 'WorgenForm'],
   Illidan: ['SweepingStrike', 'Dive', 'Evasion'],
   Kaelthas: ['Flamestrike', 'VerdantSpheres', 'GravityLapse', 'LivingBomb'],
   Monk: ['FistsofFury', 'RadiantDash', 'BreathofHeaven'],
   Leoric: ['DrainHope', 'SkeletalSwing'],
   Wizard: ['Teleport', 'MagicMissiles'],
+  Lucio: ['WallRide', 'AmpItUp', 'Soundwave', 'Crossfade'],
   Malfurion: ['EntanglingRoots', 'Innervate'],
   Muradin: ['Stormbolt', 'Thunderclap', 'Executioner60DamageBonus'],
+  Ragnaros: ['LivingMeteor', 'EmpowerSulfuras'],
+  Sylvanas: ['WitheringFire', 'HauntingWave'],
   Butcher: ['RuthlessOnslaught', 'ButchersBrand', 'Butcher', 'FreshMeat'],
   Tychus: ['FragGrenade'],
   Uther: ['HolyRadiance', 'HolyLight', 'HammerOfJustice', 'EternalDevotion'],
   Valeera: ['SinisterStrike', 'BladeFlurry', 'Vanish'],
+  DemonHunter: ['HungeringArrow', 'Vault'],
+  Necromancer: ['BoneArmor'],
   Zarya: ['Weapon', 'PersonalBarrier', 'ShieldAlly']
 }
 
