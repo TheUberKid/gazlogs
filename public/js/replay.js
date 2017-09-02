@@ -64,9 +64,23 @@ for(var i=0, j=params.Players.length; i<j; i++){
     }
 }
 
+function formatTalent(hero, name){
+  if(name.length === 0) return 'None';
+  name = name.replace(hero, '');
+  for(var i = 0, j = universalKeywords.length; i < j; i++)
+    name = name.replace(universalKeywords[i], '');
+  var res = '';
+  if(heroSpecificKeywords[hero])
+    for(var i = 0, j = heroSpecificKeywords[hero].length; i < j; i++)
+      name = name.replace(heroSpecificKeywords[hero][i], '');
+  for(var i = 0, j = name.length; i < j; i++)
+    res += (name.charCodeAt(i) < 97 ? ' ' : '') + name[i];
+  return res;
+}
+
 // players
 var resArr = ['', '', ''];
-for(var i=0, j=params.Players.length; i<j; i++){
+for(var i = 0, j = params.Players.length; i < j; i++){
   var res = '';
   var p = params.Players[i];
 
@@ -130,6 +144,14 @@ for(var i=0, j=params.Players.length; i<j; i++){
   res += addReplayStat('tf escapes', p.TeamfightEscapesPerformed);
   res += addReplayStat('outnumbered deaths', p.OutnumberedDeaths);
   res += addReplayStat('highest kill streak', p.HighestKillStreak);
+  res += '</div><div class="replay-player-subheading"> Talents </div><div class="stat-table">';
+  res += addReplayStat('level 1', formatTalent(p.Hero, p.Tier1Talent));
+  res += addReplayStat('level 4', formatTalent(p.Hero, p.Tier2Talent));
+  res += addReplayStat('level 7', formatTalent(p.Hero, p.Tier3Talent));
+  res += addReplayStat('level 10', formatTalent(p.Hero, p.Tier4Talent));
+  res += addReplayStat('level 13', formatTalent(p.Hero, p.Tier5Talent));
+  res += addReplayStat('level 16', formatTalent(p.Hero, p.Tier6Talent));
+  res += addReplayStat('level 20', formatTalent(p.Hero, p.Tier7Talent));
   res += '</div><div class="replay-player-subheading">Other</div><div class="stat-table">';
   res += addReplayStat('time spent dead', p.TimeSpentDead + 's');
   res += addReplayStat('time silencing enemies', p.TimeSilencingEnemyHeroes + 's');

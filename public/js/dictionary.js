@@ -86,6 +86,14 @@ function heroByAttr(attrName){
   return null;
 }
 
+var universalKeywords = [
+  'Mastery',
+  'HeroicAbility',
+  'CombatStyle',
+  'GenericTalent',
+  'Talent',
+  'Quest'
+];
 var heroSpecificKeywords = {
   Artanis: ['TwinBlades', 'ShieldOverload', 'PhasePrism', 'SpearofAdun'],
   Dehaka: ['EssenceCollection', 'Drag', 'Brushstalker'],

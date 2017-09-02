@@ -59,17 +59,30 @@ function queryStatistics(){
   req.send();
 }
 
+var sortBy = 'winrate';
+var sortReverse = false;
 queryStatistics();
 
-function showStatistics(statRes){
+var statRes;
+function showStatistics(res){
+  if(res) statRes = res;
   statRes.Heroes.sort(function(a, b){
-    var aWR = a.GamesPicked === 0 ? -1 : (a.Wins / (a.Wins + a.Losses));
-    var bWR = b.GamesPicked === 0 ? -1 : (b.Wins / (b.Wins + b.Losses));
-    if(aWR === bWR){
-      aWR = a.GamesPicked;
-      bWR = b.GamesPicked;
+    var as = sortMethods[sortBy](a, statRes);
+    var bs = sortMethods[sortBy](b, statRes);
+    if(as === bs){
+      as = b.GamesPicked;
+      bs = a.GamesPicked;
     }
-    return bWR - aWR;
+    if(as === null) return 1;
+    if(bs === null) return -1;
+    if(!sortReverse){
+      if(as < bs) return -1;
+      if(bs < as) return 1;
+    } else {
+      if(bs < as) return -1;
+      if(as < bs) return 1
+    }
+    return 0;
   });
 
   var res = '';
@@ -103,3 +116,48 @@ function showStatistics(statRes){
       window.location.href = '/statistics/hero/' + this.dataset.hero + '?gametype=' + params.GameType + '&build=' + params.Build;
     });
 }
+
+// Sorting
+var sortMethods = {
+  hero: function(n){
+    return altNames[n.Hero].PrimaryName;
+  },
+  winrate: function(n){
+    return n.GamesPicked === 0 ? null : (n.Losses / (n.Wins + n.Losses))
+  },
+  pickrate: function(n, statres){
+    return 1 - (n.GamesPicked / statres.SampleSize);
+  },
+  banrate: function(n, statres){
+    return 1 - (n.GamesBanned / statres.SampleSize);
+  },
+  won: function(n){
+    return -n.Wins;
+  },
+  picked: function(n){
+    return -n.GamesPicked;
+  },
+  banned: function(n){
+    return -n.GamesBanned;
+  }
+}
+
+var sortLabels = document.getElementsByClassName('sort');
+for(var i in sortLabels)
+  if(sortLabels[i].children)
+    sortLabels[i].addEventListener('click', function(){
+      if(sortBy !== this.dataset.sort){
+        sortBy = this.dataset.sort;
+        sortReverse = false;
+      } else {
+        sortReverse = !sortReverse;
+      }
+      showStatistics();
+      statisticsTable.className = fixedLabels.className = 'full-width-table complete ' + (sortReverse ? 'reverse' : 'normal');
+      for(var i in sortLabels)
+        if(sortLabels[i].children){
+          sortLabels[i].className = sortLabels[i].className.replace(' active', '');
+          if(sortLabels[i].dataset.sort === this.dataset.sort)
+            sortLabels[i].className += ' active';
+        }
+    });

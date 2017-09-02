@@ -13,6 +13,8 @@ var pickrate = document.getElementById('pickrate');
 var banrate = document.getElementById('banrate');
 var heroDetails = document.getElementById('hero-details');
 var maps = document.getElementById('maps');
+var friendlyMatchups = document.getElementById('friendlyMatchups');
+var enemyMatchups = document.getElementById('enemyMatchups');
 
 portrait.innerHTML = '<img src="/img/heroportraits/' + hero.toLowerCase() + '.png">';
 heroTitle.innerHTML = altNames[hero].PrimaryName + '<span class="subgroup">(' + altNames[hero].Group + ')</span>';
@@ -28,13 +30,13 @@ for(var i = 0, j = 8; i < j; i++){
 }
 buildList.innerHTML = buildListHTML;
 
-var nav = document.getElementsByClassName('nav-button');
+var nav = document.getElementsByClassName('details-nav-button');
 var navTargets = document.getElementsByClassName('hero-details-target');
 for(var i in nav)
   if(nav[i].children) nav[i].addEventListener('click', function(){
-    for(var i in nav) if(nav[i].children) nav[i].className = 'nav-button';
+    for(var i in nav) if(nav[i].children) nav[i].className = 'details-nav-button';
     for(var i in navTargets) if(navTargets[i].children) navTargets[i].className = 'hero-details-target';
-    this.className = 'nav-button selected';
+    this.className = 'details-nav-button selected';
     document.getElementById(this.dataset.target).className = 'hero-details-target selected';
   });
 
@@ -71,18 +73,10 @@ function queryStatistics(){
 
 queryStatistics();
 
-var filters = [
-  'Mastery',
-  'HeroicAbility',
-  'CombatStyle',
-  'GenericTalent',
-  'Talent',
-  'Quest'
-]
 function formatTalent(name){
   name = name.replace(hero, '');
-  for(var i = 0, j = filters.length; i < j; i++)
-    name = name.replace(filters[i], '');
+  for(var i = 0, j = universalKeywords.length; i < j; i++)
+    name = name.replace(universalKeywords[i], '');
   var res = '';
   if(heroSpecificKeywords[hero])
     for(var i = 0, j = heroSpecificKeywords[hero].length; i < j; i++)
@@ -177,11 +171,65 @@ function showStatistics(statRes){
   }
   maps.innerHTML = res;
 
+
+  // MATCHUPS
+
+  p.FriendlyMatchups.sort(function(a, b){
+    var aTotal = a.Wins + a.Losses;
+    var bTotal = b.Wins + b.Losses;
+    var aWR = aTotal === 0 ? -1 : (a.Wins / aTotal);
+    var bWR = bTotal === 0 ? -1 : (b.Wins / bTotal);
+    if(aWR === bWR){
+      aWR = aTotal;
+      bWR = bTotal;
+    }
+    return bWR - aWR;
+  });
+  p.EnemyMatchups.sort(function(a, b){
+    var aTotal = a.Wins + a.Losses;
+    var bTotal = b.Wins + b.Losses;
+    var aWR = aTotal === 0 ? 2 : (a.Wins / aTotal);
+    var bWR = bTotal === 0 ? 2 : (b.Wins / bTotal);
+    if(aWR === bWR){
+      aWR = aTotal;
+      bWR = bTotal;
+    }
+    return aWR - bWR;
+  });
+
+  res = '<div class="label">';
+  res += '<div class="name">Best Allies by Winrate</div>';
+  res += '</div>';
+  for(var i = 0, j = p.FriendlyMatchups.length; i < j; i++){
+    var m = p.FriendlyMatchups[i];
+    if(m.Wins + m.Losses === 0) break;
+    var matchupWinRate = (m.Wins / (m.Wins + m.Losses) * 100).toFixed(1) + '%';
+
+    res += '<div class="hero">';
+      res += '<div class="name">' + altNames[m.Name].PrimaryName + '</div>';
+      res += '<div class="winrate">' + matchupWinRate + '</div>';
+    res += '</div>';
+  }
+  friendlyMatchups.innerHTML = res;
+  res = '<div class="label">';
+  res += '<div class="name">Top Counters by Winrate</div>';
+  res += '</div>';
+  for(var i = 0, j = p.EnemyMatchups.length; i < j; i++){
+    var m = p.EnemyMatchups[i];
+    if(m.Wins + m.Losses === 0) break;
+    var matchupWinRate = (m.Wins / (m.Wins + m.Losses) * 100).toFixed(1) + '%';
+
+    res += '<div class="hero">';
+      res += '<div class="name">' + altNames[m.Name].PrimaryName + '</div>';
+      res += '<div class="winrate">' + matchupWinRate + '</div>';
+    res += '</div>';
+  }
+  enemyMatchups.innerHTML = res;
+
   var stats = document.getElementsByClassName('stat');
   for(var i in stats)
     if(stats[i].children)
       stats[i].style.background = 'linear-gradient(90deg, #abc ' + stats[i].dataset.percent + ', #ccc ' + stats[i].dataset.percent + ')';
-
-      console.log(statRes);
+  stats = document.getElementsByClassName('matchup-stat');
 
 }

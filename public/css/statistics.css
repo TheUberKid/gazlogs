@@ -29,8 +29,42 @@
 .full-width-table .statBanRate{ width: 10vw; min-width: 51px; }
 .full-width-table .statWinRate{ width: 10vw; min-width: 51px; }
 #statistics-table .row:not(.labels){ box-shadow: inset 3px 0 0 #359; cursor: pointer; }
-
 #statistics-table .row:not(:hover){ box-shadow: inset 3px 0 0 transparent; }
+
+.sort{
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.sort:hover{
+  background-color: #ddd;
+}
+.sort span{
+  position: absolute;
+}
+.sort:not(.active):hover:after{
+  content: ' ';
+  width: 0;
+  height: 0;
+  margin: 6px 0 0 calc(100% - 12px);
+  border-width: 6px 6px 0 6px;
+  border-style: solid;
+  border-color: #444 transparent;
+  opacity: 0.5;
+}
+.sort.active:after{
+  content: ' ';
+  width: 0;
+  height: 0;
+  margin: 6px 0 0 calc(100% - 12px);
+  border-style: solid;
+  border-color: #444 transparent;
+}
+.normal .sort.active:after{
+  border-width: 6px 6px 0 6px;
+}
+.reverse .sort.active:after{
+  border-width: 0 6px 6px 6px;
+}
 
 #hero-stat-table{
   margin-top: 40px;
@@ -123,7 +157,7 @@
   width: calc(100% + 10px);
   justify-content: space-between;
 }
-.hero-details-nav .nav-button{
+.hero-details-nav .details-nav-button{
   display: inline-block;
   width: 100px;
   min-width: 100px;
@@ -141,11 +175,11 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.hero-details-nav .nav-button.selected{
+.hero-details-nav .details-nav-button.selected{
   background-color: #ccc;
   border-bottom: 3px solid #359;
 }
-.hero-details-nav .nav-button:hover{
+.hero-details-nav .details-nav-button:hover{
   background-color: #ccc;
 }
 .hero-details-target:not(.selected){
@@ -238,7 +272,7 @@
   text-align: right;
   font-weight: 600;
   text-transform: uppercase;
-  color: #359;
+  color: #444;
 }
 #talents .talent .stat{
   display: inline-block;
@@ -284,7 +318,7 @@
   font-weight: 600;
   text-align: right;
   text-transform: uppercase;
-  color: #359;
+  color: #444;
 }
 #maps .map .stat{
   display: inline-block;
@@ -301,6 +335,76 @@
 #maps .map .stat .value{
   float: right;
   margin-right: 5px;
+}
+
+#matchups{
+  width: 100%;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+#matchups.selected{
+  display: flex;
+}
+#matchups .enemyMatchups, #matchups .friendlyMatchups{
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 5px);
+}
+#matchups .hero, #matchups .label{
+  display: flex;
+  background-color: #ddd;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: #444;
+  overflow: hidden;
+}
+#matchups .hero .name{
+  font-family: 'Exo', sans-serif;
+  text-transform: uppercase;
+  width: 35%;
+}
+#matchups .hero .winrate{
+  font-weight: 600;
+  width: 52px;
+  text-align: right;
+}
+#matchups .label{
+  color: #fff;
+}
+#matchups .enemyMatchups .label{
+  flex-direction: row-reverse;
+}
+#matchups .label .name{
+  text-transform: uppercase;
+  font-weight: 600;
+}
+#matchups .enemyMatchups .label .name{
+  text-align: right;
+}
+#matchups .friendlyMatchups{
+  margin-right: 5px;
+}
+#matchups .enemyMatchups{
+  margin-left: 5px;
+}
+#matchups .friendlyMatchups .hero{
+  border-left: 3px solid #55b;
+}
+#matchups .enemyMatchups .hero{
+  border-right: 3px solid #b55;
+  flex-direction: row-reverse;
+}
+#matchups .enemyMatchups .hero .name, #matchups .enemyMatchups .hero .winrate{
+  text-align: right;
+}
+#matchups .friendlyMatchups .label{
+  background-color: #55b;
+}
+#matchups .enemyMatchups .label{
+  background-color: #b55;
+  text-align: right;
 }
 
 .replay-banner{
@@ -488,4 +592,7 @@
   background-color: #bbb;
   margin-top: 20px;
   color: #444;
+}
+.replay-player-heading:not(:nth-child(0n+1)){
+  margin-top: 20px;
 }
