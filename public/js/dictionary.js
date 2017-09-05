@@ -99,7 +99,8 @@ var universalKeywords = [
 ];
 var universalReplaces = [
   ['of', ' of'],
-  ['the', ' the']
+  ['the', ' the'],
+  ['for', ' for'],
 ];
 var heroSpecificKeywords = {
   Abathur: ['Symbiote', 'Carapace', 'SpikeBurst'],
@@ -107,6 +108,7 @@ var heroSpecificKeywords = {
   Artanis: ['TwinBlades', 'ShieldOverload', 'PhasePrism', 'SpearofAdun'],
   Auriel: ['SacredSweep', 'DetainmentStrike', 'RayOfHeaven', 'BestowHope'],
   Dehaka: ['EssenceCollection', 'Drag', 'Brushstalker'],
+  Garrosh: ['Groundbreaker', 'WreckingBall', 'ArmorUp', 'Bloodthirst'],
   Greymane: ['GilneanCocktail', 'DarkflightDisengage', 'WorgenForm'],
   Illidan: ['SweepingStrike', 'Dive', 'Evasion'],
   Kaelthas: ['Flamestrike', 'VerdantSpheres', 'GravityLapse', 'LivingBomb'],

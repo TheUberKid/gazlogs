@@ -1,6 +1,6 @@
 'use strict';
 
-var uploader = 'https://gazlogs-uploader.herokuapp.com';
+var uploader = 'https://localhost:3000';
 
 Number.prototype.format = function(r){
   if(!r) r = '&#8198;';
@@ -107,6 +107,7 @@ function submitFiles(){
     displayResults: [],
     error: false
   };
+
   upload.results.length = Object.keys(responseTable).length;
   upload.results.fill(0);
   upload.displayResults.length = Object.keys(responseTable).length;
